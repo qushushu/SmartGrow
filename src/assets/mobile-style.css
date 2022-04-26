@@ -1,0 +1,41 @@
+
+@media screen and (max-width: 500px) {
+    /* 移动端显示隐藏模块 start  */
+        .mobile-show {display: block !important;}
+        .mobile-hide {display: none !important;}
+    /* 移动端显示隐藏模块 end  */
+    
+    .container-fluid {padding: 0 !important;}
+    #group-header {background: #edf3ff;padding: 18px 16px;}
+    .anticon {color: #10131a !important;}
+    .el-dropdown-link {color: #10131a !important;}
+    
+    .ant-statistic-content {text-align: center;}
+    .ant-statistic-title {color: #515862;text-align: center;}
+    .mobile-tp_col {background: #edf3ff;border: none;padding-top: 20px;}
+    .mobile-home-tab {padding-left: 16px;padding-right: 16px;}
+
+    .card-box_dark {background: none !important;color: #000 !important;border: none;}
+    .mycard-body {display: block !important;}
+    .card-box_dark .ant-card-body {padding: 0}
+    .mobile-normal-list {width: 100% !important;padding-left: 0 !important;}
+    .mobile-capsule {background: #f8f7fd;width: 46%;box-sizing: border-box;padding: 10px;border-radius: 10px;margin-left: 2%;margin-right: 2%;float: left;margin-bottom: 8px;}
+    .mobile-capsule p:first-of-type {color: #96959b !important;font-size: 14px !important;}
+    .mobile-capsule p:last-of-type {color: #000 !important;font-weight: bold;font-size: 13px !important;}
+    .mobile-sprinkling-card {border: none !important;}
+    .mobile-sprinkling-card .card-body {padding: 0}
+    .mobile-sprinkling-card .form-text-inner {width: 100% !important;}
+    .mobile-round-capsule {background: #e8f1ff;border-radius: 8px;padding: 12px 20px;}
+    .mobile-cap-title {color: #565d65;font-size: 12px;text-align: center;margin-bottom: 8px;}
+    .mobile-cap-value {color: #2b2a2f;font-size: 14px;text-align: center;margin-bottom: 0;font-weight: bold;}
+    .login-card-box {width: 80% !important;position: static !important;margin-left: auto !important;margin-right: auto !important;transform: translate(0,0) !important;margin-top: 20px;}
+    .yys-list {margin: 0;padding: 0;}
+    .yys-title {color: #000;}
+    .yys-top {display: flex;justify-content: space-between;}
+    .mobile-bg-cd {background: #f5f5f9 !important;padding-top: 20px;}
+    .yys-set {display: flex;justify-content: space-between;margin-top: 10px;margin-bottom: 10px;}
+    .yys-btm {display: flex;justify-content: space-around;text-align: center;}
+    .yys-list > li {margin-bottom: 26px;}
+    .yys-zl_b {font-weight: bold;color: #000;margin-bottom: 4px;}
+    .yys-zl_t {color: #999;}
+}

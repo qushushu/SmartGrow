@@ -1,0 +1,117 @@
+<template>
+  <div>
+    <!-- 头部 start -->
+    <!-- <el-header> -->
+      <Head></Head>
+    <!-- </el-header> -->
+    <!-- 头部 end -->
+    <!-- 主体 start -->
+    <!-- <el-main> -->
+      <!-- 导航 start -->
+      <Nav></Nav>
+      <!-- 导航 end -->
+      <!-- PC端主体内容 start -->
+      <div class="ym-main mobile-hide">
+        <el-row :gutter="10">
+          <!-- 左侧信息 start -->
+          <el-col :lg="8" :md="8" :sm="8" :xs="24">
+             <!-- 营养液信息 start -->
+              <Nutrient></Nutrient>
+              <!-- 营养液信息 end -->
+              <!-- 温湿度 co2 start -->
+              <Environment></Environment>
+              <!-- 温湿度 co2 end -->
+              <!-- 模式 start -->
+              <Mode></Mode>
+              <!-- 模式 end -->
+          </el-col>
+          <el-col :lg="16" :md="16" :sm="16" :xs="24">
+             <!-- 育苗信息 start -->
+            <CurrentPlan></CurrentPlan>
+            <!-- 育苗信息 end -->
+            <!-- 喷灌信息 start -->
+            <Sprinkling></Sprinkling>
+            <!-- 喷灌信息 end -->
+          </el-col>
+        </el-row>
+        <!-- 左侧信息 end -->
+      </div>
+      <!-- PC端主体内容 end -->
+      <!-- 移动端主题内容 start -->
+      <div class="ym-main mobile-show">
+        <Nutrient></Nutrient>
+        <div class="mobile-home-tab">
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="当前环境" name="first"><Environment></Environment></el-tab-pane>
+            <el-tab-pane label="当前方案" name="second"><CurrentPlan></CurrentPlan></el-tab-pane>
+            <el-tab-pane label="喷灌信息" name="third"><Sprinkling></Sprinkling></el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
+      <!-- 移动端主题内容 end -->
+      <!-- 时钟 start -->
+      <Clock></Clock>
+      <!-- 时钟 end -->
+    <!-- </el-main> -->
+    <!-- 主体 end -->
+  </div>
+</template>
+<style scoped>
+  .space-left {padding-left: 8px;}
+  .space-right {padding-right: 8px;}
+</style>
+<script>
+  import Head from "./common/Head"
+  import Nav from "./common/Nav"
+  import Nutrient from "./Home/Nutrient"
+  import Environment from "./Home/Environment"
+  import CurrentPlan from "./Home/CurrentPlan"
+  import Sprinkling from "./Home/Sprinkling"
+  import Clock from "./Home/Clock"
+  import Mode from "./Home/Mode"
+  import {getUserPower} from "../assets/tools/tool"
+  export default {
+    name: 'Home',
+    components: {
+      Head,
+      Nav,
+      Nutrient,
+      Environment,
+      CurrentPlan,
+      Sprinkling,
+      Clock,
+      Mode
+    },
+    data() {
+      return {
+        activeName: 'first'
+      }
+    },
+    computed: {
+      userPower() {
+        return this.$store.state.userPower;
+      }
+    },
+    watch: {
+      userPower() {
+        this.autoJump();
+      }
+    },
+    methods: {
+      // 获取仪表盘主体信息
+      info() {
+        this.$store.dispatch("updateRunInfo");
+      },
+      handleClick(tab, event) {},
+      autoJump() {
+          if(getUserPower() == 2) {
+              this.$router.replace("/User");
+          }
+      }
+    },
+    mounted() {
+      this.info();
+      this.autoJump();
+    }
+  }
+</script>

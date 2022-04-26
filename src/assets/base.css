@@ -1,0 +1,40 @@
+/* reset start */
+    body,html,p,h1,h2,h3,h4,h5,h6 {margin: 0;}
+    h1,h2,h3,h4,h5,h6,strong {font-weight: normal;}
+    ul,ol,form,input,textarea {margin: 0;padding: 0;}
+    a {text-decoration: none;}
+    img {border: none;vertical-align: middle;}
+    li {list-style: none;}
+/* reset end */
+
+.mobile-show {display: none !important;}
+.normal-list * {color: #D3D3D3 !important;font-size: 12px;}
+.ym-main {padding: 10px 20px;background: #EBECF6;}
+.el-dialog__title {font-size: 14px;}
+.el-dialog__headerbtn {top: 14px;}
+.el-drawer {width: 200px !important;background: #FFF !important;}
+@media screen and (max-width: 500px) {
+    .ant-card-body {padding: 8px; }
+    .ym-main {background: none;padding: 0}
+}
+.special-card1 .ant-card-body{padding: 26px 12px;}
+
+@media screen and (max-width: 768px) {
+    .special-card1 .ant-card-body{padding: 12px 12px;}
+}
+
+#kd-box > div {width: 2px;height: 50%;background: -webkit-linear-gradient(top,#8E8E8E 0,#8E8E8E 2%,rgba(0,0,0,0) 2%);position: absolute;left: 50%;top: 0;transform-origin: center bottom}
+#kd-box .long {background: -webkit-linear-gradient(top,#8E8E8E 0,#8E8E8E 9%,rgba(0,0,0,0) 9%);}
+
+#planListTable .warning-row {background: #ecdab9 !important; }
+#planListTable.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {background: #ecdab9 !important; }
+#planListTable .el-table__body tr.current-row>td.el-table__cell {background: #ecdab9 !important; }
+#planListTable.el-table--enable-row-transition .el-table__body td.el-table__cell {transition: background-color 0 ease;}
+
+.mycard-body .ant-descriptions-middle .ant-descriptions-row > td {padding-bottom: 7px;}
+.btn-mode-toggle {text-align: right;position: relative;top: -30px;display: inline-block;float: right;}
+.normal-chart {width: 100%;height: 300px;}
+.normal-line_chart {width: 100%;height: 150px;}
+.line-chart {width: 46%;height: 150px;margin-bottom: 80px;display: inline-block;}
+.line-chart:nth-of-type(2n+1) {margin-right: 2%;}
+.line-chart:nth-of-type(2n) {margin-left: 2%;}

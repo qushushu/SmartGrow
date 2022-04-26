@@ -1,0 +1,11 @@
+/*
+    此文件修改说明：
+    翻译部分：请在对应的中文后面添加英文和法文。英文和法文之间用"|"分隔。如 "登录": "Login|fr Login",修改完成后将此文件交给系统管理员处理。
+    上传部分：系统管理员将此文件放在static文件夹下覆盖源文件即可。
+*/ 
+let languageList = {
+    "登录": "Login|fr Login",
+    "用户": "User|fr User",
+    "选择语言": "Language|fr Language",
+    "仪表盘": "Panel|fr Panel",
+}
