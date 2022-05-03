@@ -245,7 +245,12 @@
 			    		})
                 	})
                 })
-	    	}
+	    	},
+	    	autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 	    },
 	    computed: {
 	    	apiurl() {
@@ -254,6 +259,7 @@
 	    },
 	    mounted() {
 	    	this.getList();
+	    	this.autoJump();
 	    },
 	}
 </script>

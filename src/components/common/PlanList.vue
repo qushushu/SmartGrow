@@ -1,7 +1,19 @@
+<!-- 
+  组件说明： 本组件为培植方案列表组件，点击顶部全部培植方案按钮，该组件即可显示。
+-->
 <template>
     <!-- 培植方案列表 start -->
     <ul class="listData">
-        <li v-for="item in plantList" @click="readyChangePlan(item.id)"><div class="img_box" v-loading.fullscreen.lock="fullscreenLoading"><img :src="item.plant_image" alt="" @error="unloadImg"></div><p>{{item.scheme_name}}</p></li>
+        <li v-for="item in plantList" @click="readyChangePlan(item.id)">
+            <!-- 方案图片 start -->
+            <div class="img_box" v-loading.fullscreen.lock="fullscreenLoading">
+                <img :src="item.plant_image" alt="" @error="unloadImg">
+            </div>
+            <!-- 方案图片 end -->
+            <!-- 方案文字 start -->
+            <p>{{item.scheme_name}}</p>
+            <!-- 方案文字 end -->
+        </li>
     </ul>
     <!-- 培植方案列表 end -->
 </template>
@@ -26,13 +38,14 @@
     export default {
         data() {
             return {
-                plantList: [],
-                fullscreenLoading: false,
+                plantList: [],   // 培植方案列表
+                fullscreenLoading: false,   // loading状态
             }
         },
         watch: {
-            showLayer(b) {
-                b && this.getList();
+            // 显示列表时获取全部培植方案
+            showLayer(bool) {
+                bool && this.getList();
             }
         },
         computed: {
@@ -43,7 +56,6 @@
         props: ["showLayer"],
         methods: {
             unloadImg() {
-                console.log(123);
             },
             // 获取所有培植方案
             getList() {
@@ -67,6 +79,7 @@
                     }
                 });
             },
+            // 切换培植方案
             readyChangePlan(plant_id) {
                 this.$confirm('是否切换该种植方案?', '提示', {
                     distinguishCancelAndClose: true,

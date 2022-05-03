@@ -373,11 +373,17 @@
 			        	e.target.value="";
 			        })
 				});
-			}
+			},
+			autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 		},
 		mounted() {
 			this.current_model_code = this.$route.query.model_code;
 			this.getList();
+			this.autoJump();
 		}
 	}
 </script>

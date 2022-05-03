@@ -267,10 +267,16 @@
 	    	},
 	    	changeModel(search_model_code) {
                 this.search_model_code = search_model_code;
+            },
+            autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
             }
 		},
 		mounted() {
 			this.getDevParamList();
+			this.autoJump();
 		}
 	}
 </script>

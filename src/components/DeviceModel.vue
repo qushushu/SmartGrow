@@ -9,7 +9,7 @@
 		<div class="container-fluid ym-main">
 			<a-card>
 				<!-- 标题 start -->
-				<PageHeader title="设备参数模板" goBack=false></PageHeader>
+				<PageHeader title="设备模板" goBack=false></PageHeader>
 				<!-- 标题 end -->
 				<!-- 搜索与新增 start -->
 				<a-form-model layout="inline" class="space-btm1">
@@ -226,10 +226,16 @@
         	},
             changeModel(model) {
                 this.model = model;
+            },
+            autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
             }
 		},
 		mounted() {
 			this.getList();
+            this.autoJump();
 		}
 	}
 </script>

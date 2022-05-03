@@ -88,47 +88,24 @@
 	    	Ana,
 	    	Light
 	    },
-	    computed: {
-	    	apiurl() {
-                return this.$store.state.apiurl;
-            }
-	    },
 		methods: {
-			init() {
-				// switch(this.current) {
-				// 	// 模拟量历史
-				// 	case "ana":
-				// 		this.getAnaList(1);
-				// 	break;
-				// 	// 开关量历史
-				// 	case "dig":
-				// 		this.getDiginfoList(1);
-				// 	break;
-				// 	// 告警历史
-				// 	case "alarm":
-				// 		this.getAlarmList(1);
-				// 	break;
-				// 	// 通信历史
-				// 	case "comm":
-				// 		this.getCommList(1);
-				// 	break;
-				// 	// 参数历史
-				// 	case "param":
-				// 		this.getParamList(1);
-				// 	break;
-				// }
-			},
 			// 下拉框改变
 			handleChange(cur) {
 				this.current = cur;
-				this.init();
 			},
 			// 修改开始、结束时间
 			onChange(date, dateString) {
 		      this.start_time = dateString[0];
 		      this.end_time = dateString[1];
-		      this.init();
 		    },
+		    autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 		},
+		mounted() {
+			this.autoJump();
+		}
 	}
 </script>

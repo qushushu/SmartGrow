@@ -72,10 +72,16 @@
 	    			}
 	    		})
 			    download(result, this.$route.query.scheme_name +'的培植记录列表.xlsx');//导出的文件名
-	    	}
+	    	},
+	    	autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 	    },
 		mounted() {
 			this.getRecordList();
+			this.autoJump();
 		}
 	}
 </script>

@@ -1,19 +1,21 @@
-<!-- 组件说明： 本组件为页面头部信息组件，包含PC端及移动端 -->
+<!-- 
+	组件说明： 本组件为页面头部信息组件，包含PC端及移动端。
+	测试帐号：姓名：liujunhui 电话：12345678 密码：1234567
+-->
 <template>
 	<header id="group-header">
-		<!-- 移动端头部 start -->
+		<!-- 移动端抽屉 start -->
 		<div class="mobile-show">
-			<el-drawer title="工厂智能育苗系统" :visible.sync="drawer" :direction="direction">
+			<el-drawer title="工厂智能育苗系统" :visible.sync="drawer" direction="ltr">
 				<Nav mode="vertical" mobile="true"></Nav>
 			</el-drawer>
 		</div>
-		<!-- 移动端头部 end -->
+		<!-- 移动端抽屉 end -->
 		<el-row type="flex" justify="space-between" align="middle" class="head-box">
-			<!-- 移动端左侧导航与logo start -->
 			<el-col>
-				<!-- 移动端左侧导航 start -->
+				<!-- 移动端左侧三个点 start -->
 				<div class="mobile-show"> <i class="el-icon-more more-icon" @click="drawer = true"></i> </div>
-				<!-- 移动端左侧导航 end -->
+				<!-- 移动端左侧三个点 end -->
 				<!-- logo start -->
 				<router-link to="/" class="logo mobile-hide">
 					<el-row type="flex" align="middle">
@@ -23,8 +25,6 @@
 				</router-link>
 				<!-- logo end -->
 			</el-col>
-			<!-- 移动端左侧导航与logo end -->
-			<!-- 全部培植方案按钮、 用户登录、切换语言及移动端ip start -->
 			<el-col>
 				<el-row type="flex" justify="end" align="middle">
 					<!-- 全部培植方案按钮 start -->
@@ -55,32 +55,37 @@
 					<!-- 切换语言 end -->
 				</el-row>
 			</el-col>
-			<!-- 全部培植方案按钮、 用户登录、切换语言及移动端ip end -->
 		</el-row>
 		<!-- 计划列表弹窗 start -->
 		<PlanList v-show="showLayer1" @changeState="changeState" :showLayer="showLayer"></PlanList>
 		<!-- 计划列表弹窗 end -->
 		<!-- 移动端ip修改 start -->
 		<el-dialog :visible.sync="userBaseUrlDialogVisible" title="请求路径设置" width="308px" center>
-			  <el-input placeholder="请输入ip。如：192.168.1.103" size="small" v-model="mobileBaseUrl1"></el-input>
-			  <div slot="footer" class="dialog-footer">
+			<el-input placeholder="请输入ip。如：192.168.1.103" size="small" v-model="mobileBaseUrl1"></el-input>
+			<div slot="footer" class="dialog-footer">
 			  	<el-button type="primary" size="small" @click="updateMobileBaseUrl">确认</el-button>
-			  </div>
+			</div>
 		</el-dialog>
 		<!-- 移动端ip修改 end -->
 		<!-- 用户登录 start -->
 		<el-dialog :visible.sync="userLoginDialogVisible" title="用户登录" :width="loginDialogWidth" center>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+				<!-- 输入用户名/电话 start -->
 				<el-form-item label="用户名/电话" prop="account">
 				    <el-input v-model="ruleForm.account" size="small"></el-input>
 				</el-form-item>
+				<!-- 输入用户名/电话 end -->
+				<!-- 输入密码 start -->
 				<el-form-item label="密码" prop="password">
 				    <el-input v-model="ruleForm.password" size="small" show-password></el-input>
 				</el-form-item>
+				<!-- 输入密码 end -->
 			</el-form>
+			<!-- 登录按钮 start -->
 			<div class="txt-center">
 		    	<el-button type="primary" @click="handleSubmit('ruleForm')" size="small">{{$t("message.登录")}}</el-button>
 			</div>
+			<!-- 登录按钮 end -->
 		</el-dialog>
 		<!-- 用户登录 end -->
 	</header>
@@ -106,41 +111,47 @@
 	export default {
 		data() {
 			return {
-				showLayer: false,
-				drawer: false,
-				direction: 'ltr',
-				userBaseUrlDialogVisible: false,
-				userLoginDialogVisible: false,
-				mobileBaseUrl1: "",
+				showLayer: false,  // 是否显示计划列表弹窗
+				drawer: false,  // 是否显示移动端抽屉
+				userBaseUrlDialogVisible: false,  // 是否显示移动端修改ip编辑层
+				userLoginDialogVisible: false,  // 是否显示用户登录层
+				mobileBaseUrl1: "",   // 移动端ip地址
 				ruleForm: {
 					account: "",
 					password: ""
-				},
+				},  // 设置验证规则字段
 				rules: {
 					account: [{ required: true, message: '请输入用户名或电话!', trigger: 'blur' }, ],
 					password: [{ required: true, message: '请输入密码!', trigger: 'blur' }, ],
-				}
+				}   // 设置验证规则
 			}
 		},
 		computed: {
+			// 用户权限数字
 			userPower() {
 				return localStorage.userPower || "0";
 		    },
+		    // 配置方案显示层
 			showLayer1() {
 				return this.$store.state.PlanListLayerState;
 			},
+			// 移动端请求地址
 			mobileBaseUrl() {
 				return this.$store.state.mobileBaseUrl;
 			},
+			// 是否为移动端
 			isMobile() {
 				return this.$store.state.isMobile;
 			},
+			// PC端请求地址
 			apiurl() {
                 return this.$store.state.apiurl;
             },
+            // 层大小
             loginDialogWidth() {
             	return this.isMobile ? "300px" : "50%";
             },
+            // 用户信息
             userInfo() {
             	return this.$store.state.user;
             }
@@ -150,6 +161,7 @@
 			Nav
 		},
 		methods: {
+			// 退出登录
 			logout() {
 				delete localStorage.operateNo;
 				delete localStorage.token;
@@ -164,6 +176,7 @@
 				} 
 				window.location.reload();
 			},
+			// 点击退出登录按钮
 			handleCommand1(command) {
 				if(command == "logout") {
 					this.logout()
@@ -194,64 +207,59 @@
 		        	window.location.reload();
 		        },1000);
 			},
+			// 登录
 			handleSubmit(formName) {
-		      this.$refs[formName].validate(valid => {
-		        if (valid) {
-		        	this.login();
-		        }
-		      });
-		    },
-		    login() {
-		    	let data = {
-					// account: "liujunhui",      
-				    // phone: "12345678",      
-				    // password: "fcea920f7412b5da7be0cf42b8c93759",
-					account: this.ruleForm.account,
-					phone: this.ruleForm.account,
-					password: md5(this.ruleForm.password)
-				};
-				if(/^1\d{10}$/.test(this.account)) {
-					data.account = "";
-				} else {
-					delete data.phone;
-				}
-		    	axios({
-				    method: 'post',
-				    url: `${this.apiurl}/lb/login`,
-				    data:{
-					  data
-					}
-				}).then(data => {
-					if(data.data.code == 200) {
-						this.$message({
-			              type: 'success',
-			              message: '登录成功'
-			            });
-			            localStorage.token = data.data.token;
-			            localStorage.userId = data.data.id;
-			            localStorage.operateNo = this.ruleForm.account;
-			            this.submitUserInfo();
-			            this.userLoginDialogVisible = false;
-			            this.ruleForm = {
-							account: "",
-							password: ""
+		      	this.$refs[formName].validate(valid => {
+			        if (valid) {
+			        	let data = {
+							account: this.ruleForm.account,
+							phone: this.ruleForm.account,
+							password: md5(this.ruleForm.password)
+						};
+						if(/^1\d{10}$/.test(this.account)) {
+							data.account = "";
+						} else {
+							delete data.phone;
 						}
-						window.location.reload();
-					} else {
-						this.$message({
-			              type: 'error',
-			              message: '登录失败'
-			            });
-					}
-				})
+				    	axios({
+						    method: 'post',
+						    url: `${this.apiurl}/lb/login`,
+						    data:{
+							  data
+							}
+						}).then(data => {
+							if(data.data.code == 200) {
+								this.$message({
+					              type: 'success',
+					              message: '登录成功'
+					            });
+					            localStorage.token = data.data.token;
+					            localStorage.userId = data.data.id;
+					            localStorage.operateNo = this.ruleForm.account;
+					            this.submitUserInfo();
+					            this.userLoginDialogVisible = false;
+					            this.ruleForm = {
+									account: "",
+									password: ""
+								}
+								window.location.reload();
+							} else {
+								this.$message({
+					              type: 'error',
+					              message: '登录失败'
+					            });
+							}
+						})
+			        }
+		      	});
 		    },
+		    // 像vuex中提交用户信息
 		    submitUserInfo() {
 		    	this.$store.commit("resetUser",{
 	            	token: localStorage.token,
 	            	userId: localStorage.userId,
 	            	operateNo: localStorage.operateNo
 	            });
-	            
 		    }
 		},
 		mounted() {

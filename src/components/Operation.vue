@@ -42,6 +42,16 @@
 	    	Operation_1,
 	    	Operation_2,
 	    	Operation_3
+	    },
+	    methods: {
+	    	autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
+	    },
+	    mounted() {
+	    	this.autoJump();
 	    }
 	}
 </script>

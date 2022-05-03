@@ -291,10 +291,16 @@
 		    },
 		    changeModel(plant) {
                 this.plant = plant;
+            },
+            autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
             }
 		},
 		mounted() {
 			this.getList();
+			this.autoJump();
 		}
 	}
 </script>

@@ -170,12 +170,18 @@
 			    });
                 result.unshift(baseJson);
 			    download(result, this.scheme_name +'方案阶段列表.xlsx')//导出的文件名
-	    	}
+	    	},
+	    	autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 		},
 		mounted() {
 	    	this.id = this.$route.query.id;
 	    	this.scheme_name = this.$route.query.scheme_name;
 	    	this.getList();
+	    	this.autoJump();
 		},
 	}
 </script>

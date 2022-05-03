@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为分页组件。
+-->
 <template>
     <ul class="mo-paging">
         <!-- first -->
@@ -9,8 +12,6 @@
         <li
         :class="['paging-item', 'paging-item--prev', {'paging-item--disabled' : index === 1}]"
         @click="prev">上一页</li>
-        
-        
         
         <li
         :class="['paging-item', 'paging-item--more']"

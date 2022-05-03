@@ -353,11 +353,17 @@
 						}
 					}
 				});
-	    	}
+	    	},
+	    	autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 		},
 		mounted() {
 	    	this.id = this.$route.query.id;
 	    	this.getList();
+	    	this.autoJump();
 		}
 	}
 </script>

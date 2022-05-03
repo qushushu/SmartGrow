@@ -1,8 +1,11 @@
+<!-- 
+  组件说明： 本组件为头部导航组件。
+-->
 <template>
     <el-menu :default-active="$route.path" class="el-menu-demo" :mode="mode" router :class="{'mobile-show': mobile}">
       <el-menu-item index="/" v-if="userPower != 2">{{$t("message.仪表盘")}}</el-menu-item>
       <el-menu-item index="/Operation" v-if="userPower == 1">手动操作</el-menu-item>
-      <el-menu-item index="/DeviceModel" v-if="userPower == 1">设备参数模板</el-menu-item>
+      <el-menu-item index="/DeviceModel" v-if="userPower == 1">设备模板</el-menu-item>
       <el-menu-item index="/Device" v-if="userPower == 1">设备参数</el-menu-item>
       <el-menu-item index="/DeviceInfo" v-if="userPower == 1">设备信息</el-menu-item>
       <el-menu-item index="/PlanSetting" v-if="userPower == 1">方案管理</el-menu-item>
@@ -23,18 +26,22 @@
 	export default {
     data() {
       return {
-        mode: this.$attrs.mode || "horizontal",
-        mobile: this.$attrs.mobile || false,
+        mode: this.$attrs.mode || "horizontal",    // 导航展示方向
+        mobile: this.$attrs.mobile || false,   // 移动端显示处理
       }
     },
     mounted() {
-      this.$store.dispatch("updateUserPower")
+      // 更新用户权限
+      this.$store.dispatch("updateUserPower");
     },
     computed: {
+      // 请求地址
       apiurl() {
           return this.$store.state.apiurl;
       },
+      // 用户权限
       userPower() {
+        // return 1;  // 测试使用
         return this.$store.state.userPower;
       }
     }

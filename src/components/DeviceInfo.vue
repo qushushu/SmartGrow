@@ -139,9 +139,15 @@
 		          }
 		        })
 		    },
+		    autoJump() {
+                if(getUserPower() !== 1) {
+                    this.$router.replace("/");
+                }
+            }
 		},
 		mounted() {
 			this.info();
+			this.autoJump();
 		}
 	}
 </script>
