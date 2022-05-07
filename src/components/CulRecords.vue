@@ -1,5 +1,7 @@
+<!-- 
+	组件说明： 本组件为查看培植记录组件。入口：方案管理 -> 培植记录
+ -->
 <template>
-	<!-- 入口：方案管理 -> 培植记录 -->
 	<div>
 		<!-- 头部 start -->
 		<Head></Head>
@@ -44,6 +46,7 @@
 	    	PageHeader
 	    },
 	    computed: {
+	    	// 培植记录
             recordList() {
             	return this.$store.state.recordList;
             }
@@ -58,6 +61,7 @@
 		            end_time: ""
 				});
 	    	},
+	    	// 导出excel
 	    	downloadExl() {
 	    		let result = this.recordList.map(item=> {
 	    			return {
@@ -73,6 +77,7 @@
 	    		})
 			    download(result, this.$route.query.scheme_name +'的培植记录列表.xlsx');//导出的文件名
 	    	},
+	    	// 未登录用户跳转到首页
 	    	autoJump() {
                 if(getUserPower() !== 1) {
                     this.$router.replace("/");
