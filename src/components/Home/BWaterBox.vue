@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为回水液位组件。
+-->
 <template>
     <div class="shuixiang" v-if="showBox">
         <div id="hskedu">

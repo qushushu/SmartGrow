@@ -13,7 +13,8 @@ module.exports = {
        '/apis': {
           // target: 'http://smartlux.com.cn:3600/farm/',  // 接口域名
           // target: 'http://10.0.0.19:3601/seedling/',  // 接口域名
-          target: 'http://10.0.0.18:3601/seedling/',  // 接口域名
+          // target: 'http://10.0.0.18:3601/seedling/',  // 接口域名
+          target: 'http://192.168.1.13:3601/seedling/',  // 接口域名
           // target: 'http://10.0.0.88:3601/seedling/',  // 接口域名
           changeOrigin: true,  //是否跨域
           pathRewrite: {

@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为历史记录中参数历史组件。
+-->
 <template>
     <div>
         <div class="btn-mode-toggle">

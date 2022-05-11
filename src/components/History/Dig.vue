@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为历史记录中开关量历史组件。
+-->
 <template>
     <div>
         <div class="btn-mode-toggle">
