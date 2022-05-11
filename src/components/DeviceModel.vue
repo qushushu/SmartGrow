@@ -4,65 +4,55 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 标题 start -->
-				<PageHeader title="设备模板" goBack=false></PageHeader>
-				<!-- 标题 end -->
-				<!-- 搜索与新增 start -->
-				<a-form-model layout="inline" class="space-btm1">
-					<a-form-model-item><a-input-search placeholder="请输入设备型号" enter-button v-model="model" @search="getList" /></a-form-model-item>
-					<a-form-model-item><a-button type="solid" block @click="handleEdit">新增</a-button></a-form-model-item>
-				</a-form-model>
-				<!-- 搜索与新增 end -->
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
-				    <el-table-column prop="model_code" label="型号编号"></el-table-column>
-				    <el-table-column prop="model" label="设备型号" width="120"></el-table-column>
-				    <el-table-column prop="version" label="版本" width="80"></el-table-column>
-				    <el-table-column prop="description" label="描述"></el-table-column>
-				    <el-table-column prop="btns" label="操作" width="223">
-				      	<template slot-scope="scope">
-                            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button size="mini" @click="handleToParameterConfig(scope.$index, scope.row)">参数</el-button>
-                            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-					    </template>
-				    </el-table-column>
-				</el-table>
-				<!-- 表格 end -->
-				<!-- 弹出窗口 start -->
-				<el-dialog title="数据详情" :visible.sync="dialogVisible" width="400px">
-				  <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-				  	<el-form-item label="型号编号" prop="model_code">
-                        <el-input v-model="r.model_code" id="xhbh"></el-input>
-                    </el-form-item>
-				  	<el-form-item label="设备型号" prop="model"><el-input v-model="r.model"></el-input></el-form-item>
-				  	<el-form-item label="版本" prop="version"><el-input v-model="r.version"></el-input></el-form-item>
-				  	<el-form-item label="描述" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
-				  	<el-form-item> 
-						<el-button @click="resetForm('r')">取 消</el-button>
-				    	<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
-					</el-form-item>
-				  </el-form>
-				</el-dialog>
-				<!-- 弹出窗口 end -->
-			</a-card>
-		</div>
-	</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 标题 start -->
+			<PageHeader title="设备模板" goBack=false></PageHeader>
+			<!-- 标题 end -->
+			<!-- 搜索与新增 start -->
+			<a-form-model layout="inline" class="space-btm1">
+				<a-form-model-item><a-input-search placeholder="请输入设备型号" enter-button v-model="model" @search="getList" /></a-form-model-item>
+				<a-form-model-item><a-button type="solid" block @click="handleEdit">新增</a-button></a-form-model-item>
+			</a-form-model>
+			<!-- 搜索与新增 end -->
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
+			    <el-table-column prop="model_code" label="型号编号"></el-table-column>
+			    <el-table-column prop="model" label="设备型号" width="120"></el-table-column>
+			    <el-table-column prop="version" label="版本" width="80"></el-table-column>
+			    <el-table-column prop="description" label="描述"></el-table-column>
+			    <el-table-column prop="btns" label="操作" width="223">
+			      	<template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" @click="handleToParameterConfig(scope.$index, scope.row)">参数</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+				    </template>
+			    </el-table-column>
+			</el-table>
+			<!-- 表格 end -->
+			<!-- 弹出窗口 start -->
+			<el-dialog title="数据详情" :visible.sync="dialogVisible" width="400px">
+			  <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
+			  	<el-form-item label="型号编号" prop="model_code">
+                    <el-input v-model="r.model_code" id="xhbh"></el-input>
+                </el-form-item>
+			  	<el-form-item label="设备型号" prop="model"><el-input v-model="r.model"></el-input></el-form-item>
+			  	<el-form-item label="版本" prop="version"><el-input v-model="r.version"></el-input></el-form-item>
+			  	<el-form-item label="描述" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
+			  	<el-form-item> 
+					<el-button @click="resetForm('r')">取 消</el-button>
+			    	<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
+				</el-form-item>
+			  </el-form>
+			</el-dialog>
+			<!-- 弹出窗口 end -->
+		</a-card>
+    </div>
 </template>
 <style scoped>
 	.space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
     import Vue from "vue"
 	import axios from 'axios'
@@ -91,8 +81,6 @@
 	        }
 		},
 		components: {
-        	Head,
-        	Nav,
         	PageHeader,
         },
         computed: {

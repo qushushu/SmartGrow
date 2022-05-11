@@ -4,68 +4,60 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="设置阶段" goBack=true></PageHeader>
-				<!-- 头部标题 end -->
-				<el-row :gutter="4" v-if="stageList.length">
-					<el-col :lg="10" :md="10" :sm="10">
-						<div style="padding-right: 8px;">
-							<el-table :data="stageList" border  size="small" tooltip-effect="dark" id="planListTable" :row-class-name="tableRowClassName" :highlight-current-row="true">
-						      <el-table-column prop="stage_content[0].stage_name" label="阶段名称">
-						      	<template slot-scope="scope">
-						    		<el-input type="text" @focus="changeCurrentSort(scope)" placeholder="请输入内容" v-model="scope.row.stage_content[0].stage_name" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
-						    	</template>
-						      </el-table-column>
-						      <el-table-column prop="remark" label="阶段备注">
-						      	<template slot-scope="scope">
-						      		<el-input type="text" placeholder="请输入内容" @focus="changeCurrentSort(scope)" v-model="scope.row.remark" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
-						      	</template>
-						      </el-table-column>
-						      <el-table-column prop="edit" label="操作" width="80">
-						      	<template slot-scope="scope">
-						      		<el-button size="small" @click="handleDelete1(scope)">删除</el-button>
-						      	</template>
-						      </el-table-column>
-						    </el-table>
-						</div>
-					</el-col>
-					<el-col :lg="14" :md="14" :sm="14">
-						<div style="padding-left: 8px;">
-							<el-table ref="multipleTable" :data="tableData" height="300" border stripe size="small" tooltip-effect="dark">
-							    <el-table-column prop="cs" label="参数" size="small"></el-table-column>
-							    <el-table-column prop="csz" label="参数值" size="small">
-							    	<template slot-scope="scope">
-							    		<el-input placeholder="请输入内容" size="small" v-model="scope.row.csz" @input="handleInputText(scope.row.csz,scope.row)"></el-input>
-								    </template>
-							    </el-table-column>
-							</el-table>
-						</div>
-					</el-col>
-				</el-row>
-				<a-empty v-if="!stageList.length" description="暂无数据" />
-				<!-- 功能按钮 start -->
-				<div style="padding-top: 8px;">
-					<el-button type="primary" size="small" @click="handleCreate">新增</el-button>
-					<!-- 导入按钮 start -->
-					<label>
-						<span class="nmbtn">导入excel</span>
-						<input type="file" @change="importExcel" style="display: none;" >
-					</label>
-					<!-- 导入按钮 end -->
-					<el-button type="default" size="small" @click="save" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
-				</div>
-				<!-- 功能按钮 end -->
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="设置阶段" goBack=true></PageHeader>
+			<!-- 头部标题 end -->
+			<el-row :gutter="4" v-if="stageList.length">
+				<el-col :lg="10" :md="10" :sm="10">
+					<div style="padding-right: 8px;">
+						<el-table :data="stageList" border  size="small" tooltip-effect="dark" id="planListTable" :row-class-name="tableRowClassName" :highlight-current-row="true">
+					      <el-table-column prop="stage_content[0].stage_name" label="阶段名称">
+					      	<template slot-scope="scope">
+					    		<el-input type="text" @focus="changeCurrentSort(scope)" placeholder="请输入内容" v-model="scope.row.stage_content[0].stage_name" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
+					    	</template>
+					      </el-table-column>
+					      <el-table-column prop="remark" label="阶段备注">
+					      	<template slot-scope="scope">
+					      		<el-input type="text" placeholder="请输入内容" @focus="changeCurrentSort(scope)" v-model="scope.row.remark" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
+					      	</template>
+					      </el-table-column>
+					      <el-table-column prop="edit" label="操作" width="80">
+					      	<template slot-scope="scope">
+					      		<el-button size="small" @click="handleDelete1(scope)">删除</el-button>
+					      	</template>
+					      </el-table-column>
+					    </el-table>
+					</div>
+				</el-col>
+				<el-col :lg="14" :md="14" :sm="14">
+					<div style="padding-left: 8px;">
+						<el-table ref="multipleTable" :data="tableData" height="300" border stripe size="small" tooltip-effect="dark">
+						    <el-table-column prop="cs" label="参数" size="small"></el-table-column>
+						    <el-table-column prop="csz" label="参数值" size="small">
+						    	<template slot-scope="scope">
+						    		<el-input placeholder="请输入内容" size="small" v-model="scope.row.csz" @input="handleInputText(scope.row.csz,scope.row)"></el-input>
+							    </template>
+						    </el-table-column>
+						</el-table>
+					</div>
+				</el-col>
+			</el-row>
+			<a-empty v-if="!stageList.length" description="暂无数据" />
+			<!-- 功能按钮 start -->
+			<div style="padding-top: 8px;">
+				<el-button type="primary" size="small" @click="handleCreate">新增</el-button>
+				<!-- 导入按钮 start -->
+				<label>
+					<span class="nmbtn">导入excel</span>
+					<input type="file" @change="importExcel" style="display: none;" >
+				</label>
+				<!-- 导入按钮 end -->
+				<el-button type="default" size="small" @click="save" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+			</div>
+			<!-- 功能按钮 end -->
+		</a-card>
 	</div>
 </template>
 <style scoped>
@@ -73,8 +65,6 @@
     .nmbtn:hover {color: #fff; border-color: #ebb563; background-color: #ebb563; }
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import {getUserPower} from "../assets/tools/tool"
@@ -137,8 +127,6 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader
 	    },
 	    computed: {

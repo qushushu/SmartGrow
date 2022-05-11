@@ -4,29 +4,21 @@
   用户权限： 系统管理员可以使用。其他用户（或未登录）进入此页面之后会自动跳转至首页。
 -->
 <template>
-    <div>
-        <!-- 头部 start -->
-        <Head></Head>
-        <!-- 头部 end -->
-        <!-- 导航 start -->
-        <Nav></Nav>
-        <!-- 导航 end -->
-        <div class="container-fluid ym-main">
-            <a-card>
-                <!-- 标题 start -->
-                <PageHeader title="多语言配置" goBack=false></PageHeader>
-                <!-- 标题 end -->
-                <!-- 导入按钮 start -->
-                <div class="importBox">
-                    <label>
-                        <span class="nmbtn">上传Excel</span>
-                        <input type="file" @change="importExcel" style="display: none;" >
-                    </label>
-                    <p>说明：上传Excel后会自动生成文本文件并下载，请确定下载的文本文件名称为“<b style="color: red">language.txt</b>”，然后将该文件放在服务器 <b style="color: red">opt/farm_service/dist/static</b> 文件夹下，替换现有的language.txt文件。</p>
-                </div>
-                <!-- 导入按钮 end -->
-            </a-card>
-        </div>
+    <div class="container-fluid ym-main">
+        <a-card>
+            <!-- 标题 start -->
+            <PageHeader title="多语言配置" goBack=false></PageHeader>
+            <!-- 标题 end -->
+            <!-- 导入按钮 start -->
+            <div class="importBox">
+                <label>
+                    <span class="nmbtn">上传Excel</span>
+                    <input type="file" @change="importExcel" style="display: none;" >
+                </label>
+                <p>说明：上传Excel后会自动生成文本文件并下载，请确定下载的文本文件名称为“<b style="color: red">language.txt</b>”，然后将该文件放在服务器 <b style="color: red">opt/farm_service/dist/static</b> 文件夹下，替换现有的language.txt文件。</p>
+            </div>
+            <!-- 导入按钮 end -->
+        </a-card>
     </div>
 </template>
 <style scoped>
@@ -37,15 +29,11 @@
     .importBox p {font-size: 12px;color: #333;margin-top: 30px;}
 </style>
 <script>
-    import Head from "./common/Head"
-    import Nav from "./common/Nav"
     import PageHeader from "./common/PageHeader"
     import * as XLSX from "XLSX"
     import {getUserPower} from "../assets/tools/tool"
     export default {
         components: {
-            Head,
-            Nav,
             PageHeader
         },
         computed: {

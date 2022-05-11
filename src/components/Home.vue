@@ -5,12 +5,6 @@
 -->
 <template>
   <div>
-    <!-- 头部 start -->
-    <Head></Head>
-    <!-- 头部 end -->
-    <!-- 导航 start -->
-    <Nav></Nav>
-    <!-- 导航 end -->
     <!-- PC端主体内容 start -->
     <div class="ym-main mobile-hide">
       <el-row :gutter="10">
@@ -60,8 +54,6 @@
   .space-right {padding-right: 8px;}
 </style>
 <script>
-  import Head from "./common/Head"
-  import Nav from "./common/Nav"
   import Nutrient from "./Home/Nutrient"
   import Environment from "./Home/Environment"
   import CurrentPlan from "./Home/CurrentPlan"
@@ -72,8 +64,6 @@
   export default {
     name: 'Home',
     components: {
-      Head,
-      Nav,
       Nutrient,
       Environment,
       CurrentPlan,

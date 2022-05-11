@@ -4,70 +4,59 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<!-- 入口：设备参数 -->
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 标题 start -->
-				<PageHeader title="设备参数" goBack=false></PageHeader>
-				<!-- 标题 end -->
-				<!-- 搜索栏、新增 start -->
-				<a-form-model layout="inline" class="space-btm1"> 
-					<a-form-model-item>
-						<a-input-search placeholder="请输入设备型号" enter-button v-model="search_model_code" @search="onSearch" />
-					</a-form-model-item>
-					<a-form-model-item><a-button type="solid" block @click="handleEdit">新增</a-button></a-form-model-item>
-				</a-form-model>
-				<!-- 搜索栏、新增 end -->
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
-				    <el-table-column prop="instance_number" label="设备编号"></el-table-column>
-				    <el-table-column prop="model" label="设备型号"></el-table-column>
-				    <el-table-column prop="description" label="描述"></el-table-column>
-				    <el-table-column prop="create_time" label="创建时间"></el-table-column>
-				    <el-table-column prop="btns" label="操作" width="220">
-				      	<template slot-scope="scope">
-					        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					        <el-button size="mini" @click="handleToParameterAdjustment(scope.$index, scope.row)">参数</el-button>
-				            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-					    </template>
-				    </el-table-column>
-				</el-table>
-				<!-- 表格 end -->
-				<!-- 弹窗 start -->
-				<el-dialog title="数据详情" :visible.sync="dialogVisible" width="400px">
-					<el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-						<el-form-item label="模板" prop="model_code">
-						    <el-select v-model="t" placeholder="模板">   
-						    	<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option> 
-						    </el-select>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 标题 start -->
+			<PageHeader title="设备参数" goBack=false></PageHeader>
+			<!-- 标题 end -->
+			<!-- 搜索栏、新增 start -->
+			<a-form-model layout="inline" class="space-btm1"> 
+				<a-form-model-item>
+					<a-input-search placeholder="请输入设备型号" enter-button v-model="search_model_code" @search="onSearch" />
+				</a-form-model-item>
+				<a-form-model-item><a-button type="solid" block @click="handleEdit">新增</a-button></a-form-model-item>
+			</a-form-model>
+			<!-- 搜索栏、新增 end -->
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
+			    <el-table-column prop="instance_number" label="设备编号"></el-table-column>
+			    <el-table-column prop="model" label="设备型号"></el-table-column>
+			    <el-table-column prop="description" label="描述"></el-table-column>
+			    <el-table-column prop="create_time" label="创建时间"></el-table-column>
+			    <el-table-column prop="btns" label="操作" width="220">
+			      	<template slot-scope="scope">
+				        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+				        <el-button size="mini" @click="handleToParameterAdjustment(scope.$index, scope.row)">参数</el-button>
+			            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+				    </template>
+			    </el-table-column>
+			</el-table>
+			<!-- 表格 end -->
+			<!-- 弹窗 start -->
+			<el-dialog title="数据详情" :visible.sync="dialogVisible" width="400px">
+				<el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
+					<el-form-item label="模板" prop="model_code">
+					    <el-select v-model="t" placeholder="模板">   
+					    	<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option> 
+					    </el-select>
+					</el-form-item>
+					<el-form-item label="设备编号" prop="instance_number"><el-input v-model="r.instance_number"></el-input></el-form-item>
+					<el-form-item label="描述" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
+					<el-form-item label="设备地址" prop="dev_inst_id"><el-input v-model="r.dev_inst_id"></el-input></el-form-item>
+					<el-form-item> 
+						<el-button @click="resetForm('r')">取 消</el-button>
+			    		<el-button type="primary" @click="submitForm('r')">确 定</el-button>
 						</el-form-item>
-						<el-form-item label="设备编号" prop="instance_number"><el-input v-model="r.instance_number"></el-input></el-form-item>
-						<el-form-item label="描述" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
-						<el-form-item label="设备地址" prop="dev_inst_id"><el-input v-model="r.dev_inst_id"></el-input></el-form-item>
-						<el-form-item> 
-							<el-button @click="resetForm('r')">取 消</el-button>
-				    		<el-button type="primary" @click="submitForm('r')">确 定</el-button>
-  						</el-form-item>
-					</el-form>
-				</el-dialog>
-				<!-- 弹窗 end -->
-			</a-card>
-		</div>
+				</el-form>
+			</el-dialog>
+			<!-- 弹窗 end -->
+		</a-card>
 	</div>
 </template>
 <style scoped>
 	.space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import {formatTime} from "../assets/tools/tool"
 	import axios from 'axios'
@@ -101,8 +90,6 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader,
 	    },
 	    computed: {

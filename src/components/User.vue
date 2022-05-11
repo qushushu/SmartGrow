@@ -4,70 +4,60 @@
   用户权限：只有系统管理员方可查看，其他用户（或登录用户）进入此页后将自动跳转至首页。
 -->
 <template>
-    <div>
-        <!-- 头部 start -->
-        <Head></Head>
-        <!-- 头部 end -->
-        <!-- 导航 start -->
-        <Nav></Nav>
-        <!-- 导航 end -->
-        <div class="container-fluid ym-main">
-            <a-card>
-                <!-- 标题 start -->
-                <PageHeader title="用户管理" goBack=false></PageHeader>
-                <!-- 标题 end -->
-                <!-- 创建用户 start -->
-                <div class="space-btm1">
-                    <el-button type="primary" size="small" @click="showCreateUser">创建用户</el-button>
-                </div>
-                <!-- 创建用户 end -->
-                <el-table :data="tableData" border style="width: 100%" stripe size="small" tooltip-effect="dark"> 
-                    <el-table-column prop="id" label="id" width="40"> </el-table-column>
-                    <el-table-column prop="account" label="用户名"> </el-table-column>
-                    <el-table-column prop="role" label="身份" width="94"> </el-table-column>
-                    <el-table-column prop="phone" label="电话"> </el-table-column>
-                    <el-table-column prop="email" label="email"> </el-table-column>
-                    <el-table-column label="操作" width="150">
-                      <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="getOneUser(scope.row)">修改</el-button>
-                        <el-button size="mini" type="danger" v-if="scope.row.role == '普通用户'" @click="delUser(scope.row)">删除</el-button>
-                      </template>
-                    </el-table-column>
-                </el-table>
-                <el-dialog title="创建用户" :visible.sync="dialogVisible">
-                    <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-                        <el-form-item label="用户名" prop="account"><el-input v-model="r.account"></el-input></el-form-item>
-                        <el-form-item label="密码" prop="password"><el-input v-model="r.password" show-password></el-input></el-form-item>
-                        <el-form-item label="电话" prop="phone"><el-input v-model="r.phone"></el-input></el-form-item>
-                         <el-form-item label="email" prop="email"><el-input v-model="r.email"></el-input></el-form-item>
-                        <el-form-item> 
-                            <el-button @click="resetForm('r')">取 消</el-button>
-                            <el-button type="primary" @click="submitForm('r')">确 定</el-button>
-                        </el-form-item>
-                    </el-form>
-                </el-dialog>
-                <el-dialog title="编辑用户" :visible.sync="dialogVisible1">
-                    <el-form ref="editCurrent" :model="editCurrent" label-width="80px" size="mini" modal="true" :rules="rules">
-                        <el-form-item label="用户名" prop="account"><el-input v-model="editCurrent.account"></el-input></el-form-item>
-                        <el-form-item label="密码" prop="password"><el-input v-model="editCurrent.password" show-password></el-input></el-form-item>
-                        <el-form-item label="电话" prop="phone"><el-input v-model="editCurrent.phone"></el-input></el-form-item>
-                         <el-form-item label="email" prop="email"><el-input v-model="editCurrent.email"></el-input></el-form-item>
-                        <el-form-item> 
-                            <el-button @click="resetForm1('editCurrent')">取 消</el-button>
-                            <el-button type="primary" @click="submitForm1('editCurrent')">确 定</el-button>
-                        </el-form-item>
-                    </el-form>
-                </el-dialog>
-            </a-card>
-        </div>
+    <div class="container-fluid ym-main">
+        <a-card>
+            <!-- 标题 start -->
+            <PageHeader title="用户管理" goBack=false></PageHeader>
+            <!-- 标题 end -->
+            <!-- 创建用户 start -->
+            <div class="space-btm1">
+                <el-button type="primary" size="small" @click="showCreateUser">创建用户</el-button>
+            </div>
+            <!-- 创建用户 end -->
+            <el-table :data="tableData" border style="width: 100%" stripe size="small" tooltip-effect="dark"> 
+                <el-table-column prop="id" label="id" width="40"> </el-table-column>
+                <el-table-column prop="account" label="用户名"> </el-table-column>
+                <el-table-column prop="role" label="身份" width="94"> </el-table-column>
+                <el-table-column prop="phone" label="电话"> </el-table-column>
+                <el-table-column prop="email" label="email"> </el-table-column>
+                <el-table-column label="操作" width="150">
+                  <template slot-scope="scope">
+                    <el-button size="mini" type="primary" @click="getOneUser(scope.row)">修改</el-button>
+                    <el-button size="mini" type="danger" v-if="scope.row.role == '普通用户'" @click="delUser(scope.row)">删除</el-button>
+                  </template>
+                </el-table-column>
+            </el-table>
+            <el-dialog title="创建用户" :visible.sync="dialogVisible">
+                <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
+                    <el-form-item label="用户名" prop="account"><el-input v-model="r.account"></el-input></el-form-item>
+                    <el-form-item label="密码" prop="password"><el-input v-model="r.password" show-password></el-input></el-form-item>
+                    <el-form-item label="电话" prop="phone"><el-input v-model="r.phone"></el-input></el-form-item>
+                     <el-form-item label="email" prop="email"><el-input v-model="r.email"></el-input></el-form-item>
+                    <el-form-item> 
+                        <el-button @click="resetForm('r')">取 消</el-button>
+                        <el-button type="primary" @click="submitForm('r')">确 定</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+            <el-dialog title="编辑用户" :visible.sync="dialogVisible1">
+                <el-form ref="editCurrent" :model="editCurrent" label-width="80px" size="mini" modal="true" :rules="rules">
+                    <el-form-item label="用户名" prop="account"><el-input v-model="editCurrent.account"></el-input></el-form-item>
+                    <el-form-item label="密码" prop="password"><el-input v-model="editCurrent.password" show-password></el-input></el-form-item>
+                    <el-form-item label="电话" prop="phone"><el-input v-model="editCurrent.phone"></el-input></el-form-item>
+                     <el-form-item label="email" prop="email"><el-input v-model="editCurrent.email"></el-input></el-form-item>
+                    <el-form-item> 
+                        <el-button @click="resetForm1('editCurrent')">取 消</el-button>
+                        <el-button type="primary" @click="submitForm1('editCurrent')">确 定</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+        </a-card>
     </div>
 </template>
 <style scoped>
     .space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-    import Head from "./common/Head"
-    import Nav from "./common/Nav"
     import PageHeader from "./common/PageHeader"
     import {getUserPower} from "../assets/tools/tool"
     import axios from 'axios'
@@ -99,8 +89,6 @@
             }
         },
         components: {
-            Head,
-            Nav,
             PageHeader
         },
         computed: {

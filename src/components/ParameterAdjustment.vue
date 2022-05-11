@@ -4,47 +4,37 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="设置参数值" goBack=true></PageHeader>
-				<!-- 头部标题 end -->
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="tableData" border stripe size="small" height="300px" tooltip-effect="dark" style="margin-top: 20px;">
-				    <el-table-column prop="sort_index" label="序号" width="50"></el-table-column>
-				    <el-table-column prop="param_code" label="代码" width="100"></el-table-column>
-				    <el-table-column prop="name" label="参数项" width="200"></el-table-column>
-				    <el-table-column prop="unit" label="单位" width="100"></el-table-column>
-				    <el-table-column prop="remark" label="备注" width="200"></el-table-column>
-				    <el-table-column prop="ref_value" label="参数值">
-			    		<template slot-scope="scope">
-			    			<el-input placeholder="请输入内容" size="small" v-model="scope.row.ref_value"></el-input>
-						</template>
-				    </el-table-column>
-				</el-table>
-				<!-- 表格 end -->
-				<!-- 功能按钮 start -->
-				<div style="padding-top: 10px;">
-					<el-button type="primary" size="small" @click="save">保存</el-button>
-					<el-button type="default" size="small" @click="write" v-loading.fullscreen.lock="fullscreenLoading">写设备参数</el-button>
-					<el-button type="warning" size="small" @click="read">读设备参数</el-button>
-				</div>
-				<!-- 功能按钮 end -->
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="设置参数值" goBack=true></PageHeader>
+			<!-- 头部标题 end -->
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" height="300px" tooltip-effect="dark" style="margin-top: 20px;">
+			    <el-table-column prop="sort_index" label="序号" width="50"></el-table-column>
+			    <el-table-column prop="param_code" label="代码" width="100"></el-table-column>
+			    <el-table-column prop="name" label="参数项" width="200"></el-table-column>
+			    <el-table-column prop="unit" label="单位" width="100"></el-table-column>
+			    <el-table-column prop="remark" label="备注" width="200"></el-table-column>
+			    <el-table-column prop="ref_value" label="参数值">
+		    		<template slot-scope="scope">
+		    			<el-input placeholder="请输入内容" size="small" v-model="scope.row.ref_value"></el-input>
+					</template>
+			    </el-table-column>
+			</el-table>
+			<!-- 表格 end -->
+			<!-- 功能按钮 start -->
+			<div style="padding-top: 10px;">
+				<el-button type="primary" size="small" @click="save">保存</el-button>
+				<el-button type="default" size="small" @click="write" v-loading.fullscreen.lock="fullscreenLoading">写设备参数</el-button>
+				<el-button type="warning" size="small" @click="read">读设备参数</el-button>
+			</div>
+			<!-- 功能按钮 end -->
+		</a-card>
 	</div>
 </template>
 
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import {minuteToTime,timeToMinute,switchTimeToShow,switchTimeToSubmit,getUserPower} from "../assets/tools/tool.js"
@@ -58,8 +48,6 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader
 	    },
 	    methods: {

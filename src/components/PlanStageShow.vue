@@ -4,37 +4,27 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 ebd -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="查看阶段" goBack=true></PageHeader>
-				<!-- 头部标题 end -->
-				<!-- 导出excel start -->
-				<el-button type="primary" size="small" @click="downloadExl" :disabled="!!!tableData1.length">导出excel</el-button>
-				<!-- 导出excel end -->
-				<el-table ref="multipleTable" :data="tableData1" height="300" border stripe size="small" empty-text tooltip-effect="dark" style="margin-top: 20px;">
-					<el-table-column size="small" v-for="item,key in colList" :key="key" :prop="item.prop" :label="item.label"></el-table-column>
-				</el-table>
-				<div style="margin-top: 10px;">
-					<el-button type="primary" size="small" @click="handleEdit">编辑</el-button>
-				</div>
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="查看阶段" goBack=true></PageHeader>
+			<!-- 头部标题 end -->
+			<!-- 导出excel start -->
+			<el-button type="primary" size="small" @click="downloadExl" :disabled="!!!tableData1.length">导出excel</el-button>
+			<!-- 导出excel end -->
+			<el-table ref="multipleTable" :data="tableData1" height="300" border stripe size="small" empty-text tooltip-effect="dark" style="margin-top: 20px;">
+				<el-table-column size="small" v-for="item,key in colList" :key="key" :prop="item.prop" :label="item.label"></el-table-column>
+			</el-table>
+			<div style="margin-top: 10px;">
+				<el-button type="primary" size="small" @click="handleEdit">编辑</el-button>
+			</div>
+		</a-card>
 	</div>
 </template>
 <style scoped>
 	.space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import download from "../assets/tools/downloadExcel"
@@ -98,8 +88,6 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader
 	    },
 	    computed: {

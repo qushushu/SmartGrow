@@ -1,18 +1,24 @@
 <template>
-  <div id="app">
-    <div class="container-fluid">
-      <router-view/>
-    </div>
+  <div id="app" class="container-fluid">
+    <Head></Head>
+    <Nav></Nav>
+    <router-view/>
   </div>
 </template>
 
 <script>
+  import Head from "./components/common/Head.vue"
+  import Nav from "./components/common/Nav.vue"
   export default {
     name: 'App',
     computed: {
       isMode() {
         return this.$store.state.localMode;
       }
+    },
+    components: {
+      Head,
+      Nav
     },
     mounted() {
       let timer;

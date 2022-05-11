@@ -4,47 +4,35 @@
 	用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
  -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="培植记录" goBack=true></PageHeader>
-				<!-- 头部标题 end -->
-				<!-- 导出excel start -->
-				<el-button type="primary" size="small" @click="downloadExl" style="margin-bottom: 20px;">导出excel</el-button>
-				<!-- 导出excel end -->
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="recordList" border stripe size="small" tooltip-effect="dark">
-				    <el-table-column prop="plant" label="育苗名称"></el-table-column>
-				    <el-table-column prop="scheme_name" label="方案名称"></el-table-column>
-				    <el-table-column prop="grow_cycle" label="生产周期(天)" width="100"></el-table-column>
-				    <el-table-column prop="start_time" label="开始时间"></el-table-column>
-				    <el-table-column prop="finish_time" label="结束时间"></el-table-column>
-				    <el-table-column prop="record_time" label="记录时间"></el-table-column>
-				    <el-table-column prop="status" label="状态"></el-table-column>
-				    <el-table-column prop="remark" label="评价"></el-table-column>
-				</el-table>
-				<!-- 表格 end -->
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="培植记录" goBack=true></PageHeader>
+			<!-- 头部标题 end -->
+			<!-- 导出excel start -->
+			<el-button type="primary" size="small" @click="downloadExl" style="margin-bottom: 20px;">导出excel</el-button>
+			<!-- 导出excel end -->
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="recordList" border stripe size="small" tooltip-effect="dark">
+			    <el-table-column prop="plant" label="育苗名称"></el-table-column>
+			    <el-table-column prop="scheme_name" label="方案名称"></el-table-column>
+			    <el-table-column prop="grow_cycle" label="生产周期(天)" width="100"></el-table-column>
+			    <el-table-column prop="start_time" label="开始时间"></el-table-column>
+			    <el-table-column prop="finish_time" label="结束时间"></el-table-column>
+			    <el-table-column prop="record_time" label="记录时间"></el-table-column>
+			    <el-table-column prop="status" label="状态"></el-table-column>
+			    <el-table-column prop="remark" label="评价"></el-table-column>
+			</el-table>
+			<!-- 表格 end -->
+		</a-card>
 	</div>
 </template>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import download from "../assets/tools/downloadExcel"
 	import {getUserPower} from "../assets/tools/tool"
 	export default {
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader
 	    },
 	    computed: {

@@ -4,77 +4,65 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<!-- 主体 start -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="方案管理" goBack=false></PageHeader>
-				<!-- 头部标题 end -->
-				<!-- 搜索新增 start -->
-				<a-form-model layout="inline" class="space-btm1"> 
-					<a-form-model-item>
-                        <a-input-search data-layout="normal" placeholder="请输入育苗名称" enter-button v-model="plant" @search="getList" />
-                    </a-form-model-item>
-				    <a-form-model-item><a-button type="solid" block @click="handleCreate">新增</a-button></a-form-model-item>
-				</a-form-model>
-				<!-- 搜索新增 end -->
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
-				    <el-table-column prop="scheme_name" label="方案名称" width="135"></el-table-column>
-				    <el-table-column prop="plant" label="育苗名称" width="120"></el-table-column>
-				    <el-table-column prop="grow_cycle" label="生长周期" width="70"></el-table-column>
-				    <el-table-column prop="create_time" label="创建时间" width="150"></el-table-column>
-				    <el-table-column prop="remark" label="评价"></el-table-column>
-				    <el-table-column prop="btns" label="操作" width="405">
-				      	<template slot-scope="scope">
-					        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					        <el-button size="mini" type="warning" @click="handleCopy(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading">复制</el-button> 
-					        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading" disabled v-if="scope.row.id == currentPlantId">删除 </el-button>
-					        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading" v-if="scope.row.id != currentPlantId">删除</el-button>
-					        <el-button size="mini" @click="handleToPlanStageShow(scope.$index, scope.row)">查看阶段</el-button>
-					        <el-button size="mini" @click="handToCulRecords(scope.$index, scope.row)">培植记录</el-button>
-					    </template>
-				    </el-table-column>
-				</el-table>
-				<!-- 表格 start -->
-				<!-- 种植计划弹窗 start -->
-				<el-dialog title="培植计划" :visible.sync="dialogVisible" width="400px">
-					<el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-						<el-form-item label="计划名称" prop="scheme_name"><el-input v-model="r.scheme_name"></el-input></el-form-item>
-						<el-form-item label="育苗图片" prop="plant_image">
-							<label>
-								<input type="file" @change="upload($event)" style="position: fixed;left: -9999999px;">
-								<img :src="r.plant_image || defaultImg" alt="" style="width: 80px;height: 80px;cursor: pointer;">
-							</label>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="方案管理" goBack=false></PageHeader>
+			<!-- 头部标题 end -->
+			<!-- 搜索新增 start -->
+			<a-form-model layout="inline" class="space-btm1"> 
+				<a-form-model-item>
+                    <a-input-search data-layout="normal" placeholder="请输入育苗名称" enter-button v-model="plant" @search="getList" />
+                </a-form-model-item>
+			    <a-form-model-item><a-button type="solid" block @click="handleCreate">新增</a-button></a-form-model-item>
+			</a-form-model>
+			<!-- 搜索新增 end -->
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
+			    <el-table-column prop="scheme_name" label="方案名称" width="135"></el-table-column>
+			    <el-table-column prop="plant" label="育苗名称" width="120"></el-table-column>
+			    <el-table-column prop="grow_cycle" label="生长周期" width="70"></el-table-column>
+			    <el-table-column prop="create_time" label="创建时间" width="150"></el-table-column>
+			    <el-table-column prop="remark" label="评价"></el-table-column>
+			    <el-table-column prop="btns" label="操作" width="405">
+			      	<template slot-scope="scope">
+				        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+				        <el-button size="mini" type="warning" @click="handleCopy(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading">复制</el-button> 
+				        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading" disabled v-if="scope.row.id == currentPlantId">删除 </el-button>
+				        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading" v-if="scope.row.id != currentPlantId">删除</el-button>
+				        <el-button size="mini" @click="handleToPlanStageShow(scope.$index, scope.row)">查看阶段</el-button>
+				        <el-button size="mini" @click="handToCulRecords(scope.$index, scope.row)">培植记录</el-button>
+				    </template>
+			    </el-table-column>
+			</el-table>
+			<!-- 表格 start -->
+			<!-- 种植计划弹窗 start -->
+			<el-dialog title="培植计划" :visible.sync="dialogVisible" width="400px">
+				<el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
+					<el-form-item label="计划名称" prop="scheme_name"><el-input v-model="r.scheme_name"></el-input></el-form-item>
+					<el-form-item label="育苗图片" prop="plant_image">
+						<label>
+							<input type="file" @change="upload($event)" style="position: fixed;left: -9999999px;">
+							<img :src="r.plant_image || defaultImg" alt="" style="width: 80px;height: 80px;cursor: pointer;">
+						</label>
+					</el-form-item>
+					<el-form-item label="种植作物" prop="plant"><el-input v-model="r.plant"></el-input></el-form-item>
+					<el-form-item label="生长周期（天）" prop="grow_cycle"><el-input v-model="r.grow_cycle"></el-input></el-form-item>
+					<el-form-item label="评价" prop="remark"><el-input v-model="r.remark" type="textarea"></el-input></el-form-item>
+					<el-form-item> 
+						<el-button @click="resetForm('r')">取 消</el-button>
+			    		<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
 						</el-form-item>
-						<el-form-item label="种植作物" prop="plant"><el-input v-model="r.plant"></el-input></el-form-item>
-						<el-form-item label="生长周期（天）" prop="grow_cycle"><el-input v-model="r.grow_cycle"></el-input></el-form-item>
-						<el-form-item label="评价" prop="remark"><el-input v-model="r.remark" type="textarea"></el-input></el-form-item>
-						<el-form-item> 
-							<el-button @click="resetForm('r')">取 消</el-button>
-				    		<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
-  						</el-form-item>
-					</el-form>
-				</el-dialog>
-				<!-- 种植计划弹窗 end -->
-			</a-card>
-		</div>
-		<!-- 主体 end -->
+				</el-form>
+			</el-dialog>
+			<!-- 种植计划弹窗 end -->
+		</a-card>
 	</div>
 </template>
 <style scoped>
 	.space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import {formatTime,getUserPower} from "../assets/tools/tool"
@@ -102,10 +90,7 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader,
-	    	// MyKeyBoard
 	    },
 	    computed: {
 	    	apiurl() {

@@ -4,81 +4,75 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<Head></Head>
-		<Nav></Nav>
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 标题 start -->
-				<PageHeader title="设备信息" goBack=false></PageHeader>
-				<!-- 标题 end -->
-				<el-tabs v-model="activeName" @tab-click="handleClick">
-				    <el-tab-pane label="模拟量列表" name="list1">
-				    	<el-table ref="multipleTable" :data="tableDataAna" border stripe size="small" tooltip-effect="dark">
-							<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="param_code" label="代码"></el-table-column>
-							<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
-							<el-table-column prop="value" label="当前值"></el-table-column>
-						</el-table>
-				    </el-tab-pane>
-				    <el-tab-pane label="开关量列表" name="list2">
-				    	<el-table ref="multipleTable" :data="tableDataDig" border stripe size="small" tooltip-effect="dark">
-							<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="param_code" label="代码"></el-table-column>
-							<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
-							<el-table-column prop="value" label="当前值"></el-table-column>
-						</el-table>
-				    </el-tab-pane>
-				    <el-tab-pane label="告警列表" name="list3">
-				    	<el-table ref="multipleTable" :data="tableDataAlarm" border stripe size="small" tooltip-effect="dark">
-							<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="param_code" label="代码"></el-table-column>
-							<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
-							<el-table-column prop="value" label="当前值">
-								<template slot-scope="scope">
-						    		<div :style="{color: (scope.row.value == '异常' ? 'red' : 'green')}">{{scope.row.value}} </div>
-						    	</template>
-							</el-table-column>
-						</el-table>
-				    </el-tab-pane>
-				    <el-tab-pane label="传感器通信状态列表" name="list4">
-				    	<el-table ref="multipleTable" :data="tableDataComm" border stripe size="small" tooltip-effect="dark">
-							<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="param_code" label="代码"></el-table-column>
-							<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
-							<el-table-column prop="value" label="当前值">
-								<template slot-scope="scope">
-						    		<div :style="{color: (scope.row.value == '异常' ? 'red' : 'green')}">{{scope.row.value}} </div>
-						    	</template>
-							</el-table-column>
-						</el-table>
-				    </el-tab-pane>
-				    <el-tab-pane label="版本信息" name="list5">
-				    	<el-table ref="multipleTable" :data="tableDataVersion" border stripe size="small" tooltip-effect="dark">
-				    		<el-table-column prop="dev_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="hardwareVersion" label="硬件版本"></el-table-column>
-							<el-table-column prop="softwareVersion" label="软件版本"></el-table-column>
-				    	</el-table>
-				    </el-tab-pane>
-				    <el-tab-pane label="灯控装置版本信息" name="list6">
-				    	<el-table ref="multipleTable" :data="tableDataSeedlingLight" border stripe size="small" tooltip-effect="dark">
-							<el-table-column prop="dev_id" label="序号" width="50"></el-table-column>
-							<el-table-column prop="hardwareVersion" label="硬件版本"></el-table-column>
-							<el-table-column prop="softwareVersion" label="软件版本"></el-table-column>
-						</el-table>
-				    </el-tab-pane>
-				  </el-tabs>
-				
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 标题 start -->
+			<PageHeader title="设备信息" goBack=false></PageHeader>
+			<!-- 标题 end -->
+			<el-tabs v-model="activeName" @tab-click="handleClick">
+			    <el-tab-pane label="模拟量列表" name="list1">
+			    	<el-table ref="multipleTable" :data="tableDataAna" border stripe size="small" tooltip-effect="dark">
+						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="param_code" label="代码"></el-table-column>
+						<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
+						<el-table-column prop="value" label="当前值"></el-table-column>
+					</el-table>
+			    </el-tab-pane>
+			    <el-tab-pane label="开关量列表" name="list2">
+			    	<el-table ref="multipleTable" :data="tableDataDig" border stripe size="small" tooltip-effect="dark">
+						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="param_code" label="代码"></el-table-column>
+						<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
+						<el-table-column prop="value" label="当前值"></el-table-column>
+					</el-table>
+			    </el-tab-pane>
+			    <el-tab-pane label="告警列表" name="list3">
+			    	<el-table ref="multipleTable" :data="tableDataAlarm" border stripe size="small" tooltip-effect="dark">
+						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="param_code" label="代码"></el-table-column>
+						<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
+						<el-table-column prop="value" label="当前值">
+							<template slot-scope="scope">
+					    		<div :style="{color: (scope.row.value == '异常' ? 'red' : 'green')}">{{scope.row.value}} </div>
+					    	</template>
+						</el-table-column>
+					</el-table>
+			    </el-tab-pane>
+			    <el-tab-pane label="传感器通信状态列表" name="list4">
+			    	<el-table ref="multipleTable" :data="tableDataComm" border stripe size="small" tooltip-effect="dark">
+						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="param_code" label="代码"></el-table-column>
+						<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
+						<el-table-column prop="value" label="当前值">
+							<template slot-scope="scope">
+					    		<div :style="{color: (scope.row.value == '异常' ? 'red' : 'green')}">{{scope.row.value}} </div>
+					    	</template>
+						</el-table-column>
+					</el-table>
+			    </el-tab-pane>
+			    <el-tab-pane label="版本信息" name="list5">
+			    	<el-table ref="multipleTable" :data="tableDataVersion" border stripe size="small" tooltip-effect="dark">
+			    		<el-table-column prop="dev_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="hardwareVersion" label="硬件版本"></el-table-column>
+						<el-table-column prop="softwareVersion" label="软件版本"></el-table-column>
+			    	</el-table>
+			    </el-tab-pane>
+			    <el-tab-pane label="灯控装置版本信息" name="list6">
+			    	<el-table ref="multipleTable" :data="tableDataSeedlingLight" border stripe size="small" tooltip-effect="dark">
+						<el-table-column prop="dev_id" label="序号" width="50"></el-table-column>
+						<el-table-column prop="hardwareVersion" label="硬件版本"></el-table-column>
+						<el-table-column prop="softwareVersion" label="软件版本"></el-table-column>
+					</el-table>
+			    </el-tab-pane>
+			  </el-tabs>
+			
+		</a-card>
 	</div>
 </template>
 <style scoped>
 	.space-btm1 {margin-bottom: 20px;}
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import {formatTime} from "../assets/tools/tool"
 	import axios from 'axios'
@@ -96,8 +90,6 @@
 	      	}
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader,
 	    },
 	    computed: {

@@ -4,65 +4,57 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div>
-		<!-- 头部 start -->
-		<Head></Head>
-		<!-- 头部 end -->
-		<!-- 导航 start -->
-		<Nav></Nav>
-		<!-- 导航 end -->
-		<div class="container-fluid ym-main">
-			<a-card>
-				<!-- 头部标题 start -->
-				<PageHeader title="设置参数字典" goBack=true></PageHeader>
-				<!-- 头部标题 end -->
-				<el-row type="flex" justify="space-between">
-					<el-col>
-						<!-- 导入按钮 start -->
-						<label>
-							<span class="nmbtn">导入excel</span>
-							<input type="file" @change="importExcel" style="display: none;" >
-						</label>
-						<!-- 导入按钮 end -->
-					</el-col>
-					<el-col style="text-align: right">
-						<!-- 导出按钮 start -->
-						<a-button type="solid" @click="downloadExl" v-if="tableData.length">导出excel</a-button>
-						<!-- 导出按钮 end -->
-					</el-col>
-				</el-row>
-				<!-- 表格 start -->
-				<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark" class="space-tp1" height="450">
-				    <el-table-column prop="sort_index" label="序号" width="50"></el-table-column>
-				    <el-table-column prop="param_code" label="代码"></el-table-column>
-				    <el-table-column prop="name" label="参数项"></el-table-column>
-				    <el-table-column prop="unit" label="单位"></el-table-column>
-				    <el-table-column prop="show_ref_value" label="默认值"></el-table-column>
-				    <el-table-column prop="remark" label="备注"></el-table-column>
-				    <el-table-column prop="btns" label="操作" width="150">
-				      	<template slot-scope="scope">
-					        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> 
-					        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-					    </template>
-				    </el-table-column>
-				</el-table>
-				<!-- 表格 end -->
-				<!-- 弹出窗口 start -->
-				<el-dialog title="参数字典" :visible.sync="dialogVisible" width="400px">
-				    <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-					  	<el-form-item label="参数项" prop="name"><el-input v-model="r.name"></el-input></el-form-item>
-					  	<el-form-item label="单位" prop="unit"> <el-input v-model="r.unit"></el-input> </el-form-item>
-					  	<el-form-item label="默认值" prop="show_ref_value"> <el-input v-model="r.show_ref_value"></el-input> </el-form-item>
-					  	<el-form-item label="备注" prop="remark"> <el-input v-model="r.remark"></el-input> </el-form-item>
-					  	<el-form-item> 
-							<el-button @click="resetForm('r')">取 消</el-button>
-				    		<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
-						</el-form-item>
-				    </el-form>
-				</el-dialog>
-				<!-- 弹出窗口 end -->
-			</a-card>
-		</div>
+	<div class="container-fluid ym-main">
+		<a-card>
+			<!-- 头部标题 start -->
+			<PageHeader title="设置参数字典" goBack=true></PageHeader>
+			<!-- 头部标题 end -->
+			<el-row type="flex" justify="space-between">
+				<el-col>
+					<!-- 导入按钮 start -->
+					<label>
+						<span class="nmbtn">导入excel</span>
+						<input type="file" @change="importExcel" style="display: none;" >
+					</label>
+					<!-- 导入按钮 end -->
+				</el-col>
+				<el-col style="text-align: right">
+					<!-- 导出按钮 start -->
+					<a-button type="solid" @click="downloadExl" v-if="tableData.length">导出excel</a-button>
+					<!-- 导出按钮 end -->
+				</el-col>
+			</el-row>
+			<!-- 表格 start -->
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark" class="space-tp1" height="450">
+			    <el-table-column prop="sort_index" label="序号" width="50"></el-table-column>
+			    <el-table-column prop="param_code" label="代码"></el-table-column>
+			    <el-table-column prop="name" label="参数项"></el-table-column>
+			    <el-table-column prop="unit" label="单位"></el-table-column>
+			    <el-table-column prop="show_ref_value" label="默认值"></el-table-column>
+			    <el-table-column prop="remark" label="备注"></el-table-column>
+			    <el-table-column prop="btns" label="操作" width="150">
+			      	<template slot-scope="scope">
+				        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> 
+				        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+				    </template>
+			    </el-table-column>
+			</el-table>
+			<!-- 表格 end -->
+			<!-- 弹出窗口 start -->
+			<el-dialog title="参数字典" :visible.sync="dialogVisible" width="400px">
+			    <el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
+				  	<el-form-item label="参数项" prop="name"><el-input v-model="r.name"></el-input></el-form-item>
+				  	<el-form-item label="单位" prop="unit"> <el-input v-model="r.unit"></el-input> </el-form-item>
+				  	<el-form-item label="默认值" prop="show_ref_value"> <el-input v-model="r.show_ref_value"></el-input> </el-form-item>
+				  	<el-form-item label="备注" prop="remark"> <el-input v-model="r.remark"></el-input> </el-form-item>
+				  	<el-form-item> 
+						<el-button @click="resetForm('r')">取 消</el-button>
+			    		<el-button type="primary" @click="submitForm('r')" v-loading.fullscreen.lock="fullscreenLoading">确 定</el-button>
+					</el-form-item>
+			    </el-form>
+			</el-dialog>
+			<!-- 弹出窗口 end -->
+		</a-card>
 	</div>
 </template>
 <style scoped>
@@ -71,8 +63,6 @@
     .nmbtn:hover {color: #fff; border-color: #66b1ff; background-color: #66b1ff; }
 </style>
 <script>
-	import Head from "./common/Head"
-	import Nav from "./common/Nav"
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import * as XLSX from "XLSX"
@@ -116,8 +106,6 @@
             }
 		},
 		components: {
-	    	Head,
-	    	Nav,
 	    	PageHeader
 	    },
 	    methods: {
