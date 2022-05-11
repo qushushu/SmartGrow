@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="方案管理" goBack=false></PageHeader>
@@ -65,7 +65,7 @@
 <script>
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
-	import {formatTime,getUserPower} from "../assets/tools/tool"
+	import {formatTime,autoJump} from "../assets/tools/tool"
 	export default {
 		data() {
 			return {
@@ -278,19 +278,11 @@
 			// 跳转到配置记录页面
 			handToCulRecords(index,row) {
 		      	this.$router.push(`/CulRecords?plant=${row.plant}&scheme_name=${row.scheme_name}`);
-		    },
-		    changeModel(plant) {
-                this.plant = plant;
-            },
-            autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
+		    }
 		},
 		mounted() {
 			this.getList();
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

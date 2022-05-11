@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="查看阶段" goBack=true></PageHeader>
@@ -28,7 +28,7 @@
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
 	import download from "../assets/tools/downloadExcel"
-	import {minuteToTime,timeToMinute,getUserPower} from "../assets/tools/tool.js"
+	import {minuteToTime,timeToMinute,autoJump} from "../assets/tools/tool.js"
 	export default {
 		data() {
 			return {
@@ -127,9 +127,11 @@
 	    			}
 	    		})
 	    	},
+	    	// 点击编辑按钮跳转页面
 	    	handleEdit() {
 	    		this.$router.push("/PlanStage?id=" + this.id);
 	    	},
+	    	// 下载eccel
 	    	downloadExl() {
                 let baseJson = {
                     "阶段名称" : "阶段名称",
@@ -164,17 +166,12 @@
                 result.unshift(baseJson);
 			    download(result, this.scheme_name +'方案阶段列表.xlsx')//导出的文件名
 	    	},
-	    	autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 	    	this.id = this.$route.query.id;
 	    	this.scheme_name = this.$route.query.scheme_name;
 	    	this.getList();
-	    	this.autoJump();
+	    	autoJump(1);
 		},
 	}
 </script>

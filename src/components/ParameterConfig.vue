@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="设置参数字典" goBack=true></PageHeader>
@@ -67,7 +67,7 @@
 	import axios from 'axios'
 	import * as XLSX from "XLSX"
 	import download from "../assets/tools/downloadExcel"
-	import {minuteToTime,timeToMinute,getUserPower} from "../assets/tools/tool.js"
+	import {minuteToTime,timeToMinute,autoJump} from "../assets/tools/tool.js"
 	export default {
 		data() {
 			return {
@@ -212,6 +212,7 @@
 		          }
 		        });
 		    },
+		    // 添加/修改回调
 		    cbSubmit(type,data,formName) {
 		    	if(data.data.code == 200) {
 		    		let message = type == 0 ? "添加成功" : "修改成功";
@@ -278,6 +279,7 @@
 		          	})
 		        })
 			},
+			// 导入excel
 			importExcel(e) {
 				let file = e.target.files[0];
 				if(!/sheet/.test(file.type)) {
@@ -367,16 +369,11 @@
 			        })
 				});
 			},
-			autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 			this.current_model_code = this.$route.query.model_code;
 			this.getList();
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

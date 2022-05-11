@@ -5,7 +5,7 @@
   其他说明：子组件的地址在同级目录History文件夹下。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="历史记录" goBack=false></PageHeader>
@@ -63,7 +63,7 @@
 	import Comm from "./History/Comm"
 	import Param from "./History/Param"
 	import Ana from "./History/Ana"
-	import {getUserPower} from "../assets/tools/tool"
+	import {autoJump} from "../assets/tools/tool"
 	export default {
 		data() {
 			return {
@@ -92,14 +92,9 @@
 		      this.start_time = dateString[0];
 		      this.end_time = dateString[1];
 		    },
-		    autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="设置阶段" goBack=true></PageHeader>
@@ -25,7 +25,7 @@
 					      </el-table-column>
 					      <el-table-column prop="edit" label="操作" width="80">
 					      	<template slot-scope="scope">
-					      		<el-button size="small" @click="handleDelete1(scope)">删除</el-button>
+					      		<el-button size="small" @click="handleDelete(scope)">删除</el-button>
 					      	</template>
 					      </el-table-column>
 					    </el-table>
@@ -67,7 +67,7 @@
 <script>
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
-	import {getUserPower} from "../assets/tools/tool"
+	import {autoJump} from "../assets/tools/tool"
 	import * as XLSX from "XLSX"
 	export default {
 		data() {
@@ -135,6 +135,7 @@
             }
 	    },
 	    methods: {
+	    	// 设置高亮行
 	    	tableRowClassName({row, rowIndex}) {
 		        if (rowIndex === this.currentIndex) {
 		          return 'warning-row';
@@ -246,7 +247,7 @@
 	    		})
 	    	},
 	    	// 删除阶段
-	    	handleDelete1(scope) {
+	    	handleDelete(scope) {
 	    		this.stageList = this.stageList.filter(item => item !== scope.row);
 	    		;
 	    		if(this.stageList.length) {
@@ -265,6 +266,7 @@
 		    		}
 	    		}
 	    	},
+	    	// 导入excel
 	    	importExcel(e) {
 	    		let _this = this;
 	    		let file = e.target.files[0];
@@ -347,16 +349,11 @@
 					}
 				});
 	    	},
-	    	autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 	    	this.id = this.$route.query.id;
 	    	this.getList();
-	    	this.autoJump();
+	    	autoJump(1);
 		}
 	}
 </script>

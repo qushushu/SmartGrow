@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 标题 start -->
 			<PageHeader title="设备参数" goBack=false></PageHeader>
@@ -58,9 +58,8 @@
 </style>
 <script>
 	import PageHeader from "./common/PageHeader"
-	import {formatTime} from "../assets/tools/tool"
 	import axios from 'axios'
-	import {getUserPower} from "../assets/tools/tool"
+	import {formatTime,autoJump} from "../assets/tools/tool"
 	export default {
 		data() {
 			return {
@@ -257,18 +256,10 @@
 		            });
 	    		}
 	    	},
-	    	changeModel(search_model_code) {
-                this.search_model_code = search_model_code;
-            },
-            autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 			this.getDevParamList();
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

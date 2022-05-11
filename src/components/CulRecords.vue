@@ -4,7 +4,7 @@
 	用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
  -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="培植记录" goBack=true></PageHeader>
@@ -30,7 +30,7 @@
 <script>
 	import PageHeader from "./common/PageHeader"
 	import download from "../assets/tools/downloadExcel"
-	import {getUserPower} from "../assets/tools/tool"
+	import {autoJump} from "../assets/tools/tool"
 	export default {
 		components: {
 	    	PageHeader
@@ -65,18 +65,12 @@
 		    			"状态": item.status,
 	    			}
 	    		})
-			    download(result, this.$route.query.scheme_name +'的培植记录列表.xlsx');//导出的文件名
+			    download(result, this.$route.query.scheme_name + '的培植记录列表.xlsx');//导出的文件名
 	    	},
-	    	// 未登录用户跳转到首页
-	    	autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 	    },
 		mounted() {
 			this.getRecordList();
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

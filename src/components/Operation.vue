@@ -5,7 +5,7 @@
   其他说明：子组件的地址在同级目录Operation文件夹下。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<div class="mobile-home-tab mobile-bg-cd">
 			<a-card>
 				<el-tabs tab-position="top">
@@ -18,15 +18,7 @@
 	</div>
 </template>
 <style scoped>
-    .mobile-hide {display: none;}
-    .pc-show {display: block;}
-    @media screen and (max-width: 768px) {
-	     .pad-hide {display: none;}
-	     .pad-show {display: block;}
-	}
 	@media screen and (max-width: 500px) {
-	    .mobile-hide {display: block;}
-	    .pc-show {display: none;}
 	    .ant-card-body {padding: 0;}
 	}
 </style>
@@ -34,22 +26,15 @@
 	import Operation_1 from "./Operation/Operation_1"
 	import Operation_2 from "./Operation/Operation_2"
 	import Operation_3 from "./Operation/Operation_3"
-	import {getUserPower} from "../assets/tools/tool"
+	import {autoJump} from "../assets/tools/tool"
 	export default {
 	    components: {
 	    	Operation_1,
 	    	Operation_2,
 	    	Operation_3
 	    },
-	    methods: {
-	    	autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
-	    },
 	    mounted() {
-	    	this.autoJump();
+	    	autoJump(1);
 	    }
 	}
 </script>

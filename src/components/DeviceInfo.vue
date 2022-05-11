@@ -4,12 +4,12 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 标题 start -->
 			<PageHeader title="设备信息" goBack=false></PageHeader>
 			<!-- 标题 end -->
-			<el-tabs v-model="activeName" @tab-click="handleClick">
+			<el-tabs v-model="activeName">
 			    <el-tab-pane label="模拟量列表" name="list1">
 			    	<el-table ref="multipleTable" :data="tableDataAna" border stripe size="small" tooltip-effect="dark">
 						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
@@ -74,9 +74,8 @@
 </style>
 <script>
 	import PageHeader from "./common/PageHeader"
-	import {formatTime} from "../assets/tools/tool"
 	import axios from 'axios'
-	import {getUserPower} from "../assets/tools/tool"
+	import {autoJump} from "../assets/tools/tool"
 	export default {
 		data() {
 			return {
@@ -98,9 +97,6 @@
             }
 	    },
 	    methods: {
-	    	handleClick(tab, event) {
-		        console.log(tab, event);
-		    },
 	    	// 获取仪表盘主体信息
 		    info() {
 		        axios({
@@ -136,15 +132,10 @@
 		          }
 		        })
 		    },
-		    autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 			this.info();
-			this.autoJump();
+			autoJump(1);
 		}
 	}
 </script>

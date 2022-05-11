@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import router from "../../router"
 String.prototype.toJson = function() {
 	const result = {};
 	this.substring(1,this.length - 1).split(",").forEach(item => {
@@ -52,6 +52,7 @@ function getUserPower() {
     }
 }
 
+// ajax
 function ajax(obj) {
 	let {url,data,callback} = obj;
 	axios({
@@ -67,4 +68,22 @@ function ajax(obj) {
 	})
 }
 
-export {formatTime,ajax,minuteToTime,timeToMinute,switchTimeToShow,switchTimeToSubmit,getUserPower};
+// 自动跳转到指定页面
+function autoJump() {
+    let data = [{
+        number: 0,       // 未登录用户
+        redirect: "/",   // 跳转至首页
+    },{
+        number: 1,       // 操作员
+        redirect: "/",   // 跳转至首页
+    },{
+        number: 2,        // 操作员
+        redirect: "/User",// 跳转至首页
+    }];
+    if(!([...arguments].includes(getUserPower()))) {
+        let url = data.filter(item => item.number == getUserPower());
+        url.length && router.replace(url[0].redirect);
+    }
+}
+
+export {formatTime,ajax,minuteToTime,timeToMinute,switchTimeToShow,switchTimeToSubmit,getUserPower,autoJump};

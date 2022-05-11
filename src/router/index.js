@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-// import Login from '@/components/Login'
 import Operation from '@/components/Operation'
 import PlanSetting from '@/components/PlanSetting'
 import History from '@/components/History'
@@ -29,11 +28,6 @@ export default new Router({
       name: 'Home',
       component: Home
     },
-    // {
-    //   path: '/Login',
-    //   name: 'Login',
-    //   component: Login
-    // },
     {
       path: '/User',
       name: 'User',
@@ -47,7 +41,7 @@ export default new Router({
     {
       path: '/Operation',
       name: 'Operation',
-      component: Operation
+      component: Operation,
     },
     {
       path: '/PlanSetting',
@@ -95,6 +89,9 @@ export default new Router({
       path: '/PlanStageShow',
       name: 'PlanStageShow',
       component: PlanStageShow
+    },{
+      path: "*",
+      redirect: Home
     }
   ]
 })

@@ -41,19 +41,12 @@
 				<tr>
 					<td style="max-width: 100px;"></td>
 					<td style="max-width: 60px;">开关</td>
-					<!-- <td style="width: 70px;">方向</td> -->
 					<td style="max-width: 50px">转速</td>
-					<td style="max-width: 58px;">当前<br />质量(g)</td>
-					<td style="max-width: 58px;">起始<br />质量(g)</td>
-					<td style="max-width: 65px;">本次增加<br />质量(g)</td>
+					<td>当前质量(g) / 起始质量(g) / 本次增加质量(g)</td>
 				</tr>
 				<tr v-for="num in 5">
 					<td>{{nameList[num - 1]}}</td>
 					<td> <a-switch @change="onChangeRdb" :disabled="runInfo.dig.AUTO === 1" :asid="num" :checked="radioOnOff[num-1]"></a-switch></td>
-					<!-- <td>
-						<el-radio v-model="radioArr[num - 1]" :disabled="runInfo.dig.AUTO === 1" label="1" :asid="num" @change="changeZf(1)">正向</el-radio> 
-						<el-radio v-model="radioArr[num - 1]" :disabled="runInfo.dig.AUTO === 1" label="0" :asid="num" @change="changeZf(0)" >逆向</el-radio>
-					</td> -->
  					<td>
  						<el-input-number :step="5"  v-if="num == 1" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[0]" @change="onChangeZs1" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
  						<el-input-number :step="5"  v-if="num == 2" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[1]" @change="onChangeZs2" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
@@ -61,9 +54,7 @@
  						<el-input-number :step="5"  v-if="num == 4" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[3]" @change="onChangeZs4" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
  						<el-input-number :step="5"  v-if="num == 5" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[4]" @change="onChangeZs5" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
  					</td>
- 					<td><span class="num-text">{{runInfo.ana["W" + num]}}</span> </td>
- 					<td><span class="num-text">{{runInfo.ana["WS" + num] || "--"}}</span></td>
- 					<td><span class="num-text">{{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span></td>
+ 					<td style="text-align: center;"><span class="num-text">{{runInfo.ana["W" + num]}} / {{runInfo.ana["WS" + num] || "--"}} / {{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span> </td>
 				</tr>
           		<!-- 当前重量 end -->
           	</table>

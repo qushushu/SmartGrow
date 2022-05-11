@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
 			<PageHeader title="设置参数值" goBack=true></PageHeader>
@@ -37,7 +37,7 @@
 <script>
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
-	import {minuteToTime,timeToMinute,switchTimeToShow,switchTimeToSubmit,getUserPower} from "../assets/tools/tool.js"
+	import {switchTimeToShow,switchTimeToSubmit,autoJump} from "../assets/tools/tool.js"
 	export default {
 		data() {
 			return {
@@ -107,6 +107,7 @@
 	    			}
 	    		})
 	    	},
+	    	// 保存
 	    	baseSave() {
 	    		return new Promise(resolve => {
 	    			let param_item = [];
@@ -239,11 +240,6 @@
                 	})
                 })
 	    	},
-	    	autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 	    },
 	    computed: {
 	    	apiurl() {
@@ -252,7 +248,7 @@
 	    },
 	    mounted() {
 	    	this.getList();
-	    	this.autoJump();
+	    	autoJump(1);
 	    },
 	}
 </script>

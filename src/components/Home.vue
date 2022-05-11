@@ -60,7 +60,7 @@
   import Sprinkling from "./Home/Sprinkling"
   import Clock from "./Home/Clock"
   import Mode from "./Home/Mode"
-  import {getUserPower} from "../assets/tools/tool"
+  import {autoJump} from "../assets/tools/tool"
   export default {
     name: 'Home',
     components: {
@@ -83,7 +83,7 @@
     },
     watch: {
       userPower() {
-        this.autoJump();
+        autoJump(0,1);
       }
     },
     methods: {
@@ -92,15 +92,10 @@
         this.$store.dispatch("updateRunInfo");
       },
       handleClick(tab, event) {},
-      autoJump() {
-        if(getUserPower() == 2) {
-          this.$router.replace("/User");
-        }
-      }
     },
     mounted() {
       this.info();
-      this.autoJump();
+      autoJump(0,1);
     }
   }
 </script>

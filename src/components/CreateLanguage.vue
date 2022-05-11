@@ -4,7 +4,7 @@
   用户权限： 系统管理员可以使用。其他用户（或未登录）进入此页面之后会自动跳转至首页。
 -->
 <template>
-    <div class="container-fluid ym-main">
+    <div class="ym-main">
         <a-card>
             <!-- 标题 start -->
             <PageHeader title="多语言配置" goBack=false></PageHeader>
@@ -31,22 +31,13 @@
 <script>
     import PageHeader from "./common/PageHeader"
     import * as XLSX from "XLSX"
-    import {getUserPower} from "../assets/tools/tool"
+    import {autoJump} from "../assets/tools/tool"
     export default {
         components: {
             PageHeader
         },
-        computed: {
-            userPower() {
-                return this.$store.state.userPower;
-            }
-        },
         methods: {
-            autoJump() {
-                if(getUserPower() !== 2) {
-                    this.$router.replace("/");
-                }
-            },
+            // 导入语言excel
             importExcel(e) {
                 let file = e.target.files[0];
                 if(!/sheet/.test(file.type)) {
@@ -78,7 +69,7 @@
                         });
                         let resultJson = "{";
                         param_item.forEach(item => {
-                                resultJson += `"${item["zh"]}": "${item["en"]}|${item["fr"]}",`;
+                            resultJson += `"${item["zh"]}": "${item["en"]}|${item["fr"]}",`;
                         });
                         resultJson = resultJson.substring(0,resultJson.length - 1);
                         resultJson += "}"
@@ -92,6 +83,7 @@
                     }
                 }
             },
+            // 下载文件
             download(filename, text) {
               var element = document.createElement('a');
               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -102,7 +94,7 @@
             }
         },
         mounted() {
-            this.autoJump();
+           autoJump(2);
         }
     }
 </script>

@@ -4,7 +4,7 @@
   用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
-	<div class="container-fluid ym-main">
+	<div class="ym-main">
 		<a-card>
 			<!-- 标题 start -->
 			<PageHeader title="设备模板" goBack=false></PageHeader>
@@ -54,9 +54,8 @@
 </style>
 <script>
 	import PageHeader from "./common/PageHeader"
-    import Vue from "vue"
 	import axios from 'axios'
-    import {getUserPower} from "../assets/tools/tool"
+    import {autoJump} from "../assets/tools/tool"
 	export default {
 		data() {
 			return {
@@ -89,12 +88,6 @@
             }
         },
 	    methods: {
-            setVal(v) {
-                this.model = v;
-            },
-            setVal2(v) {
-                this.r.model_code = v;
-            },
         	// 获取数据
         	getList() {
         		axios({
@@ -217,18 +210,10 @@
         	handleToParameterConfig(index,row) {
         		this.$router.push(`/ParameterConfig?model_code=${row.model_code}`);
         	},
-            changeModel(model) {
-                this.model = model;
-            },
-            autoJump() {
-                if(getUserPower() !== 1) {
-                    this.$router.replace("/");
-                }
-            }
 		},
 		mounted() {
 			this.getList();
-            this.autoJump();
+            autoJump(1);
 		}
 	}
 </script>
