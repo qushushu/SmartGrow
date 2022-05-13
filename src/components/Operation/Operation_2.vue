@@ -50,14 +50,8 @@
 				<tr v-for="num in 5">
 					<td>{{nameList[num - 1]}}</td>
 					<td> <a-switch @change="onChangeRdb" :disabled="runInfo.dig.AUTO === 1" :asid="num" :checked="radioOnOff[num-1]"></a-switch></td>
- 					<td>
- 						<el-input-number :step="5"  v-if="num == 1" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[0]" @change="onChangeZs1" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
- 						<el-input-number :step="5"  v-if="num == 2" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[1]" @change="onChangeZs2" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
- 						<el-input-number :step="5"  v-if="num == 3" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[2]" @change="onChangeZs3" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
- 						<el-input-number :step="5"  v-if="num == 4" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[3]" @change="onChangeZs4" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
- 						<el-input-number :step="5"  v-if="num == 5" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[4]" @change="onChangeZs5" :min="1" :max="300" label="描述文字" size="small"></el-input-number>
- 					</td>
- 					<td style="text-align: center;"><span class="num-text">{{runInfo.ana["W" + num]}} / {{runInfo.ana["WS" + num] || "--"}} / {{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span> </td>
+ 					<td><el-input-number v-for="i in 5" :step="5"  v-if="num == i" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[i-1]" @change="onChangeZs" :min="0" :max="300" label="描述文字" size="small"></el-input-number></td>
+ 					<td class="t-center"><span class="num-text">{{runInfo.ana["W" + num]}} / {{runInfo.ana["WS" + num] || "--"}} / {{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span> </td>
 				</tr>
           		<!-- 当前重量 end -->
           	</table>
@@ -71,13 +65,6 @@
 		                <p class="yys-title">{{nameList[num - 1]}}</p>
 		                <a-switch @change="onChangeRdb" :asid="num" :checked="radioOnOff[num-1]" :disabled="runInfo.dig.AUTO === 1"></a-switch>
 		            </div>
-		           <!--  <div class="yys-set">
-		                <el-radio v-model="radioArr[num - 1]" label="1" :asid="num" @change="changeZf(1)">正向</el-radio> 
-		                <el-radio v-model="radioArr[num - 1]" label="0" :asid="num" @change="changeZf(0)">逆向</el-radio>
-		                <span v-show="!showIptZs[num - 1]">{{showArrZs[num - 1] || '--'}} </span> 
-		                <a-input-number v-show="showIptZs[num - 1]" :index="num - 1" :defaultValue="showArrZs[num - 1]" :min="0" step=10 :max="100" @change="onChangeZs" class="space-right1" />
-		                <a href="javascript:;" class="f-normal"><i class="el-icon-edit" @click="toggleShowIptZs(num - 1)"></i></a>
-		            </div> -->
 		            <div class="yys-btm">
 		                <div>
 		                    <p class="yys-zl_b">{{runInfo.ana["W" + num] ? runInfo.ana["W" + num] : "--"}}</p>
@@ -105,43 +92,19 @@
 	.normal-table {border-collapse: collapse; border: 1px solid #f1f1f1; width: 100%; font-size: 12px; color: #606266; }
   	.normal-table td { border:  1px solid #f1f1f1;padding: 8px;}
 	.space-btm1 {margin-bottom: 20px;}
-	.space-btm2 {margin-bottom: 5px;}
-	.pd-text {padding: 0 8px;}
-	.box-zsheader {display: flex;justify-content: space-between;padding: 8px;}
 	.t-center {text-align: center;}
-	.box-weight {width: 180px;height: 180px;margin: auto;}
-	.f-normal {font-size: 14px;}
-	.space-right1 {margin-right: 4px;}
 	.num-text {overflow: hidden;text-overflow: ellipsis;max-width: 100%;display: block;white-space: nowrap;}
 </style>
 <script>
 	export default {
 		data() {
 			return {
-				showIptZs: [false,false,false,false,false],
 				nameList: ["营养液A蠕动泵","营养液B蠕动泵","营养液C蠕动泵","酸液蠕动泵","碱液蠕动泵"],
+                oldSliderData: [],
 				sliderData: [],
 			}
 		},
 		methods: {
-			// 方向修改
-			changeZf(value) {
-				let baseNum = parseInt(event.target.parentNode.parentNode.getAttribute("asid"));
-				this.$confirm('是否切换蠕动泵转向?', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(()=> {
-					let data = {
-						data_id: 261 + baseNum,
-					    data_code: "C_PP" + baseNum + "_ZF",
-					    value
-					};
-					this.$store.dispatch("control",{
-						data
-		    		});
-                })
-			},
 			// 蠕动泵开关修改
 			onChangeRdb(checked) {
 				let value = checked ? 1 : 0;
@@ -161,97 +124,31 @@
 		    		});
                 })
 			},
-			// 切换转速编辑状态
-			toggleShowIptZs(n) {
-				let arr = [...this.showIptZs];
-				let value = this.showArrZs[n];
-				arr[n] = !arr[n];
-				this.showIptZs = arr;
-			},
-			// 改变A蠕动泵转速值
-			onChangeZs1(value) {
-				this.$confirm('是否修改A蠕动泵转速值', '提示', {
+            // 改变酸液蠕动泵转速值
+            onChangeZs(value) {
+                let data_id = 0;
+                this.sliderData.forEach((item,key) => {
+                    if(item !== this.oldSliderData[key]) {
+                        data_id = key + 1;
+                    }
+                });
+                this.$confirm('确认修改蠕动泵转速值', '提示', {
                     distinguishCancelAndClose: true,
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(()=> {
-					this.$store.dispatch("adjust",{
-						data: {
-						    data_id: 1,
-						    data_code: "ADJ_ZS1",
-						    value
-						}
-		    		});
-                })
-			},
-			// 改变B蠕动泵转速值
-			onChangeZs2(value) {
-				this.$confirm('是否修改A蠕动泵转速值', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(()=> {
-					this.$store.dispatch("adjust",{
-						data: {
-						    data_id: 2,
-						    data_code: "ADJ_ZS2",
-						    value
-						}
-		    		});
-                })
-			},
-			// 改变C蠕动泵转速值
-			onChangeZs3(value) {
-				this.$confirm('是否修改A蠕动泵转速值', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(()=> {
-					this.$store.dispatch("adjust",{
-						data: {
-						    data_id: 3,
-						    data_code: "ADJ_ZS3",
-						    value
-						}
-		    		});
-                })
-			},
-			// 改变D蠕动泵转速值
-			onChangeZs4(value) {
-				this.$confirm('是否修改A蠕动泵转速值', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(()=> {
-					this.$store.dispatch("adjust",{
-						data: {
-						    data_id: 4,
-						    data_code: "ADJ_ZS4",
-						    value
-						}
-		    		});
-                })
-			},
-			// 改变酸液蠕动泵转速值
-			onChangeZs5(value) {
-				this.$confirm('是否修改A蠕动泵转速值', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(()=> {
-					this.$store.dispatch("adjust",{
-						data: {
-						    data_id: 5,
-						    data_code: "ADJ_ZS5",
-						    value
-						}
-		    		});
-                })
-			},
-			closest(cname,cd) {
-				let tar = cd.parentNode;
-				return Array.from(tar.classList).includes(cname) ? tar : this.closest(cname,tar);
-			},
+                    this.oldSliderData = [...this.sliderData];
+                    this.$store.dispatch("adjust",{
+                        data: {
+                            data_id,
+                            data_code: `ADJ_ZS${data_id}`,
+                            value
+                        }
+                    });
+                }).catch(err => {
+                    this.sliderData = [...this.oldSliderData];
+                });
+            }
 		},
 		watch: {
 			showArrZs(data) {
@@ -271,10 +168,6 @@
 	    	showArrZs() {
 	    		let {ZS1,ZS2,ZS3,ZS4,ZS5} = this.runInfo.ana;
 	    		return [ZS1,ZS2,ZS3,ZS4,ZS5];
-	    	},
-	    	radioArr() {
-	    		let {PP1_ZF,PP2_ZF,PP3_ZF,PP4_ZF,PP5_ZF} = this.runInfo.dig;
-	    		return [PP1_ZF,PP2_ZF,PP3_ZF,PP4_ZF,PP5_ZF].map(item => String(item));
 	    	},
 	    	radioOnOff() {
 	    		let {PP1,PP2,PP3,PP4,PP5} = this.runInfo.dig;

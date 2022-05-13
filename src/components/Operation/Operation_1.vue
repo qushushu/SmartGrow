@@ -2,74 +2,71 @@
   组件说明： 本组件为手动操作面板喷灌设置组件。
 -->
 <template>
-	<a-card>
-		<div class="space-btm3">
-			<h5> 实时液位 (cm)</h5>
-			<p class="desc_txt">{{runInfo.ana.LIQ_LV ? (runInfo.ana.LIQ_LV.toFixed(2)) : "未知"}}</p> 
-		</div>
-		<div class="space-btm3">
-			<h5> 喷灌泵 </h5>
-			<table class="normal-table space-btm2">
-				<tr>
-					<td>左侧喷灌泵：<a-switch v-model="runInfo.dig.SIP1 == 1" @change="onChangeSIP1" :disabled="runInfo.dig.AUTO === 1" /></td>
-					<td>右侧喷灌泵：<a-switch v-model="runInfo.dig.SIP2 == 1" @change="onChangeSIP2" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-			</table>
-		</div>
-		<div class="space-btm3">
-			<h5> 回水泵 </h5>
-			<table class="normal-table space-btm2">
-				<tr>
-					<td>回水泵1状态：<a-switch v-model="runInfo.dig.BWP1 == 1" @change="onChangeBWP1" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-			</table>
-		</div>
-        <div class="space-btm3">
-            <h5> 补水阀 </h5>
-            <table class="normal-table space-btm2">
+    <div>
+        <a-card class="space-btm2">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                  <h5> 实时液位 (cm)</h5>
+                    <p class="desc_txt">{{runInfo.ana.LIQ_LV ? (runInfo.ana.LIQ_LV.toFixed(2)) : "未知"}}</p> 
+                  </el-col>
+              <el-col :span="8">
+                  <h5> 喷灌泵</h5>
+                  <p>左侧喷灌泵：<a-switch v-model="runInfo.dig.SIP1 == 1" @change="onChangeSIP1" :disabled="runInfo.dig.AUTO === 1" /></p>
+              </el-col>
+              <el-col :span="8">
+                  <h5>&nbsp;</h5>  
+                  <p>右侧喷灌泵：<a-switch v-model="runInfo.dig.SIP2 == 1" @change="onChangeSIP2" :disabled="runInfo.dig.AUTO === 1" /></p>
+              </el-col>
+            </el-row>
+        </a-card>
+        <a-card class="space-btm2">
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <h5> 回水泵 </h5>
+                    <p>回水泵1状态：<a-switch v-model="runInfo.dig.BWP1 == 1" @change="onChangeBWP1" :disabled="runInfo.dig.AUTO === 1" /></p>
+                </el-col>
+                <el-col :span="8">
+                    <h5> 补水阀 </h5>
+                    <p>补水阀状态：<a-switch v-model="runInfo.dig.WSV == 1" @change="onChangeWSV" :disabled="runInfo.dig.AUTO === 1" /></p>
+                </el-col>
+            </el-row>
+        </a-card>
+        <a-card>
+            <h5> 水阀 </h5>
+            <table class="normal-table">
                 <tr>
-                    <td>补水阀状态：<a-switch v-model="runInfo.dig.WSV == 1" @change="onChangeWSV" :disabled="runInfo.dig.AUTO === 1" /></td>
+                    <td style="width: 62px;"></td>
+                    <td>左侧水阀</td>
+                    <td>右侧水阀</td>
+                </tr>
+                <tr>
+                    <td>第四层</td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VL4 == '1'" @change="onChangeVL4" :disabled="runInfo.dig.AUTO === 1" /></td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VR4 == '1'" @change="onChangeVR4" :disabled="runInfo.dig.AUTO === 1" /></td>
+                </tr>
+                <tr>
+                    <td>第三层</td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VL3 == '1'" @change="onChangeVL3" :disabled="runInfo.dig.AUTO === 1" /></td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VR3 == '1'" @change="onChangeVR3" :disabled="runInfo.dig.AUTO === 1" /></td>
+                </tr>
+                <tr>
+                    <td>第二层</td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VL2 == '1'" @change="onChangeVL2" :disabled="runInfo.dig.AUTO === 1" /></td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VR2 == '1'" @change="onChangeVR2" :disabled="runInfo.dig.AUTO === 1" /></td>
+                </tr>
+                <tr>
+                    <td>第一层</td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VL1 == '1'" @change="onChangeVL1" :disabled="runInfo.dig.AUTO === 1" /></td>
+                    <td>状态：<a-switch v-model="runInfo.dig.VR1 == '1'" @change="onChangeVR1" :disabled="runInfo.dig.AUTO === 1" /></td>
                 </tr>
             </table>
-        </div>
-		<div class="space-btm3">
-			<h5> 水阀 </h5>
-			<table class="normal-table">
-				<tr>
-					<td style="width: 62px;"></td>
-					<td>左侧水阀</td>
-					<td>右侧水阀</td>
-				</tr>
-				<tr>
-					<td>第四层</td>
-					<td>状态：<a-switch v-model="runInfo.dig.VL4 == '1'" @change="onChangeVL4" :disabled="runInfo.dig.AUTO === 1" /></td>
-					<td>状态：<a-switch v-model="runInfo.dig.VR4 == '1'" @change="onChangeVR4" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-				<tr>
-					<td>第三层</td>
-					<td>状态：<a-switch v-model="runInfo.dig.VL3 == '1'" @change="onChangeVL3" :disabled="runInfo.dig.AUTO === 1" /></td>
-					<td>状态：<a-switch v-model="runInfo.dig.VR3 == '1'" @change="onChangeVR3" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-				<tr>
-					<td>第二层</td>
-					<td>状态：<a-switch v-model="runInfo.dig.VL2 == '1'" @change="onChangeVL2" :disabled="runInfo.dig.AUTO === 1" /></td>
-					<td>状态：<a-switch v-model="runInfo.dig.VR2 == '1'" @change="onChangeVR2" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-				<tr>
-					<td>第一层</td>
-					<td>状态：<a-switch v-model="runInfo.dig.VL1 == '1'" @change="onChangeVL1" :disabled="runInfo.dig.AUTO === 1" /></td>
-					<td>状态：<a-switch v-model="runInfo.dig.VR1 == '1'" @change="onChangeVR1" :disabled="runInfo.dig.AUTO === 1" /></td>
-				</tr>
-			</table>
-		</div>
-	</a-card>
+        </a-card>
+    </div>
 </template>
 <style scoped>
 	td {vertical-align: middle;}
-	.space-right {margin-right: 8px;}
 	.normal-table {border-collapse: collapse; border: 1px solid #f1f1f1; width: 100%; font-size: 12px; color: #606266; }
   	.normal-table td { border:  1px solid #f1f1f1;padding: 8px;}
-  	.space-btm3 {margin-bottom: 40px;}
   	.space-btm2 {margin-bottom: 20px;}
   	.desc_txt {font-size: 14px; color: #5e6d82; line-height: 1.5em;}
 </style>
