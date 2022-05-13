@@ -50,7 +50,7 @@
 				<tr v-for="num in 5">
 					<td>{{nameList[num - 1]}}</td>
 					<td> <a-switch @change="onChangeRdb" :disabled="runInfo.dig.AUTO === 1" :asid="num" :checked="radioOnOff[num-1]"></a-switch></td>
- 					<td><el-input-number v-for="i in 5" :step="5"  v-if="num == i" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[i-1]" @change="onChangeZs" :min="0" :max="300" label="描述文字" size="small"></el-input-number></td>
+ 					<td><el-input-number v-for="i in 5" :key="i" :step="5"  v-if="num == i" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[i-1]" @change="onChangeZs" :min="0" :max="300" label="描述文字" size="small"></el-input-number></td>
  					<td class="t-center"><span class="num-text">{{runInfo.ana["W" + num]}} / {{runInfo.ana["WS" + num] || "--"}} / {{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span> </td>
 				</tr>
           		<!-- 当前重量 end -->
