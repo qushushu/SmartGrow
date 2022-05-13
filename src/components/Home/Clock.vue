@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为仪表盘页面右侧时钟组件。
+-->
 <template>
     <div class="time" id="timeBox">
         <div id="kd-box"></div>

@@ -1,4 +1,6 @@
-
+<!-- 
+  组件说明： 本组件为手动操作面板喷灌设置组件。
+-->
 <template>
 	<a-card>
 		<div class="space-btm3">

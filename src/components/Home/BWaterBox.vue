@@ -1,5 +1,5 @@
 <!-- 
-  组件说明： 本组件为回水液位组件。
+  组件说明： 本组件为仪表盘右侧显示补水阀液位组件。
 -->
 <template>
     <div class="shuixiang" v-if="showBox">

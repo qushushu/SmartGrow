@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为仪表盘页面右侧蓝色区域当前方案组件。
+-->
 <template>
     <a-card size="small" class="card-box_dark space-btm">
         <div class="mycard-body mobile-hide">

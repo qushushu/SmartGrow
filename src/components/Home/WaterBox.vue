@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为仪表盘右侧显示回水泵液位组件。
+-->
 <template>
     <div class="shuixiang" v-show="showBox">
         <div id="kedu">

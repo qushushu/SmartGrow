@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为仪表盘页面右侧显示喷灌泵相关信息组件。
+-->
 <template>
     <div class="card mobile-sprinkling-card">
         <div class="card-body">

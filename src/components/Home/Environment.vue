@@ -1,3 +1,6 @@
+<!-- 
+  组件说明： 本组件为仪表盘页面左侧显示当前温湿度计二氧化碳组件。
+-->
 <template>
     <a-card size="small" class="space-btm">
         <div class="pad-row">
