@@ -8,8 +8,8 @@
 /* reset end */
 
 .mobile-show {display: none !important;}
-.normal-list * {color: #D3D3D3 !important;font-size: 12px;}
-.ym-main {padding: 10px 20px;background: #EBECF6;}
+.normal-list * {color: #FFF !important;font-size: 12px;}
+.ym-main {padding: 10px 10px;background: #EFF2F9;}
 .el-dialog__title {font-size: 14px;}
 .el-dialog__headerbtn {top: 14px;}
 .el-drawer {width: 200px !important;background: #FFF !important;}

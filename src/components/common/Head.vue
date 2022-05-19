@@ -19,7 +19,7 @@
 				<!-- logo start -->
 				<router-link to="/" class="logo mobile-hide">
 					<el-row type="flex" align="middle">
-						<img src="../../assets/img/logo.png" alt="工厂智能育苗系统" />
+						<!-- <img src="../../assets/img/logo.png" alt="工厂智能育苗系统" /> -->
 						<h1>工厂智能育苗系统</h1>
 					</el-row>
 				</router-link>
@@ -91,7 +91,7 @@
 	</header>
 </template>
 <style scoped>
-	.head-box {padding: 6px 0}
+	.head-box {padding: 12px 10px;background: #5C8CFD;}
 	.logo {display: inline-block;border: none !important;text-decoration: none;}
 	.logo img {width: 40px;height: auto;border: none !important;}
 	h1 {margin: 0;margin-left: 8px;font-size: 22px;color: #FFF;border: none !important; }
