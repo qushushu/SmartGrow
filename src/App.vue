@@ -1,8 +1,16 @@
 <template>
-  <div id="app" class="container-fluid">
+  <div id="app">
     <Head></Head>
-    <Nav></Nav>
-    <router-view/>
+    <div style="display: flex">
+      <div style="width: 130px;">
+        <Nav></Nav>
+      </div>
+      <div style="flex: 1">
+        <router-view/>
+      </div>
+    </div>
+    
+    
   </div>
 </template>
 
@@ -34,7 +42,7 @@
 </script>
 
 <style>
-  #app {background:#137EC2 url(/static/bg.jpg) repeat-x;background-size: 100% auto;height: 100%;}
+  #app {height: 100%;}
   @media screen and (max-width: 500px) {
     #app {
         background: none;

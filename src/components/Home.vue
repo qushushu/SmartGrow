@@ -9,21 +9,22 @@
     <div class="ym-main mobile-hide">
       <el-row :gutter="10">
         <!-- 左侧信息 start -->
-        <el-col :lg="8" :md="8" :sm="8" :xs="24">
+        <el-col :lg="18" :md="18" :sm="18" :xs="24">
            <!-- 营养液信息 start -->
             <Nutrient></Nutrient>
             <!-- 营养液信息 end -->
             <!-- 温湿度 co2 start -->
-            <Environment></Environment>
+            <!-- <Environment></Environment> -->
             <!-- 温湿度 co2 end -->
+             <!-- 育苗信息 start -->
+          <CurrentPlan></CurrentPlan>
+          <!-- 育苗信息 end -->
             <!-- 模式 start -->
             <Mode></Mode>
             <!-- 模式 end -->
         </el-col>
-        <el-col :lg="16" :md="16" :sm="16" :xs="24">
-           <!-- 育苗信息 start -->
-          <CurrentPlan></CurrentPlan>
-          <!-- 育苗信息 end -->
+        <el-col :lg="6" :md="6" :sm="6" :xs="24">
+          
           <!-- 喷灌信息 start -->
           <Sprinkling></Sprinkling>
           <!-- 喷灌信息 end -->
