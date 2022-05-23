@@ -7,7 +7,7 @@
 		<!-- 移动端抽屉 start -->
 		<div>
 			<el-drawer title="工厂智能育苗系统" :visible.sync="drawer" direction="ltr">
-				<Nav></Nav>
+				<Nav @tgsel="tgDrawer"></Nav>
 			</el-drawer>
 		</div>
 		<!-- 移动端抽屉 end -->
@@ -15,9 +15,7 @@
 			<el-col>
 				<!-- logo start -->
 				<el-row type="flex" justify="start" align="middle">
-					<!-- <el-col> -->
-						<span @click="drawer = true" class="span-m-icon"></span>
-					<!-- </el-col> -->
+					<span @click="drawer = true" class="span-m-icon"></span>
 					<el-col>
 						<router-link to="/" class="logo mobile-hide">
 							<h1>工厂智能育苗系统</h1>
@@ -265,6 +263,9 @@
 	            	userId: localStorage.userId,
 	            	operateNo: localStorage.operateNo
 	            });
+		    },
+		    tgDrawer() {
+		    	this.drawer = false;
 		    }
 		},
 		mounted() {

@@ -2,7 +2,7 @@
   组件说明： 本组件为头部导航组件。
 -->
 <template>
-    <el-menu :default-active="$route.path" mode="vertical" router>
+    <el-menu :default-active="$route.path" mode="vertical" router @select="handleSelect">
       <el-menu-item index="/" v-if="userPower != 2">{{$t("message.仪表盘")}}</el-menu-item>
       <el-menu-item index="/Operation" v-if="userPower == 1">手动操作</el-menu-item>
       <el-menu-item index="/DeviceModel" v-if="userPower == 1">设备模板</el-menu-item>
@@ -44,6 +44,11 @@
       userPower() {
         // return 1;  // 测试使用
         return this.$store.state.userPower;
+      }
+    },
+    methods: {
+      handleSelect() {
+        this.$emit("tgsel")
       }
     }
   }
