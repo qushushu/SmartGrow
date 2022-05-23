@@ -134,6 +134,9 @@
 		    },
 		},
 		mounted() {
+			setInterval(()=> {
+				this.info();
+			},1000);
 			this.info();
 			autoJump(1);
 		}
