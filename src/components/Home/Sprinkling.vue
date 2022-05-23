@@ -3,30 +3,42 @@
 -->
 <template>
     <div>
-        <div class="home-cardbox">
-            <div class="home-cardtitle">左喷灌泵<el-switch v-model="runInfo.dig.SIP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-            <div class="home-cardinner">
-                <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
-                <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
+        <div :class="{'more-col' : isMobile}">
+            <!-- 左喷灌泵 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">左喷灌泵<el-switch v-model="runInfo.dig.SIP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                <div class="home-cardinner">
+                    <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
+                    <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
+                </div>
             </div>
-        </div>
+            <!-- 左喷灌泵 end -->
 
-        <div class="home-cardbox">
-            <div class="home-cardtitle">右喷灌泵<el-switch v-model="runInfo.dig.SIP2 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-            <div class="home-cardinner">
-                <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
-                <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
+            <!-- 右喷灌泵 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">右喷灌泵<el-switch v-model="runInfo.dig.SIP2 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                <div class="home-cardinner">
+                    <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
+                    <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
+                </div>
             </div>
+            <!-- 右喷灌泵 end -->
         </div>
 
-        <div class="home-cardbox">
-            <div class="home-cardtitle">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+        <div :class="{'more-col' : isMobile}">
+            <!-- 回水泵 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+            </div>
+            <!-- 回水泵 end -->
+             <!-- 补水阀 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+            </div>
+            <!-- 补水阀 end -->
         </div>
 
-        <div class="home-cardbox">
-            <div class="home-cardtitle">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-        </div>
-
+        <!-- 水阀 start -->
         <div class="home-cardbox">
             <div class="home-cardtitle">水阀</div>
             <div class="home-cardinner">
@@ -83,99 +95,40 @@
                 </table>
             </div>
         </div>
+        <!-- 水阀 end -->
 
-        <div class="card mobile-sprinkling-card" style="display: none">
-            <div class="card-body">
-                <!-- 喷灌信息 end -->
-                <!-- 液位信息 start -->
-                <a-row type="flex" class="mobile-hide space-btm1">
-                    <!-- 左侧水箱图 start -->
-                    <a-col justify="space-between" :span="12">
-                        <WaterBox 
-                            :liqLv="liqLv"
-                            :lbBwUpAlm="lbBwUpAlm"
-                            :lbBwAlm="lbBwAlm"
-                            :lvTv="lvTv"
-                            :lvAdj="lvAdj"
-                            v-if="renderWaterBox"
-                        ></WaterBox>
-                    </a-col>
-                    <!-- 左侧水箱图 end -->
-                    <!-- 右侧表格 start -->
-                    <a-col :span="12">
-                        <BWaterBox 
-                             :liqLv="liqLv1"
-                             :lbBwUpAlm="lbBwUpAlm1"
-                             :lbBwAlm="lbBwAlm1"
-                             :lvTv="lvTv1"
-                             :lvAdj="lvAdj1"
-                             v-if="renderWaterBox1"
-                        ></BWaterBox>
-                    </a-col>
-                    <!-- 右侧表格 end -->
-                </a-row>
-
-                <div class="mobile-show">
-                    <div class="mobile-round-capsule">
-                        <div class="form-text-inner">
-                            <div>
-                                <p class="mobile-cap-title">当前液位</p>
-                                <p class="mobile-cap-value">{{runInfo.ana.LIQ_LV ? (runInfo.ana.LIQ_LV + 'cm') : '--'}}</p>
-                            </div>
-                            <div>
-                                <p class="mobile-cap-title">上告警值</p>
-                                <p class="mobile-cap-value">{{runInfo.param.LV_BW_UP_ALM ? (runInfo.param.LV_BW_UP_ALM + 'cm') : "未知"}}</p>
-                            </div>
-                            <div>
-                                <p class="mobile-cap-title">下告警值</p>
-                                <p class="mobile-cap-value">{{runInfo.param.LV_BW_ALM ? (runInfo.param.LV_BW_ALM + 'cm') : '未知'}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="normal-table space-btm1">
-                        <tr>
-                            <td style="width: 62px;"></td>
-                            <td> <span style="margin-right: 8px;">{{runInfo.dig.BWP1 == "1" ? "回水泵1已开启": '回水泵1未开启'}}</span> <el-switch v-model="runInfo.dig.BWP1 == 1" disabled></el-switch> </td>
-                            <td> <span style="margin-right: 8px;">{{runInfo.dig.WSV == "1" ? "补水阀已开启": '补水阀未开启'}}</span> <el-switch v-model="runInfo.dig.WSV == 1" disabled></el-switch> </td>
-                        </tr>
-                    </table>
-                    <table class="normal-table" style="margin-top: 20px;">
-                        <tr>
-                            <td style="width: 62px;"></td>
-                            <td>左侧</td>
-                            <td>右侧</td>
-                        </tr>
-                        <tr>
-                            <td>第四层</td>
-                            <td>{{runInfo.dig.VL4 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                            <td>{{runInfo.dig.VR4 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                        </tr>
-                        <tr>
-                            <td>第三层</td>
-                            <td>{{runInfo.dig.VL3 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                            <td>{{runInfo.dig.VR3 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                        </tr>
-                        <tr>
-                            <td>第二层</td>
-                            <td>{{runInfo.dig.VL2 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                            <td>{{runInfo.dig.VR2 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                        </tr>
-                        <tr>
-                            <td>第一层</td>
-                            <td>{{runInfo.dig.VL1 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                            <td>{{runInfo.dig.VR1 == "1" ? "水阀已开启": '水阀未开启'}}</td>
-                        </tr>
-                    </table>
+        <div :class="{'more-col' : isMobile}">
+            <!-- 液位 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">液位</div>
+                <div class="home-cardinner">
+                     <WaterBox 
+                        :liqLv="liqLv"
+                        :lbBwUpAlm="lbBwUpAlm"
+                        :lbBwAlm="lbBwAlm"
+                        :lvTv="lvTv"
+                        :lvAdj="lvAdj"
+                        v-if="renderWaterBox"
+                    ></WaterBox>
                 </div>
-                <!-- 液位信息 end -->
-               <!-- <table class="normal-table space-btm1">
-                    <tr>
-                        <td> <span style="margin-right: 8px;">{{runInfo.dig.BWP1 == "1" ? "回水泵1已开启": '回水泵1未开启'}}</span> <el-switch v-model="runInfo.dig.BWP1 == 1" disabled></el-switch> </td>
-                        <td> <span style="margin-right: 8px;">{{runInfo.dig.WSV == "1" ? "补水阀已开启": '补水阀未开启'}}</span> <el-switch v-model="runInfo.dig.WSV == 1" disabled></el-switch> </td>
-                    </tr>
-                </table> -->
-                
             </div>
+            <!-- 液位 end -->
+
+            <!-- 回水液位 start -->
+            <div class="home-cardbox">
+                <div class="home-cardtitle">回水液位</div>
+                <div class="home-cardinner">
+                     <BWaterBox 
+                         :liqLv="liqLv1"
+                         :lbBwUpAlm="lbBwUpAlm1"
+                         :lbBwAlm="lbBwAlm1"
+                         :lvTv="lvTv1"
+                         :lvAdj="lvAdj1"
+                         v-if="renderWaterBox1"
+                    ></BWaterBox>
+                </div>
+            </div>
+            <!-- 回水液位 end -->
         </div>
     </div>
 </template>
@@ -191,6 +144,8 @@
   .home-cardtitle {border-bottom: 1px solid #F7F7F7;padding: 8px 8px;font-size: 12px;}
   .home-cardtitle:only-child {padding-bottom: 2px;}
   .home-cardinner {padding: 0 8px;line-height: 30px;}
+  .more-col {display: flex;justify-content: space-between;}
+  .more-col > * {width: 49%;}
   @media screen and (max-width: 768px) {
    .space-left1 {margin-left: 2px;}
    .space-btm1_special {margin-bottom: 10px;}
@@ -255,9 +210,7 @@
             lvAdj() {
                 return this.runInfo.param.LV_ADJ ? (this.runInfo.param.LV_ADJ + 'cm') : '未知'
             },
-
-
-             liqLv1() {
+            liqLv1() {
                 return this.runInfo.ana.LIQ_B_LV ? (this.runInfo.ana.LIQ_B_LV + 'cm') : '未知'
             },
             lbBwUpAlm1() {
@@ -271,7 +224,11 @@
             },
             lvAdj1() {
                 return this.runInfo.param.LV_BW_ADJ ? (this.runInfo.param.LV_BW_ADJ + 'cm') : '未知'
-            }
+            },
+            // 是否为移动端
+            isMobile() {
+                return this.$store.state.isMobile;
+            },
         },
         components: {
             WaterBox,

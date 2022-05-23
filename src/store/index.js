@@ -3,8 +3,8 @@ import Vuex from "vuex"
 import {ajax,formatTime} from "../assets/tools/tool"
 import opinion from "../assets/tools/agent"
 Vue.use(Vuex);
-let localMode = true;
-// let localMode = false;
+// let localMode = true;
+let localMode = false;
 let localBaseUrl = "/apis";
 let realBaseUrl = window.ip.apiURL;
 let isMobile = opinion() == "mobile";

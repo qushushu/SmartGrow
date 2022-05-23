@@ -5,21 +5,20 @@
 <template>
 	<header id="group-header">
 		<!-- 移动端抽屉 start -->
-		<div class="mobile-show">
+		<div v-if="isMobile">
 			<el-drawer title="工厂智能育苗系统" :visible.sync="drawer" direction="ltr">
-				<Nav mode="vertical" mobile="true"></Nav>
+				<Nav></Nav>
 			</el-drawer>
 		</div>
 		<!-- 移动端抽屉 end -->
 		<el-row type="flex" justify="space-between" align="middle" class="head-box">
 			<el-col>
-				<!-- 移动端左侧三个点 start -->
-				<div class="mobile-show"> <i class="el-icon-more more-icon" @click="drawer = true"></i> </div>
-				<!-- 移动端左侧三个点 end -->
 				<!-- logo start -->
 				<router-link to="/" class="logo mobile-hide">
 					<el-row type="flex" align="middle">
-						<!-- <img src="../../assets/img/logo.png" alt="工厂智能育苗系统" /> -->
+						<!-- 移动端左侧三个点 start -->
+						<div v-if="isMobile"> <i class="el-icon-more more-icon" @click="drawer = true"></i> </div>
+						<!-- 移动端左侧三个点 end -->
 						<h1>工厂智能育苗系统</h1>
 					</el-row>
 				</router-link>
@@ -91,16 +90,16 @@
 	</header>
 </template>
 <style scoped>
-	.head-box {padding: 12px 10px;background: #5C8CFD;}
+	.head-box {padding: 12px 10px;background: #84a9ff;}
 	.logo {display: inline-block;border: none !important;text-decoration: none;}
 	.logo img {width: 40px;height: auto;border: none !important;}
 	h1 {margin: 0;margin-left: 8px;font-size: 22px;color: #FFF;border: none !important; }
 	.el-dropdown-link {color: #FFF;}
 	.user-icon, .menu-icon,.setting-icon {font-size: 28px; color: #FFF;cursor: pointer;margin-right: 18px}
-	.more-icon {font-size: 20px; cursor: pointer;color: #10131a}
+	.more-icon {font-size: 20px; cursor: pointer;color: #FFF}
 	.txt-center {text-align: center;}
 	@media screen and (max-width: 500px) {
-		.user-icon, .menu-icon,.setting-icon {color: #10131a;}
+		.user-icon, .menu-icon,.setting-icon {color: #FFF;}
 	}
 </style>
 <script>

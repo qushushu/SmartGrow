@@ -1,19 +1,23 @@
 <template>
   <div id="app">
     <Head></Head>
-    <div style="display: flex">
-      <div style="width: 130px;">
+    <div id="mainBox">
+      <div v-if="!isMobile" class="nav-box">
         <Nav></Nav>
       </div>
-      <div style="flex: 1">
+      <div class="app-main">
         <router-view/>
       </div>
-    </div>
+  </div>
     
     
   </div>
 </template>
-
+<style scoped>
+  #mainBox {display: flex;background: #EFF2F9;}
+  .nav-box {width: 130px;}
+  .app-main {flex: 1}
+</style>
 <script>
   import Head from "./components/common/Head.vue"
   import Nav from "./components/common/Nav.vue"
@@ -22,7 +26,11 @@
     computed: {
       isMode() {
         return this.$store.state.localMode;
-      }
+      },
+      // 是否为移动端
+      isMobile() {
+        return this.$store.state.isMobile;
+      },
     },
     components: {
       Head,
