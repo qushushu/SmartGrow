@@ -23,7 +23,11 @@
 						<el-table-column prop="param_id" label="序号" width="50"></el-table-column>
 						<el-table-column prop="param_code" label="代码"></el-table-column>
 						<el-table-column prop="name" label="参数项" style="width: 100px;"></el-table-column>
-						<el-table-column prop="value" label="当前值"></el-table-column>
+						<el-table-column prop="value" label="当前值">
+							<template slot-scope="scope">
+					    		<div :style="{color: (scope.row.value == '关' ? 'red' : 'green')}">{{scope.row.value}} </div>
+					    	</template>
+						</el-table-column>
 					</el-table>
 			    </el-tab-pane>
 			    <el-tab-pane label="告警列表" name="list3">
