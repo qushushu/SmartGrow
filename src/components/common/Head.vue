@@ -5,7 +5,7 @@
 <template>
 	<header id="group-header">
 		<!-- 移动端抽屉 start -->
-		<div v-if="isMobile">
+		<div>
 			<el-drawer title="工厂智能育苗系统" :visible.sync="drawer" direction="ltr">
 				<Nav></Nav>
 			</el-drawer>
@@ -14,14 +14,16 @@
 		<el-row type="flex" justify="space-between" align="middle" class="head-box">
 			<el-col>
 				<!-- logo start -->
-				<router-link to="/" class="logo mobile-hide">
-					<el-row type="flex" align="middle">
-						<!-- 移动端左侧三个点 start -->
-						<div v-if="isMobile"> <i class="el-icon-more more-icon" @click="drawer = true"></i> </div>
-						<!-- 移动端左侧三个点 end -->
-						<h1>工厂智能育苗系统</h1>
-					</el-row>
-				</router-link>
+				<el-row type="flex" justify="start" align="middle">
+					<!-- <el-col> -->
+						<span @click="drawer = true" class="span-m-icon"></span>
+					<!-- </el-col> -->
+					<el-col>
+						<router-link to="/" class="logo mobile-hide">
+							<h1>工厂智能育苗系统</h1>
+						</router-link>
+					</el-col>
+				</el-row>
 				<!-- logo end -->
 			</el-col>
 			<el-col>
@@ -90,7 +92,7 @@
 	</header>
 </template>
 <style scoped>
-	.head-box {padding: 12px 10px;background: #84a9ff;}
+	.head-box {padding: 12px 10px;background: #69C25C;}
 	.logo {display: inline-block;border: none !important;text-decoration: none;}
 	.logo img {width: 40px;height: auto;border: none !important;}
 	h1 {margin: 0;margin-left: 8px;font-size: 22px;color: #FFF;border: none !important; }
@@ -98,6 +100,10 @@
 	.user-icon, .menu-icon,.setting-icon {font-size: 28px; color: #FFF;cursor: pointer;margin-right: 18px}
 	.more-icon {font-size: 20px; cursor: pointer;color: #FFF}
 	.txt-center {text-align: center;}
+	.span-m-icon {display: inline-block;width: 25px;height: 25px;position: relative;margin-right: 20px;background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0) 11px,#FFF 11px,#FFF 13px,rgba(0,0,0,0) 13px);cursor: pointer;}
+	.span-m-icon:before,.span-m-icon:after {content: "";display: inline-block;width: 25px;height: 2px;background: #FFF;position: absolute;}
+	.span-m-icon:before {top: 4px;}
+	.span-m-icon:after {bottom: 4px;}
 	@media screen and (max-width: 500px) {
 		.user-icon, .menu-icon,.setting-icon {color: #FFF;}
 	}

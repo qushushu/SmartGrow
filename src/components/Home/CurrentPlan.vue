@@ -77,7 +77,7 @@
 </template>
 <style scoped>
     .space-btm {margin-bottom: 10px;}
-    .card-box_dark {background: #5a8bff;color: #FFF;}
+    .card-box_dark {background: #78db6a;color: #FFF;}
     .mycard-body {align-items: center;display: flex;}
     .card-imgbox {width: 18%;top: -3px;}
     .card-img {width: 90%;height: auto;display: block;border-radius: 2px;margin-left: 5%;}

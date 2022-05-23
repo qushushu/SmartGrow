@@ -9,7 +9,7 @@
           <div style="display: flex;text-align: center">
             <div v-for="item in dataInfo" style="flex: 1">
               <p style="font-size: 14px;color:#808695;line-height: 22px;">{{item.name}}</p>
-              <p style="color: #515a6e;font-size: 22px;">{{item.value}} <span class="dw" v-if="item.dw">{{item.dw}}</span></p>
+              <p style="color: #515a6e;font-size: 22px;margin-bottom: 0;">{{item.value}} <span class="dw" v-if="item.dw">{{item.dw}}</span></p>
             </div>
           </div>
             <el-row :gutter="1">
