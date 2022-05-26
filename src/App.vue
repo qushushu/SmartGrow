@@ -17,6 +17,7 @@
   #mainBox {display: flex;background: #EFF2F9;}
   .nav-box {width: 130px;}
   .app-main {flex: 1}
+  #app {background: #EFF2F9;}
 </style>
 <script>
   import Head from "./components/common/Head.vue"

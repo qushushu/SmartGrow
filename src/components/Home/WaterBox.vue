@@ -2,20 +2,23 @@
   组件说明： 本组件为仪表盘右侧显示回水泵液位组件。
 -->
 <template>
-    <div class="shuixiang" v-show="showBox">
+    <div class="shuixiang">
         <div id="kedu">
             <div class="kd" 
-                v-for="(item,key) in (maxNum - minNum)" 
+                v-for="(item,key) in (maxNum - minNum + 1)" 
                 :class="{
-                    warnLine: key == 0 || key == (maxNum - minNum - 1),
+                    warnLine: key == 0 ,
+                    warnLine1: maxNum - key == minNum,
                     targetLine: maxNum - key == tarNum,
                     adjLine: maxNum - key == adjNum,
                 }"
                 :id="(maxNum - key) == curNum ? 'currentLine' : ''"
-                :style="{top: key * space + 'px'}" 
+                :style="{top: (key * (oneSpace)) + 'px'}" 
                 :adjnum="'调节启动值：' + (maxNum - key) + 'cm'" 
                 :tarnum="'目标值：' + (maxNum - key) + 'cm'" 
                 :curnum="'当前液位：' + (maxNum - key) + 'cm'"
+                :upnum="'上告警值：' + (maxNum) + 'cm'"
+                :downnum="'下告警值：' + (minNum) + 'cm'"
                 :snum = "maxNum - item + 1"
             ></div>
         </div>
@@ -28,8 +31,8 @@
             <div id="chunWater"></div>
         </div>
         <div class="currentHeight" id="currentHeight" :curnum="'当前液位：' + (liqLv)"></div>
-        <div class="max-line"><span>上告警值：{{lbBwUpAlm }}</span></div>
-        <div class="min-line"><span>下告警值：{{lbBwAlm}}</span></div>
+        <!-- <div class="max-line"><span>上告警值：{{lbBwUpAlm }}</span></div>
+        <div class="min-line"><span>下告警值：{{lbBwAlm}}</span></div> -->
     </div>
 </template>
 <style scoped>
@@ -47,11 +50,13 @@
 .max-line {top: 12px;}
 .min-line {bottom: 30px;}
 .max-line span,.min-line span {position: absolute;right: -100px;font-size: 12px;color: #F56C6C;}
-.warnLine {background: red !important;height: 3px !important;width: 15px !important;}
+.warnLine,.warnLine1 {background: red !important;height: 3px !important;width: 15px !important;}
+.warnLine:after {content: attr(upnum);position: absolute;width: 130px;font-size: 12px;color: red !important;right: -141px;top: -14px;}
+.warnLine1:after {content: attr(downnum);position: absolute;width: 130px;font-size: 12px;color: red !important;right: -141px;top: -14px;}
 .targetLine {background: #67C23A !important;height: 3px !important;width: 15px !important;}
-.targetLine:after {content: attr(tarnum);position: absolute;width: 130px;font-size: 12px;color: #67C23A !important;right: -141px;top: -6px;}
+.targetLine:after {content: attr(tarnum);position: absolute;width: 130px;font-size: 12px;color: #67C23A !important;right: -141px;top: -14px;}
 .adjLine {background: #E6A23C  !important;height: 3px !important;width: 15px !important;}
-.adjLine:after {content: attr(adjnum);position: absolute;width: 130px;font-size: 12px;color: #E6A23C !important;right: -141px;top: -6px;}
+.adjLine:after {content: attr(adjnum);position: absolute;width: 130px;font-size: 12px;color: #E6A23C !important;right: -141px;top: -14px;}
 .liqLine  {background: #513c20 !important;height: 3px !important;width: 15px !important;}
 .liqLine:after {content: attr(liqBlv);position: absolute;width: 130px;font-size: 12px;color: #513c20 !important;right: -141px;top: -6px;}
 .target-line,.adj-line {height: 2px;position: absolute;width: 100%;}
@@ -61,7 +66,7 @@
 .target-line span,.liq-line span {right: -97px;color: #67C23A;top: -6px;}
 .adj-line span {right: -120px;color: #E6A23C;top: -6px;}
 
-#kedu {position: absolute;left: 0;top: 20px;width: 100%;height: calc(100% - 40px);z-index: 4;}
+#kedu {position: absolute;left: 0;top: 18px;width: 100%;height: 136px;z-index: 4;}
 .kd {width: 10px;background: #2d2f2f;height: 1px;position: absolute;right: 0;top: 20px;}
 .currentHeight {background: rgba(51,207,255,.2);position: absolute;bottom: 0;height: 40px;width: 100%;}
 .currentHeight:after {content: attr(curnum);position: relative;width: 100%;color: #0b1325;font-size: 12px;text-align: center;top: -18px;display: block;}
@@ -84,7 +89,8 @@
                 tarNum: 0,
                 adjNum: 0,
                 space: 0,
-                showBox: false
+                oneSpace: 0,
+                curNum: 0
             }
         },
         watch: {
@@ -94,25 +100,25 @@
         },
         methods: {
             resetData() {
-                const keduBox = document.getElementById("kedu");
-                this.showBox = true;
-                this.maxNum = parseInt(this.lbBwUpAlm);
-                this.minNum = parseInt(this.lbBwAlm);
+                this.maxNum = parseInt(this.lbBwUpAlm);  // 上告警值
+                this.minNum = parseInt(this.lbBwAlm);  // 下告警值
                 this.tarNum = parseInt(this.lvTv);
                 this.adjNum = parseInt(this.lvAdj);
                 this.curNum = parseInt(this.liqLv);
+                let allge = this.maxNum - this.minNum
+                this.oneSpace = parseInt(136 / allge);
                 setTimeout(()=> {
-                    let aH = keduBox.offsetHeight;
-                    this.space = parseInt((aH / (this.maxNum - this.minNum - 1)));
-                    let ctp = 200 - document.getElementById("currentLine").offsetTop - 20;
-                    document.getElementById("currentHeight").style.height = ctp + 'px';
-                    document.getElementById("watersInnerBox").style.bottom = ctp - 60 + 'px';
-                    document.getElementById("chunWater").style.height = ctp - 60 + 'px';
-                });
+                    // let ctp = 200 - document.getElementById("currentLine").offsetTop - 20;
+                    // document.getElementById("currentHeight").style.height = ctp + 'px';
+                    // document.getElementById("watersInnerBox").style.bottom = ctp - 60 + 'px';
+                    // document.getElementById("chunWater").style.height = ctp - 60 + 'px';
+                },1000);
             }
         },
         mounted() {
-            this.resetData();
+            setTimeout(()=> {
+                this.resetData();
+            },300)
         }
     }
 </script>

@@ -17,7 +17,7 @@
     .ant-card-body {padding: 8px; }
     .ym-main {background: none;padding: 0}
 }
-.special-card1 .ant-card-body{padding: 26px 12px;}
+.special-card1 .ant-card-body{padding: 16px 12px;}
 
 @media screen and (max-width: 768px) {
     .special-card1 .ant-card-body{padding: 12px 12px;}

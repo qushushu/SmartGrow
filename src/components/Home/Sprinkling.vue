@@ -3,133 +3,163 @@
 -->
 <template>
     <div>
-        <div :class="{'more-col' : isMobile}">
-            <!-- 左喷灌泵 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">左喷灌泵<el-switch v-model="runInfo.dig.SIP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-                <div class="home-cardinner">
-                    <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
-                    <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
+        <el-row :gutter="10">
+            <el-col :span="12">
+                <!-- 左喷灌泵 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">左喷灌泵<el-switch v-model="runInfo.dig.SIP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardinner">
+                        <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
+                        <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
+                    </div>
                 </div>
-            </div>
-            <!-- 左喷灌泵 end -->
-
-            <!-- 右喷灌泵 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">右喷灌泵<el-switch v-model="runInfo.dig.SIP2 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-                <div class="home-cardinner">
-                    <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
-                    <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
+                <!-- 左喷灌泵 end -->
+            </el-col>
+            <el-col :span="12">
+                <!-- 右喷灌泵 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">右喷灌泵<el-switch v-model="runInfo.dig.SIP2 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardinner">
+                        <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
+                        <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
+                    </div>
                 </div>
-            </div>
-            <!-- 右喷灌泵 end -->
-        </div>
-
-        <div :class="{'more-col' : isMobile}">
-            <!-- 回水泵 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-            </div>
-            <!-- 回水泵 end -->
-             <!-- 补水阀 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
-            </div>
-            <!-- 补水阀 end -->
-        </div>
-
+                <!-- 右喷灌泵 end -->
+            </el-col>
+        </el-row>
+      
+        <el-row :gutter="10">
+            <el-col :span="12">
+                <!-- 回水泵 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                </div>
+                <!-- 回水泵 end -->
+            </el-col>
+            <el-col :span="12">
+                 <!-- 补水阀 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                </div>
+                <!-- 补水阀 end -->
+            </el-col>
+        </el-row>
         <!-- 水阀 start -->
-        <div class="home-cardbox">
-            <div class="home-cardtitle">水阀</div>
-            <div class="home-cardinner">
-                <table class="normal-table">
-                    <tr>
-                        <td style="width: 40px;"></td>
-                        <td>左</td>
-                        <td>右</td>
-                    </tr>
-                    <tr>
-                        <td>4层</td>
-                        <td>{{runInfo.dig.VL4 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                        <td>
-                            {{runInfo.dig.VR4 == "1" ? "开": '关'}}
-                             <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
+           
+            <el-row :gutter="10">
+                <el-col :span="12">
+                    <div class="home-cardbox">
+                        <div class="home-cardtitle">左侧水阀</div>
+                        <table class="normal-table">
+                            <tr>
+                                <td><span>4层</span> 
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>3层</span>
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>2层</span> 
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>1层</span>
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="home-cardbox">
+                         <div class="home-cardtitle">右侧水阀</div>
+                        <table class="normal-table">
+                            <tr>
+                                <td>
+                                    <span>4层</span> 
+                                    <span style="float:right">
+                                     <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch></span>
+                                    </span>
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <td>3层</td>
-                        <td>
-                            {{runInfo.dig.VL3 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                        <td>
-                            {{runInfo.dig.VR3 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2层</td>
-                        <td>
-                            {{runInfo.dig.VL2 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                        <td>
-                            {{runInfo.dig.VR2 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1层</td>
-                        <td>
-                            {{runInfo.dig.VL1 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                        <td>
-                            {{runInfo.dig.VR1 == "1" ? "开": '关'}}
-                            <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>3层</span> 
+                                     <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
+                                     </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>2层</span> 
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>1层</span> 
+                                    <span style="float:right">
+                                        <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </el-col>
+            </el-row>
         <!-- 水阀 end -->
-
-        <div :class="{'more-col' : isMobile}">
-            <!-- 液位 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">液位</div>
-                <div class="home-cardinner">
-                     <WaterBox 
-                        :liqLv="liqLv"
-                        :lbBwUpAlm="lbBwUpAlm"
-                        :lbBwAlm="lbBwAlm"
-                        :lvTv="lvTv"
-                        :lvAdj="lvAdj"
-                        v-if="renderWaterBox"
-                    ></WaterBox>
+        <el-row :gutter="10">
+            <el-col :span="12">
+                <!-- 液位 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">液位</div>
+                    <div class="home-cardinner">
+                         <WaterBox 
+                            :liqLv="liqLv"
+                            :lbBwUpAlm="lbBwUpAlm"
+                            :lbBwAlm="lbBwAlm"
+                            :lvTv="lvTv"
+                            :lvAdj="lvAdj"
+                        ></WaterBox>
+                    </div>
                 </div>
-            </div>
-            <!-- 液位 end -->
-
-            <!-- 回水液位 start -->
-            <div class="home-cardbox">
-                <div class="home-cardtitle">回水液位</div>
-                <div class="home-cardinner">
-                     <BWaterBox 
-                         :liqLv="liqLv1"
-                         :lbBwUpAlm="lbBwUpAlm1"
-                         :lbBwAlm="lbBwAlm1"
-                         :lvTv="lvTv1"
-                         :lvAdj="lvAdj1"
-                         v-if="renderWaterBox1"
-                    ></BWaterBox>
+                <!-- 液位 end -->
+            </el-col>
+            <el-col :span="12">
+                <!-- 回水液位 start -->
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">回水液位</div>
+                    <div class="home-cardinner">
+                         <BWaterBox 
+                             :liqLv="liqLv1"
+                             :lbBwUpAlm="lbBwUpAlm1"
+                             :lbBwAlm="lbBwAlm1"
+                             :lvTv="lvTv1"
+                             :lvAdj="lvAdj1"
+                        ></BWaterBox>
+                    </div>
                 </div>
-            </div>
-            <!-- 回水液位 end -->
-        </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 <style scoped>
@@ -141,8 +171,8 @@
   .space-left1 {margin-left: 1px;}
 
   .home-cardbox {background: #FFF;padding: 0px 0 4px;margin-bottom: 10px;font-size: 12px;border-radius: 2px;color: #808695}
-  .home-cardtitle {border-bottom: 1px solid #F7F7F7;padding: 8px 8px;font-size: 12px;}
-  .home-cardtitle:only-child {padding-bottom: 2px;}
+  .home-cardtitle {border-bottom: 1px solid #F7F7F7;padding: 8px 8px;font-size: 14px;}
+  .home-cardtitle:only-child {padding-bottom: 3px;border-bottom: 0;}
   .home-cardinner {padding: 0 8px;line-height: 30px;}
   .more-col {display: flex;justify-content: space-between;}
   .more-col > * {width: 49%;}

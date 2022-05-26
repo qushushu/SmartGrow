@@ -7,29 +7,28 @@
   <div>
     <!-- PC端主体内容 start -->
     <div class="ym-main mobile-hide">
-      <el-row :gutter="10">
-        <!-- 左侧信息 start -->
+      <!-- <el-carousel :autoplay="false" arrow="always"> -->
+        <!-- <el-carousel-item> -->
+          <div>
+            <div class="inner">
+                <Nutrient></Nutrient>
+                <CurrentPlan></CurrentPlan>
+                <Mode></Mode>
+                <Sprinkling></Sprinkling>
+            </div>
+          </div>
+      </el-carousel>
+
+      <!-- <el-row :gutter="10">
         <el-col :lg="18" :md="18" :sm="18" :xs="24">
-           <!-- 营养液信息 start -->
             <Nutrient></Nutrient>
-            <!-- 营养液信息 end -->
-            <!-- 温湿度 co2 start -->
-            <!-- <Environment></Environment> -->
-            <!-- 温湿度 co2 end -->
-             <!-- 育苗信息 start -->
-          <CurrentPlan></CurrentPlan>
-          <!-- 育苗信息 end -->
-            <!-- 模式 start -->
+            <CurrentPlan></CurrentPlan>
             <Mode></Mode>
-            <!-- 模式 end -->
         </el-col>
         <el-col :lg="6" :md="6" :sm="6" :xs="24">
-          
-          <!-- 喷灌信息 start -->
           <Sprinkling></Sprinkling>
-          <!-- 喷灌信息 end -->
         </el-col>
-      </el-row>
+      </el-row> -->
       <!-- 左侧信息 end -->
     </div>
     <!-- PC端主体内容 end -->
@@ -53,6 +52,8 @@
 <style scoped>
   .space-left {padding-left: 8px;}
   .space-right {padding-right: 8px;}
+  .showMoreInfo {float: right;color: #515a6e;font-size: 12px;}
+  .morebtnbox {overflow: hidden;margin-bottom: 10px;}
 </style>
 <script>
   import Nutrient from "./Home/Nutrient"
@@ -74,7 +75,8 @@
     },
     data() {
       return {
-        activeName: 'first'
+        activeName: 'first',
+        showCard: 0
       }
     },
     computed: {
