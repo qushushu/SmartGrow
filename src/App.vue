@@ -2,9 +2,9 @@
   <div id="app">
     <Head></Head>
     <div id="mainBox">
-      <!-- <div v-if="!isMobile" class="nav-box">
+      <!-- <div v-if="!isMobile" class="nav-box"> -->
         <Nav></Nav>
-      </div> -->
+      <!-- </div> -->
       <div class="app-main">
         <router-view/>
       </div>

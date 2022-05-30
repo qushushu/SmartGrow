@@ -18,6 +18,7 @@
   /*.el-menu-demo {padding-left: 3%;padding-right: 3%;}
   .el-menu.el-menu--horizontal {border-radius: 4px 4px 0 0;overflow: hidden;}
   .el-menu--horizontal>.el-menu-item {height: 40px;line-height: 40px;padding: 0 12px !important;}*/
+  .el-menu-item.is-active {color: #69C25C !important}
   @media screen and (max-width: 500px) {
     .el-menu-demo {display: none;}
   }
