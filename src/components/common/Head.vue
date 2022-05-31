@@ -4,24 +4,10 @@
 -->
 <template>
 	<header id="group-header">
-		<!-- 移动端抽屉 start -->
-		<!-- <div> -->
-			<!-- <el-drawer title="工厂智能育苗系统" :visible.sync="drawer" direction="ltr"> -->
-			
-			<!-- </el-drawer> -->
-		<!-- </div> -->
-		<!-- 移动端抽屉 end -->
 		<el-row type="flex" justify="space-between" align="middle" class="head-box">
 			<el-col>
 				<!-- logo start -->
-				<el-row type="flex" justify="start" align="middle">
-					<!-- <span @click="drawer = true" class="span-m-icon"></span> -->
-					<el-col>
-						<router-link to="/" class="logo mobile-hide">
-							<h1>工厂智能育苗系统</h1>
-						</router-link>
-					</el-col>
-				</el-row>
+				<router-link to="/" class="logo mobile-hide"> <h1>工厂智能育苗系统</h1> </router-link>
 				<!-- logo end -->
 			</el-col>
 			<el-col>
@@ -116,7 +102,6 @@
 		data() {
 			return {
 				showLayer: false,  // 是否显示计划列表弹窗
-				drawer: false,  // 是否显示移动端抽屉
 				userBaseUrlDialogVisible: false,  // 是否显示移动端修改ip编辑层
 				userLoginDialogVisible: false,  // 是否显示用户登录层
 				mobileBaseUrl1: "",   // 移动端ip地址
@@ -158,7 +143,19 @@
             // 用户信息
             userInfo() {
             	return this.$store.state.user;
-            }
+            },
+            localMode() {
+            	return this.$store.state.localMode;
+            },
+            localUserInfo() {
+            	return this.$store.state.localUserInfo;
+            },
+			localUserPower() {
+            	return this.$store.state.localUserPower;
+			},
+			noWebTest() {
+            	return this.$store.state.noWebTest;
+			}
 		},
 		components: {
 			PlanList,
@@ -225,35 +222,52 @@
 						} else {
 							delete data.phone;
 						}
-				    	axios({
-						    method: 'post',
-						    url: `${this.apiurl}/lb/login`,
-						    data:{
-							  data
+						if(this.localMode && this.noWebTest) {
+							this.$message({
+				              type: 'success',
+				              message: '登录成功'
+				            });
+				            localStorage.token = this.localUserInfo.token;
+				            localStorage.userId = this.localUserInfo.userId;
+				            localStorage.operateNo = this.localUserPower;
+				            this.submitUserInfo();
+				            this.userLoginDialogVisible = false;
+				            this.ruleForm = {
+								account: "",
+								password: ""
 							}
-						}).then(data => {
-							if(data.data.code == 200) {
-								this.$message({
-					              type: 'success',
-					              message: '登录成功'
-					            });
-					            localStorage.token = data.data.token;
-					            localStorage.userId = data.data.id;
-					            localStorage.operateNo = this.ruleForm.account;
-					            this.submitUserInfo();
-					            this.userLoginDialogVisible = false;
-					            this.ruleForm = {
-									account: "",
-									password: ""
+							window.location.reload();
+						} else {
+					    	axios({
+							    method: 'post',
+							    url: `${this.apiurl}/lb/login`,
+							    data:{
+								  data
 								}
-								window.location.reload();
-							} else {
-								this.$message({
-					              type: 'error',
-					              message: '登录失败'
-					            });
-							}
-						})
+							}).then(data => {
+								if(data.data.code == 200) {
+									this.$message({
+						              type: 'success',
+						              message: '登录成功'
+						            });
+						            localStorage.token = data.data.token;
+						            localStorage.userId = data.data.id;
+						            localStorage.operateNo = this.ruleForm.account;
+						            this.submitUserInfo();
+						            this.userLoginDialogVisible = false;
+						            this.ruleForm = {
+										account: "",
+										password: ""
+									}
+									window.location.reload();
+								} else {
+									this.$message({
+						              type: 'error',
+						              message: '登录失败'
+						            });
+								}
+							})
+						}
 			        }
 		      	});
 		    },
@@ -265,9 +279,6 @@
 	            	operateNo: localStorage.operateNo
 	            });
 		    },
-		    tgDrawer() {
-		    	this.drawer = false;
-		    }
 		},
 		mounted() {
 			this.mobileBaseUrl1 = this.mobileBaseUrl;

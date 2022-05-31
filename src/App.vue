@@ -1,23 +1,23 @@
 <template>
   <div id="app">
+    <!-- 头部 start -->
     <Head></Head>
+    <!-- 头部 end -->
     <div id="mainBox">
-      <!-- <div v-if="!isMobile" class="nav-box"> -->
-        <Nav></Nav>
-      <!-- </div> -->
-      <div class="app-main">
-        <router-view/>
-      </div>
+      <!-- 导航 start -->
+      <Nav></Nav>
+      <!-- 导航 end -->
+      <!-- 内容 start -->
+      <router-view/>
+      <!-- 内容 end -->
   </div>
     
     
   </div>
 </template>
 <style scoped>
-  #mainBox {display: flex;background: #EFF2F9;}
-  .nav-box {width: 130px;}
-  .app-main {flex: 1}
   #app {background: #EFF2F9;}
+  #mainBox {display: flex;}
 </style>
 <script>
   import Head from "./components/common/Head.vue"
@@ -25,6 +25,7 @@
   export default {
     name: 'App',
     computed: {
+      // 是否为本地模式
       isMode() {
         return this.$store.state.localMode;
       },
@@ -49,12 +50,3 @@
     }
   }
 </script>
-
-<style>
-  #app {height: 100%;}
-  @media screen and (max-width: 500px) {
-    #app {
-        background: none;
-    }
-  }
-</style>

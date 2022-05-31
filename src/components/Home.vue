@@ -18,18 +18,6 @@
             </div>
           </div>
       </el-carousel>
-
-      <!-- <el-row :gutter="10">
-        <el-col :lg="18" :md="18" :sm="18" :xs="24">
-            <Nutrient></Nutrient>
-            <CurrentPlan></CurrentPlan>
-            <Mode></Mode>
-        </el-col>
-        <el-col :lg="6" :md="6" :sm="6" :xs="24">
-          <Sprinkling></Sprinkling>
-        </el-col>
-      </el-row> -->
-      <!-- 左侧信息 end -->
     </div>
     <!-- PC端主体内容 end -->
     <!-- 移动端主题内容 start -->

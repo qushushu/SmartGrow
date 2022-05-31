@@ -3,8 +3,15 @@ import Vuex from "vuex"
 import {ajax,formatTime} from "../assets/tools/tool"
 import opinion from "../assets/tools/agent"
 Vue.use(Vuex);
-// let localMode = true;
-let localMode = false;
+let localMode = true;
+let noWebTest = true;
+let localUserPower = 1;
+let localUserInfo  = {
+	token: "12345",
+	operateNo: 0,
+	userId: "11",
+} 
+// let localMode = false;
 let localBaseUrl = "/apis";
 let realBaseUrl = window.ip.apiURL;
 let isMobile = opinion() == "mobile";
@@ -16,6 +23,9 @@ import axios from 'axios'
 let store = new Vuex.Store({
 	state: {
 		localMode,
+		noWebTest,
+		localUserInfo,
+		localUserPower,
 		runInfo: {
 	        ana: {},
 	        alarm: {},
@@ -30,7 +40,6 @@ let store = new Vuex.Store({
 	    recordList: [],
 	    op_onOff: false,
 	    mobileBaseUrl : opinion() == "mobile" ? (window.localStorage.mobileBaseUrl ||  window.ip.apiURL)  : window.ip.apiURL,
-	    // apiurl: localMode ? "/apis" : "./seedling"
 	    apiurl: localMode ? localBaseUrl : realBaseUrl,
 	    isMobile,
 	    user: {
@@ -41,9 +50,11 @@ let store = new Vuex.Store({
 	    userPower: 0
 	},
 	mutations: {
+		// 更新用户权限
 		updateUserPower(state,number) {
 			state.userPower = parseInt(number);
 		},
+		// 更新用户信息
 		resetUser(state,{token,operateNo,userId}) {
 			state.user = {
 				token,
@@ -99,7 +110,7 @@ let store = new Vuex.Store({
 		}
 	},
 	actions: {
-		// 获得当前永辉级别
+		// 获得当前用户级别
 		updateUserPower({commit}) {
 			let {token,userId} = this.state.user;
 			if(!token || !userId) {
@@ -108,18 +119,23 @@ let store = new Vuex.Store({
 				delete localStorage.userId;
 				delete localStorage.userPower;
 			} else {
-				axios({
-	                url: `${localMode ? localBaseUrl: realBaseUrl}/la/user/get`,
-	                method: "post",
-	                data: {
-	                    data: {
-	                        id: userId
-	                    }
-	                }
-	            }).then(data=> {
-	               localStorage.userPower = data.data.data.role;
-	               commit("updateUserPower",data.data.data.role);
-	            })
+				if(localMode && noWebTest) {
+					localStorage.userPower = localUserPower;
+	                commit("updateUserPower",localUserPower);
+				} else {
+					axios({
+		                url: `${localMode ? localBaseUrl: realBaseUrl}/la/user/get`,
+		                method: "post",
+		                data: {
+		                    data: {
+		                        id: userId
+		                    }
+		                }
+		            }).then(data=> {
+		               localStorage.userPower = data.data.data.role;
+		               commit("updateUserPower",data.data.data.role);
+		            })
+				}
 			}
 		},
 		// 更新当前状态

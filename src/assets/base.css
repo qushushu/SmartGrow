@@ -9,7 +9,7 @@
 
 .mobile-show {display: none !important;}
 .normal-list * {color: #FFF !important;font-size: 12px;}
-.ym-main {padding: 10px 10px;background: #EFF2F9;}
+.ym-main {padding: 10px 10px;background: #EFF2F9;flex: 1;}
 .el-dialog__title {font-size: 14px;}
 .el-dialog__headerbtn {top: 14px;}
 .el-drawer {width: 200px !important;background: #FFF !important;}
