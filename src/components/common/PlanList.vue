@@ -3,18 +3,20 @@
 -->
 <template>
     <!-- 培植方案列表 start -->
-    <ul class="listData">
-        <li v-for="item in plantList" @click="readyChangePlan(item.id)">
-            <!-- 方案图片 start -->
-            <div class="img_box" v-loading.fullscreen.lock="fullscreenLoading">
-                <img :src="item.plant_image" alt="" @error="unloadImg">
-            </div>
-            <!-- 方案图片 end -->
-            <!-- 方案文字 start -->
-            <p>{{item.scheme_name}}</p>
-            <!-- 方案文字 end -->
-        </li>
-    </ul>
+    <div>
+        <ul class="listData">
+            <li v-for="item in plantList" @click="readyChangePlan(item.id)">
+                <!-- 方案图片 start -->
+                <div class="img_box" v-loading.fullscreen.lock="fullscreenLoading">
+                    <img :src="item.plant_image" alt="" @error="unloadImg">
+                </div>
+                <!-- 方案图片 end -->
+                <!-- 方案文字 start -->
+                <p>{{item.scheme_name}}</p>
+                <!-- 方案文字 end -->
+            </li>
+        </ul>
+    </div>
     <!-- 培植方案列表 end -->
 </template>
 <style scoped>
@@ -23,6 +25,7 @@
     .img_box {display: inline-block;width: 80px;height: 80px;padding: 5px;border: 1px solid #ddd;}
     .img_box img {width: 100%;height: 100%;}
     .listData p {margin-top: 10px;font-size: 12px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+    #formchange {position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);z-index: 100;}
     @media screen and (max-width: 768px) {
         .listData li {width: 25%;}
     }
@@ -40,6 +43,9 @@
             return {
                 plantList: [],   // 培植方案列表
                 fullscreenLoading: false,   // loading状态
+                form: {
+                    des: ""
+                }
             }
         },
         watch: {
@@ -51,6 +57,12 @@
         computed: {
             apiurl() {
                 return this.$store.state.apiurl;
+            },
+            localMode() {
+                return this.$store.state.localMode;
+            },
+            noWebTest() {
+                return this.$store.state.noWebTest;
             }
         },
         props: ["showLayer"],
@@ -59,25 +71,33 @@
             },
             // 获取所有培植方案
             getList() {
-                axios({
-                    method: "post",
-                    url: `${this.apiurl}/la/plant/head/get_list`,
-                    data: {
+                if(this.localMode && this.noWebTest) {
+                    this.plantList = [{
+                        id: 1,
+                        plant_image: ""
+                    }];
+                    this.$store.commit("changePlanListLayerState",true);
+                } else {
+                    axios({
+                        method: "post",
+                        url: `${this.apiurl}/la/plant/head/get_list`,
                         data: {
-                            formData: {
-                                plant: "",
-                                scheme_name: "",
-                                start_time: "",
-                                end_time: ""
+                            data: {
+                                formData: {
+                                    plant: "",
+                                    scheme_name: "",
+                                    start_time: "",
+                                    end_time: ""
+                                }
                             }
                         }
-                    }
-                }).then(data => {
-                    if(data.data.code == 200) {
-                        this.plantList = data.data.data;
-                        this.$store.commit("changePlanListLayerState",true);
-                    }
-                });
+                    }).then(data => {
+                        if(data.data.code == 200) {
+                            this.plantList = data.data.data;
+                            this.$store.commit("changePlanListLayerState",true);
+                        }
+                    });
+                }
             },
             // 切换培植方案
             readyChangePlan(plant_id) {
@@ -86,12 +106,24 @@
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(() => {
-                    this.start(plant_id);
-                    this.$message({
-                        type: 'success',
-                        message: '切换成功!'
+                    this.$prompt('请填写切换原因', '切换方案', {
+                      confirmButtonText: '确定',
+                      cancelButtonText: '取消',
+                      inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,
+                      inputErrorMessage: '切换原因不能为空'
+                    }).then(({ value }) => {
+                        this.start(plant_id);
+                        this.$message({
+                            type: 'success',
+                            message: '切换成功!'
+                        });
+                        this.$store.commit("changePlanListLayerState",false);
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消切换'
+                        });       
                     });
-                    this.$store.commit("changePlanListLayerState",false);
                 }).catch(() => {
                     this.$message({
                         type: 'info',

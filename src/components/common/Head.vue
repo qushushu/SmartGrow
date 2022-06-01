@@ -26,9 +26,9 @@
 						</el-dropdown-menu>
 					</el-dropdown>
 					<!-- 用户退出 end -->
-					<!-- ip设置 start -->
+					<!-- ip设置(仅移动端) start -->
 					<i class="el-icon-setting setting-icon" v-if="isMobile" @click="userBaseUrlDialogVisible=true"></i>
-					<!-- ip设置 end -->
+					<!-- ip设置(仅移动端) end -->
 					<!-- 切换语言 start -->
 					<el-dropdown @command="handleCommand" trigger="click">
 						<span class="el-dropdown-link">{{$t("message.选择语言")}}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -73,22 +73,19 @@
 			<!-- 登录按钮 end -->
 		</el-dialog>
 		<!-- 用户登录 end -->
-		<!-- <Nav></Nav> -->
 	</header>
 </template>
 <style scoped>
 	.head-box {padding: 12px 10px;background: #69C25C;}
 	.logo {display: inline-block;border: none !important;text-decoration: none;}
-	.logo img {width: 40px;height: auto;border: none !important;}
 	h1 {margin: 0;margin-left: 8px;font-size: 22px;color: #FFF;border: none !important; }
 	.el-dropdown-link {color: #FFF;}
 	.user-icon, .menu-icon,.setting-icon {font-size: 28px; color: #FFF;cursor: pointer;margin-right: 18px}
-	.more-icon {font-size: 20px; cursor: pointer;color: #FFF}
 	.txt-center {text-align: center;}
-	.span-m-icon {display: inline-block;width: 25px;height: 25px;position: relative;margin-right: 20px;background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0) 11px,#FFF 11px,#FFF 13px,rgba(0,0,0,0) 13px);cursor: pointer;}
+	/*.span-m-icon {display: inline-block;width: 25px;height: 25px;position: relative;margin-right: 20px;background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0) 11px,#FFF 11px,#FFF 13px,rgba(0,0,0,0) 13px);cursor: pointer;}
 	.span-m-icon:before,.span-m-icon:after {content: "";display: inline-block;width: 25px;height: 2px;background: #FFF;position: absolute;}
 	.span-m-icon:before {top: 4px;}
-	.span-m-icon:after {bottom: 4px;}
+	.span-m-icon:after {bottom: 4px;}*/
 	@media screen and (max-width: 500px) {
 		.user-icon, .menu-icon,.setting-icon {color: #FFF;}
 	}
