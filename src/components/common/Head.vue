@@ -22,13 +22,11 @@
 					<el-dropdown @command="handleCommand1" trigger="click" v-if="userInfo.token">
 						<span class="el-dropdown-link"><i class="el-icon-setting user-icon"></i></span>
 						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item command="setReqUrl" v-if="isMobile">请求路径设置</el-dropdown-item>
 						    <el-dropdown-item command="logout">退出</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
 					<!-- 用户退出 end -->
-					<!-- ip设置(仅移动端) start -->
-					<i class="el-icon-setting setting-icon" v-if="isMobile" @click="userBaseUrlDialogVisible=true"></i>
-					<!-- ip设置(仅移动端) end -->
 					<!-- 切换语言 start -->
 					<el-dropdown @command="handleCommand" trigger="click">
 						<span class="el-dropdown-link">{{$t("message.选择语言")}}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -42,16 +40,8 @@
 			</el-col>
 		</el-row>
 		<!-- 计划列表弹窗 start -->
-		<PlanList v-show="showLayer1" @changeState="changeState" :showLayer="showLayer"></PlanList>
+		<PlanList v-show="showLayerPlanList" @changeState="changeState" :showLayer="showLayer"></PlanList>
 		<!-- 计划列表弹窗 end -->
-		<!-- 移动端ip修改 start -->
-		<el-dialog :visible.sync="userBaseUrlDialogVisible" title="请求路径设置" width="308px" center>
-			<el-input placeholder="请输入ip。如：192.168.1.103" size="small" v-model="mobileBaseUrl1"></el-input>
-			<div slot="footer" class="dialog-footer">
-			  	<el-button type="primary" size="small" @click="updateMobileBaseUrl">确认</el-button>
-			</div>
-		</el-dialog>
-		<!-- 移动端ip修改 end -->
 		<!-- 用户登录 start -->
 		<el-dialog :visible.sync="userLoginDialogVisible" title="用户登录" :width="loginDialogWidth" center>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -67,7 +57,8 @@
 				<!-- 输入密码 end -->
 			</el-form>
 			<!-- 登录按钮 start -->
-			<div class="txt-center">
+			<!-- <div class="txt-center"> -->
+			<div slot="footer">
 		    	<el-button type="primary" @click="handleSubmit('ruleForm')" size="small">{{$t("message.登录")}}</el-button>
 			</div>
 			<!-- 登录按钮 end -->
@@ -75,17 +66,15 @@
 		<!-- 用户登录 end -->
 	</header>
 </template>
+<style>
+</style>
 <style scoped>
 	.head-box {padding: 12px 10px;background: #69C25C;}
-	.logo {display: inline-block;border: none !important;text-decoration: none;}
-	h1 {margin: 0;margin-left: 8px;font-size: 22px;color: #FFF;border: none !important; }
+	.logo {display: inline-block;border: none;text-decoration: none;}
+	h1 {margin: 0 0 0 8px;font-size: 22px;color: #FFF;border: none; }
 	.el-dropdown-link {color: #FFF;}
 	.user-icon, .menu-icon,.setting-icon {font-size: 28px; color: #FFF;cursor: pointer;margin-right: 18px}
 	.txt-center {text-align: center;}
-	/*.span-m-icon {display: inline-block;width: 25px;height: 25px;position: relative;margin-right: 20px;background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0) 11px,#FFF 11px,#FFF 13px,rgba(0,0,0,0) 13px);cursor: pointer;}
-	.span-m-icon:before,.span-m-icon:after {content: "";display: inline-block;width: 25px;height: 2px;background: #FFF;position: absolute;}
-	.span-m-icon:before {top: 4px;}
-	.span-m-icon:after {bottom: 4px;}*/
 	@media screen and (max-width: 500px) {
 		.user-icon, .menu-icon,.setting-icon {color: #FFF;}
 	}
@@ -99,9 +88,7 @@
 		data() {
 			return {
 				showLayer: false,  // 是否显示计划列表弹窗
-				userBaseUrlDialogVisible: false,  // 是否显示移动端修改ip编辑层
 				userLoginDialogVisible: false,  // 是否显示用户登录层
-				mobileBaseUrl1: "",   // 移动端ip地址
 				ruleForm: {
 					account: "",
 					password: ""
@@ -113,98 +100,56 @@
 			}
 		},
 		computed: {
-			// 用户权限数字
-			userPower() {
-				return localStorage.userPower || "0";
-		    },
-		    // 配置方案显示层
-			showLayer1() {
-				return this.$store.state.PlanListLayerState;
-			},
-			// 移动端请求地址
-			mobileBaseUrl() {
-				return this.$store.state.mobileBaseUrl;
+			// 模式信息
+            localMode() {
+            	return this.$store.state.localMode;
+            },
+            // 是否为单机测试
+			noWebTest() {
+            	return this.$store.state.noWebTest;
 			},
 			// 是否为移动端
 			isMobile() {
 				return this.$store.state.isMobile;
 			},
+			// 移动端请求地址
+			mobileBaseUrl() {
+				return this.$store.state.mobileBaseUrl;
+			},
 			// PC端请求地址
 			apiurl() {
                 return this.$store.state.apiurl;
             },
-            // 层大小
-            loginDialogWidth() {
-            	return this.isMobile ? "300px" : "50%";
-            },
+			// 用户权限数字
+			userPower() {
+				return localStorage.userPower || "0";
+		    },
+		    // 本地模式用户权限
+			localUserPower() {
+            	return this.$store.state.localUserPower;
+			},
             // 用户信息
             userInfo() {
             	return this.$store.state.user;
             },
-            localMode() {
-            	return this.$store.state.localMode;
-            },
+            // 本地模式用户信息
             localUserInfo() {
             	return this.$store.state.localUserInfo;
             },
-			localUserPower() {
-            	return this.$store.state.localUserPower;
+            // 配置方案显示层
+			showLayerPlanList() {
+				return this.$store.state.PlanListLayerState;
 			},
-			noWebTest() {
-            	return this.$store.state.noWebTest;
-			}
+            // 层大小
+            loginDialogWidth() {
+            	return this.isMobile ? "300px" : "50%";
+            },
 		},
 		components: {
 			PlanList,
 			Nav
 		},
 		methods: {
-			// 退出登录
-			logout() {
-				delete localStorage.operateNo;
-				delete localStorage.token;
-				delete localStorage.userId;
-				delete localStorage.userPower;
-				this.$message({
-	              type: 'success',
-	              message: '退出成功'
-	            });
-				if(this.$route.name !== "Home") {
-					this.$router.replace({path: "/"});
-				} 
-				window.location.reload();
-			},
-			// 点击退出登录按钮
-			handleCommand1(command) {
-				if(command == "logout") {
-					this.logout()
-				}
-			},
-			// 点击切换语言按钮
-			handleCommand(command) {
-			 	this.$i18n.locale = command;
-		    },
-			// 切换培植方案层显示状态
-			tgShowLayer() {
-				this.showLayer1 && this.$store.commit("changePlanListLayerState",false);
-				this.showLayer = !this.showLayer;
-			},
-			// 改变方案
-			changeState(data) {
-				data && this.$store.commit("changePlanListLayerState",true);
-			},
-			// 修改移动端ip
-			updateMobileBaseUrl() {
-				this.$store.commit("updateMobileBaseUrl",this.mobileBaseUrl1);
-				this.userBaseUrlDialogVisible = false;
-				this.$message({
-		          message: '修改成功',
-		          type: 'success'
-		        });
-		        setTimeout(()=> {
-		        	window.location.reload();
-		        },1000);
-			},
 			// 登录
 			handleSubmit(formName) {
 		      	this.$refs[formName].validate(valid => {
@@ -220,20 +165,8 @@
 							delete data.phone;
 						}
 						if(this.localMode && this.noWebTest) {
-							this.$message({
-				              type: 'success',
-				              message: '登录成功'
-				            });
-				            localStorage.token = this.localUserInfo.token;
-				            localStorage.userId = this.localUserInfo.userId;
-				            localStorage.operateNo = this.localUserPower;
-				            this.submitUserInfo();
-				            this.userLoginDialogVisible = false;
-				            this.ruleForm = {
-								account: "",
-								password: ""
-							}
-							window.location.reload();
+							let [token,userId,operateNo] = [this.localUserInfo.token,this.localUserInfo.userId,this.localUserPower]
+							this.cblogin({token,userId,operateNo});
 						} else {
 					    	axios({
 							    method: 'post',
@@ -243,20 +176,22 @@
 								}
 							}).then(data => {
 								if(data.data.code == 200) {
-									this.$message({
-						              type: 'success',
-						              message: '登录成功'
-						            });
-						            localStorage.token = data.data.token;
-						            localStorage.userId = data.data.id;
-						            localStorage.operateNo = this.ruleForm.account;
-						            this.submitUserInfo();
-						            this.userLoginDialogVisible = false;
-						            this.ruleForm = {
-										account: "",
-										password: ""
-									}
-									window.location.reload();
+									let [token,userId,operateNo]= [data.data.token,data.data.id, this.ruleForm.account];
+									this.cblogin({token,userId,operateNo});
+									// this.$message({
+						   //            type: 'success',
+						   //            message: '登录成功'
+						   //          });
+						   //          localStorage.token = data.data.token;
+						   //          localStorage.userId = data.data.id;
+						   //          localStorage.operateNo = this.ruleForm.account;
+						   //          this.submitUserInfo();
+						   //          this.userLoginDialogVisible = false;
+						   //          this.ruleForm = {
+									// 	account: "",
+									// 	password: ""
+									// }
+									// window.location.reload();
 								} else {
 									this.$message({
 						              type: 'error',
@@ -268,7 +203,24 @@
 			        }
 		      	});
 		    },
-		    // 像vuex中提交用户信息
+		    // 登录回调
+		    cblogin({token,userId,operateNo}) {
+		    	this.$message({
+	              type: 'success',
+	              message: '登录成功'
+	            });
+	            localStorage.token = token;
+	            localStorage.userId = userId;
+	            localStorage.operateNo = operateNo;
+	            this.submitUserInfo();
+	            this.userLoginDialogVisible = false;
+	            this.ruleForm = {
+					account: "",
+					password: ""
+				}
+				window.location.reload();
+		    },
+		    // vuex中提交用户信息
 		    submitUserInfo() {
 		    	this.$store.commit("resetUser",{
 	            	token: localStorage.token,
@@ -276,9 +228,61 @@
 	            	operateNo: localStorage.operateNo
 	            });
 		    },
+			// 退出登录
+			logout() {
+				delete localStorage.operateNo;
+				delete localStorage.token;
+				delete localStorage.userId;
+				delete localStorage.userPower;
+				this.$message({
+	              type: 'success',
+	              message: '退出成功'
+	            });
+				if(this.$route.name !== "Home") {
+					this.$router.replace({path: "/"});
+				} 
+				window.location.reload();
+			},
+			// 点击齿轮按钮
+			handleCommand1(command) {
+				// 点击退出登录按钮
+				if(command == "logout") {
+					this.logout()
+				}
+				// 修改移动端ip
+				if(command == "setReqUrl") {
+					this.$prompt('', '请求路径设置', {
+			          confirmButtonText: '确定',
+			          cancelButtonText: '取消',
+			          inputPlaceholder: "请输入ip。如：192.168.1.103",
+			          inputValue: this.mobileBaseUrl
+			        }).then(({ value }) => {
+			        	this.$store.commit("updateMobileBaseUrl",value);
+			        	this.$message({
+				          message: '修改成功',
+				          type: 'success'
+				        });
+				        setTimeout(()=> {
+				        	window.location.reload();
+				        },1000);
+			        })
+				}
+			},
+			// 点击切换语言按钮
+			handleCommand(command) {
+			 	this.$i18n.locale = command;
+		    },
+			// 切换培植方案层显示状态
+			tgShowLayer() {
+				this.showLayerPlanList && this.$store.commit("changePlanListLayerState",false);
+				this.showLayer = !this.showLayer;
+			},
+			// 改变方案
+			changeState(data) {
+				data && this.$store.commit("changePlanListLayerState",true);
+			},
 		},
 		mounted() {
-			this.mobileBaseUrl1 = this.mobileBaseUrl;
 			this.submitUserInfo();
 		}
 	}

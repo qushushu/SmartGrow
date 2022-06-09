@@ -38,3 +38,7 @@
 .line-chart {width: 46%;height: 150px;margin-bottom: 80px;display: inline-block;}
 .line-chart:nth-of-type(2n+1) {margin-right: 2%;}
 .line-chart:nth-of-type(2n) {margin-left: 2%;}
+
+.el-message-box__wrapper[aria-label="请求路径设置"]::after {
+    vertical-align: top;
+}

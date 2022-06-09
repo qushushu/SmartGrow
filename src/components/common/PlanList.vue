@@ -43,9 +43,6 @@
             return {
                 plantList: [],   // 培植方案列表
                 fullscreenLoading: false,   // loading状态
-                form: {
-                    des: ""
-                }
             }
         },
         watch: {
