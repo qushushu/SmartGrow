@@ -31,8 +31,6 @@
             <div id="hschunWater"></div>
         </div>
         <div class="currentHeight" id="hscurrentHeight" :curnum="'当前回水液位：' + (liqLv)"></div>
-        <!-- <div class="max-line"><span>回水液位上告警值：{{lbBwUpAlm}}</span></div>
-        <div class="min-line"><span>回水液位下告警值：{{lbBwAlm}}</span></div> -->
     </div>
 </template>
 <style scoped>
@@ -44,7 +42,7 @@
         transform: rotate(360deg)
     }
 }
-.shuixiang {border: 2px solid rgba(200,203,202,.4);height: 170px;position: relative;width: 100px;border-top: 0;border-bottom: 0;box-sizing: border-box;}
+.shuixiang {border: 2px solid rgba(200,203,202,.4);height: 170px;position: relative;width: 100px;border-top: 0;border-bottom: 0;box-sizing: border-box;margin-top: 20px;margin-bottom: 8px;}
 .shuixiang:before {position: absolute;content: "";display: block;width: 102px;height: 20px;background: rgba(200,203,202,.4);border-radius: 50%;top: -10px;left: -3px;}
 .max-line,.min-line {position: absolute;width: 100%;}
 .max-line {top: 12px;}
@@ -105,15 +103,8 @@
                 this.tarNum = parseInt(this.lvTv);
                 this.adjNum = parseInt(this.lvAdj);
                 this.curNum = parseInt(this.liqLv);
-                let allge = this.maxNum - this.minNum
+                let allge = this.maxNum - this.minNum;
                 this.oneSpace = parseInt(136 / allge);
-                setTimeout(()=> {
-                    // this.space = parseInt((150 / (this.maxNum - this.minNum - 1)));
-                    // let ctp = 200 - document.getElementById("currentLine").offsetTop - 20;
-                    // document.getElementById("hscurrentHeight").style.height = ctp + 'px';
-                    // document.getElementById("hswatersInnerBox").style.bottom = ctp - 60 + 'px';
-                    // document.getElementById("hschunWater").style.height = ctp - 60 + 'px';
-                },1000);
             }
         },
         mounted() {

@@ -4,11 +4,11 @@
 <template>
     <!-- 培植方案列表 start -->
     <div>
-        <ul class="listData">
+        <ul class="listData text-center">
             <li v-for="item in plantList" @click="readyChangePlan(item.id)">
                 <!-- 方案图片 start -->
                 <div class="img_box" v-loading.fullscreen.lock="fullscreenLoading">
-                    <img :src="item.plant_image" alt="" @error="unloadImg">
+                    <img :src="item.plant_image" alt="" @error="unloadImg(item)">
                 </div>
                 <!-- 方案图片 end -->
                 <!-- 方案文字 start -->
@@ -21,7 +21,7 @@
 </template>
 <style scoped>
     .listData {position: absolute;z-index: 20;top: 50px;right: 63px;width: 80%;padding: 0;padding-top: 8px;font-size: 0;background: #FFF;border-radius: 4px;box-shadow: 0 0 10px #a1a1a1;}
-    .listData li {display: inline-block;box-sizing: border-box;width: 20%;padding:  10px;text-align: center;font-size: 14px;cursor: pointer;}
+    .listData li {display: inline-block;box-sizing: border-box;width: 20%;padding:  10px;font-size: 14px;cursor: pointer;}
     .img_box {display: inline-block;width: 80px;height: 80px;padding: 5px;border: 1px solid #ddd;}
     .img_box img {width: 100%;height: 100%;}
     .listData p {margin-top: 10px;font-size: 12px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
@@ -41,6 +41,7 @@
     export default {
         data() {
             return {
+                defaultImg: "/static/error.png",
                 plantList: [],   // 培植方案列表
                 fullscreenLoading: false,   // loading状态
             }
@@ -64,7 +65,8 @@
         },
         props: ["showLayer"],
         methods: {
-            unloadImg() {
+            unloadImg(item) {
+                item.plant_image = this.defaultImg;
             },
             // 获取所有培植方案
             getList() {

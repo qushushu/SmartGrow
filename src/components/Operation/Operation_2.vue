@@ -4,96 +4,51 @@
 <template>
 	<div>
 		<!-- PC基本信息 start -->
-		<a-card class="space-btm1 mobile-hide">
-			<a-row type="flex" justify="space-between">
-	            <a-col><a-statistic title="营养液EC值（us/cm）" :value="runInfo.ana.EC ? runInfo.ana.EC.toFixed(2) : '--'" /></a-col>
-	            <a-col><a-statistic title="营养液PH值" :value="runInfo.ana.PH ? runInfo.ana.PH.toFixed(2) : '--'" /></a-col>
-	            <a-col><a-statistic title="液位（CM）：" :value="runInfo.ana.LIQ_B_LV ? runInfo.ana.LIQ_B_LV.toFixed(2) : '--'" /></a-col>
-	            <a-col><a-statistic title="营养液液温（℃）：" :value="runInfo.ana.LIQ_TEMP ? runInfo.ana.LIQ_TEMP.toFixed(2) : '--'" /></a-col>
-          	</a-row>
+		<a-card size="small" class="space-btm1 text-center">
+            <el-row justify="space-between" type="flex">
+                <el-col v-for="item,key in dataInfo" :key="key">
+                    <p class="text-dt">{{item.name}}</p>
+                    <p class="text-dd">{{item.value}} <span class="dw" v-if="item.dw">{{item.dw}}</span></p>
+                </el-col>
+            </el-row>
         </a-card>
 		<!-- PC基本信息 end -->
-		<!-- 移动基本信息 start -->
-        <a-card class="space-btm1 mobile-show">
-        	<div class="mobile-capsule">
-        		<p>营养液EC值（us/cm）</p>
-        		<p>{{runInfo.ana.EC ? runInfo.ana.EC.toFixed(2) : '--'}}</p>
-        	</div>
-
-        	<div class="mobile-capsule">
-        		<p>营养液PH值</p>
-        		<p>{{runInfo.ana.PH ? runInfo.ana.PH.toFixed(2) : '--'}}</p>
-        	</div>
-
-        	<div class="mobile-capsule">
-        		<p>液位（CM）</p>
-        		<p>{{runInfo.ana.LIQ_B_LV ? runInfo.ana.LIQ_B_LV.toFixed(2) : '--'}}</p>
-        	</div>
-
-        	<div class="mobile-capsule">
-        		<p>营养液液温(℃)</p>
-        		<p>{{runInfo.ana.LIQ_TEMP ? runInfo.ana.LIQ_TEMP.toFixed(2) : '--'}}</p>
-        	</div>
-        </a-card>
-        <!-- 移动基本信息 end -->
-
 		<!-- PC 转速、重量 start -->
-        <a-card class="mobile-hide">
-          	<table id="tb1"  class="normal-table">
-          		<!-- 当前转速 start -->
+        <a-card>
+          	<table class="normal-table text-center">
 				<tr>
-					<td style="max-width: 100px;"></td>
-					<td style="max-width: 60px;">开关</td>
-					<td style="max-width: 50px">转速</td>
-					<td>当前质量(g) / 起始质量(g) / 本次增加质量(g)</td>
+					<td class="td-name"></td>
+					<td class="td-onoff">开关</td>
+					<td class="td-zs">转速</td>
+                    <td>当前质量(g)</td>
+                    <td>起始质量(g)</td>
+                    <td>本次增加质量(g)</td>
 				</tr>
 				<tr v-for="num in 5">
-					<td>{{nameList[num - 1]}}</td>
-					<td> <a-switch @change="onChangeRdb" :disabled="runInfo.dig.AUTO === 1" :asid="num" :checked="radioOnOff[num-1]"></a-switch></td>
- 					<td><el-input-number v-for="i in 5" :key="i" :step="5"  v-if="num == i" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[i-1]" @change="onChangeZs" :min="0" :max="300" label="描述文字" size="small"></el-input-number></td>
- 					<td class="t-center"><span class="num-text">{{runInfo.ana["W" + num]}} / {{runInfo.ana["WS" + num] || "--"}} / {{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</span> </td>
+                    <!-- 蠕动泵名称 start -->
+                    <td>{{nameList[num - 1]}}</td>
+                    <!-- 蠕动泵名称 end -->
+                    <!-- 开关 start -->
+                    <td> <a-switch @change="onChangeRdb" :disabled="runInfo.dig.AUTO === 1" :asid="num" :checked="radioOnOff[num-1]"></a-switch></td>
+                    <!-- 开关 end -->
+                    <!-- 转速 start -->
+                    <td><el-input-number v-for="i in 5" :key="i" :step="5"  v-if="num == i" :disabled="runInfo.dig.AUTO === 1" v-model="sliderData[i-1]" @change="onChangeZs" :min="0" :max="300" label="描述文字" size="small"></el-input-number></td>
+                    <!-- 转速 end -->
+                    <!-- 质量 start -->
+                    <td>{{runInfo.ana["W" + num]}}</td>
+                    <td>{{runInfo.ana["WS" + num] || "--"}}</td>
+                    <td>{{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</td>
+                    <!-- 质量 end -->
 				</tr>
-          		<!-- 当前重量 end -->
           	</table>
 		</a-card>
 		<!-- PC 转速、重量 end -->
-		<!-- 移动端 转速、重量 start -->
-		<a-card class="mobile-show">
-		    <ul class="yys-list">
-		        <li v-for="num in 5">
-		            <div class="yys-top">
-		                <p class="yys-title">{{nameList[num - 1]}}</p>
-		                <a-switch @change="onChangeRdb" :asid="num" :checked="radioOnOff[num-1]" :disabled="runInfo.dig.AUTO === 1"></a-switch>
-		            </div>
-		            <div class="yys-btm">
-		                <div>
-		                    <p class="yys-zl_b">{{runInfo.ana["W" + num] ? runInfo.ana["W" + num] : "--"}}</p>
-		                    <p class="yys-zl_t">当前质量(g)</p>
-		                </div>
-		                <div>
-		                    <p class="yys-zl_b">{{runInfo.ana["WS" + num] ? runInfo.ana["WS" + num] : "--"}}</p>
-		                    <p class="yys-zl_t">起始质量(g)</p>
-		                </div>
-		                <div>
-		                    <p class="yys-zl_b">{{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</p>
-		                    <p class="yys-zl_t">本次增加质量(g)</p>
-		                </div>
-		            </div>
-		        </li>
-		    </ul>
-		</a-card>
-		<!-- 移动端 转速、重量 end -->
 	</div>
 </template>
 <style scoped>
-	td {vertical-align: middle;}
-	#tb1 {width: 100%;table-layout: fixed;}
-	#tb1,#tb1 td {border: 1px solid #ebeef5;color: #172b4d;}
-	.normal-table {border-collapse: collapse; border: 1px solid #f1f1f1; width: 100%; font-size: 12px; color: #606266; }
-  	.normal-table td { border:  1px solid #f1f1f1;padding: 8px;}
-	.space-btm1 {margin-bottom: 20px;}
-	.t-center {text-align: center;}
-	.num-text {overflow: hidden;text-overflow: ellipsis;max-width: 100%;display: block;white-space: nowrap;}
+   .td-name {width: 105px;}
+   .td-onoff {width: 65px;}
+   .td-zs {width: 165px;}
 </style>
 <script>
 	export default {
@@ -165,20 +120,41 @@
 			}
 		},
 	    computed: {
+            // 获取当前信息
+            runInfo() {
+                return this.$store.state.runInfo;
+            },
+            // EC、PH、液位、液温
+            dataInfo() {
+                return [{
+                    name: "营养液EC值",
+                    value: this.runInfo.ana.EC ? this.runInfo.ana.EC.toFixed(2) : '--',
+                    dw: "us/cm"
+                },{
+                    name: "营养液PH值",
+                    value: this.runInfo.ana.PH ? this.runInfo.ana.PH.toFixed(2) : '--',
+                },{
+                    name: "液位",
+                    value: this.runInfo.ana.LIQ_B_LV ? this.runInfo.ana.LIQ_B_LV.toFixed(2) : '--',
+                    dw: "CM"
+                },{
+                    name: "液温",
+                    value: this.runInfo.ana.LIQ_TEMP ? this.runInfo.ana.LIQ_TEMP.toFixed(2) : '--',
+                    dw: "℃"
+                }]
+            },
+            // 转速
 	    	showArrZs() {
 	    		let {ZS1,ZS2,ZS3,ZS4,ZS5} = this.runInfo.ana;
 	    		return [ZS1,ZS2,ZS3,ZS4,ZS5];
 	    	},
+            // 开关状态
 	    	radioOnOff() {
 	    		let {PP1,PP2,PP3,PP4,PP5} = this.runInfo.dig;
 	    		return [PP1,PP2,PP3,PP4,PP5].map(item => {
 	    			return item == "1" ? true: false;
 	    		});
 	    	},
-	    	// 获取当前信息
-	    	runInfo() {
-		        return this.$store.state.runInfo;
-		    },
 		    op_onOff() {
             	return this.$store.state.op_onOff;
             }

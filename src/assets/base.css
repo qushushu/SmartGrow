@@ -17,11 +17,6 @@
     .ant-card-body {padding: 8px; }
     .ym-main {background: none;padding: 0}
 }
-.special-card1 .ant-card-body{padding: 16px 12px;}
-
-@media screen and (max-width: 768px) {
-    .special-card1 .ant-card-body{padding: 12px 12px;}
-}
 
 #kd-box > div {width: 2px;height: 50%;background: -webkit-linear-gradient(top,#8E8E8E 0,#8E8E8E 2%,rgba(0,0,0,0) 2%);position: absolute;left: 50%;top: 0;transform-origin: center bottom}
 #kd-box .long {background: -webkit-linear-gradient(top,#8E8E8E 0,#8E8E8E 9%,rgba(0,0,0,0) 9%);}
@@ -38,7 +33,14 @@
 .line-chart {width: 46%;height: 150px;margin-bottom: 80px;display: inline-block;}
 .line-chart:nth-of-type(2n+1) {margin-right: 2%;}
 .line-chart:nth-of-type(2n) {margin-left: 2%;}
+.el-message-box__wrapper[aria-label="请求路径设置"]::after {vertical-align: top; }
 
-.el-message-box__wrapper[aria-label="请求路径设置"]::after {
-    vertical-align: top;
-}
+.space-btm {margin-bottom: 10px;}
+.space-btm1 {margin-bottom: 20px;}
+.text-center {text-align: center;}
+.normal-table,.normal-table td {}
+.normal-table {border-collapse: collapse; width: 100%; table-layout: fixed; }
+.normal-table td { padding: 8px;color: #172b4d;border:  1px solid #f1f1f1;font-size: 12px;}
+.text-dt {font-size: 14px;color:#808695;line-height: 22px;}
+.text-dd {color: #515a6e;font-size: 22px;margin-bottom: 0;}
+.dw {font-size: 14px;}

@@ -20,18 +20,6 @@
       </el-carousel>
     </div>
     <!-- PC端主体内容 end -->
-    <!-- 移动端主题内容 start -->
-    <div class="ym-main mobile-show">
-      <Nutrient></Nutrient>
-      <div class="mobile-home-tab">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="当前环境" name="first"><Environment></Environment></el-tab-pane>
-          <el-tab-pane label="当前方案" name="second"><CurrentPlan></CurrentPlan></el-tab-pane>
-          <el-tab-pane label="喷灌信息" name="third"><Sprinkling></Sprinkling></el-tab-pane>
-        </el-tabs>
-      </div>
-    </div>
-    <!-- 移动端主题内容 end -->
     <!-- 时钟 start -->
     <Clock></Clock>
     <!-- 时钟 end -->
@@ -45,7 +33,6 @@
 </style>
 <script>
   import Nutrient from "./Home/Nutrient"
-  import Environment from "./Home/Environment"
   import CurrentPlan from "./Home/CurrentPlan"
   import Sprinkling from "./Home/Sprinkling"
   import Clock from "./Home/Clock"
@@ -55,7 +42,6 @@
     name: 'Home',
     components: {
       Nutrient,
-      Environment,
       CurrentPlan,
       Sprinkling,
       Clock,

@@ -53,9 +53,6 @@
 		</a-card>
 	</div>
 </template>
-<style scoped>
-	.space-btm1 {margin-bottom: 20px;}
-</style>
 <script>
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'
@@ -260,6 +257,25 @@
 		mounted() {
 			this.getDevParamList();
 			autoJump(1);
+			axios({
+    			url: `${this.apiurl}/la/sensor/set`,
+    			method: "post",
+    			data: {
+    				data: {
+			           "operateNo": "dgrrrrrr",
+				        "op_id": "1",
+					    "op_type": "OP_SENSOR_W_SET",
+					    "dev_id": 1,
+					    "data_id": 1,
+					    "data_code": "W_SCALE",
+					    "value": 1
+
+			        }
+    			}
+    		}).then(data => {
+    			console.log(data);
+
+    		});
 		}
 	}
 </script>

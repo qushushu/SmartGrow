@@ -236,8 +236,6 @@
 </template>
 <style scoped>
 	td {vertical-align: middle;}
-	.space-btm {margin-bottom: 10px;}
-	.space-btm1 {margin-bottom: 20px;}
 	.space-right {margin-right: 4px;}
 	.f-n {font-size: 14px;}
 	.light-tit {text-align: center;margin-top: 10px;margin-bottom: 8px;font-size: 14px;}

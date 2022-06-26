@@ -3,7 +3,7 @@
 -->
 <template>
     <div>
-        <a-card class="space-btm2">
+        <a-card class="space-btm1">
             <el-row :gutter="20">
               <el-col :span="8">
                   <h5> 实时液位 (cm)</h5>
@@ -19,7 +19,7 @@
               </el-col>
             </el-row>
         </a-card>
-        <a-card class="space-btm2">
+        <a-card class="space-btm1">
             <el-row :gutter="20">
                 <el-col :span="8">
                     <h5> 回水泵 </h5>
@@ -65,9 +65,8 @@
 </template>
 <style scoped>
 	td {vertical-align: middle;}
-	.normal-table {border-collapse: collapse; border: 1px solid #f1f1f1; width: 100%; font-size: 12px; color: #606266; }
-  	.normal-table td { border:  1px solid #f1f1f1;padding: 8px;}
-  	.space-btm2 {margin-bottom: 20px;}
+	.normal-table {border-collapse: collapse;width: 100%; font-size: 12px; color: #606266; }
+  	.normal-table td { border:  1px solid #ebeef5;padding: 8px;}
   	.desc_txt {font-size: 14px; color: #5e6d82; line-height: 1.5em;}
 </style>
 <script>

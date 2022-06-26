@@ -59,9 +59,6 @@
 		</a-card>
 	</div>
 </template>
-<style scoped>
-	.space-btm1 {margin-bottom: 20px;}
-</style>
 <script>
 	import PageHeader from "./common/PageHeader"
 	import axios from 'axios'

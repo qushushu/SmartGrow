@@ -2,9 +2,9 @@ import Vue from "vue"
 import Vuex from "vuex"
 import {ajax,formatTime,opinion} from "../assets/tools/tool"
 Vue.use(Vuex);
-// let localMode = true;
-let localMode = false;
-let noWebTest = true;
+let localMode = true;
+// let localMode = false;
+let noWebTest = false;
 let localUserPower = 1;
 let localUserInfo  = {
 	token: "12345",

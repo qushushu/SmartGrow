@@ -57,7 +57,6 @@
 				<!-- 输入密码 end -->
 			</el-form>
 			<!-- 登录按钮 start -->
-			<!-- <div class="txt-center"> -->
 			<div slot="footer">
 		    	<el-button type="primary" @click="handleSubmit('ruleForm')" size="small">{{$t("message.登录")}}</el-button>
 			</div>
@@ -74,7 +73,6 @@
 	h1 {margin: 0 0 0 8px;font-size: 22px;color: #FFF;border: none; }
 	.el-dropdown-link {color: #FFF;}
 	.user-icon, .menu-icon,.setting-icon {font-size: 28px; color: #FFF;cursor: pointer;margin-right: 18px}
-	.txt-center {text-align: center;}
 	@media screen and (max-width: 500px) {
 		.user-icon, .menu-icon,.setting-icon {color: #FFF;}
 	}

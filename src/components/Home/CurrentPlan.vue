@@ -5,7 +5,7 @@
     <a-card size="small" class="card-box_dark space-btm">
         <div class="mycard-body mobile-hide">
             <!-- 预览图片 start -->
-            <div class="card-imgbox"> <img :src="planInfo.plant.plant_image || defaultImg" class="card-img" alt=""> </div>
+            <div class="card-imgbox"> <img :src="planInfo.plant.plant_image" class="card-img" alt="" @error="loadImgFail"> </div>
             <!-- 预览图片 end -->
             <!-- PC端详细信息 start -->
             <div class="normal-list">
@@ -76,11 +76,10 @@
     </a-card>
 </template>
 <style scoped>
-    .space-btm {margin-bottom: 10px;}
     .card-box_dark {background: #78db6a;color: #FFF;}
     .mycard-body {align-items: center;display: flex;}
     .card-imgbox {width: 18%;top: -3px;}
-    .card-img {width: 90%;height: auto;display: block;border-radius: 2px;margin-left: 5%;}
+    .card-img {width: 90%;height: auto;display: block;border-radius: 2px;margin-left: 5%;max-width: 150px;}
     .normal-list {width: 75%;box-sizing: border-box;padding-left: 20px;}
 </style>
 <script>
@@ -89,7 +88,7 @@
     export default {
         data() {
             return {
-                defaultImg: "/static/temp.png",
+                defaultImg: "/static/error.png",
                 planInfo: {
                   plant: {},
                   start_time: "",
@@ -174,6 +173,9 @@
                     }
                   }
                 })
+            },
+            loadImgFail() {
+                this.planInfo.plant.plant_image = this.defaultImg;
             },
             // 格式化时间
             formatTime

@@ -84,16 +84,7 @@
 					show_ref_value: "",
 					remark: ""
 				},
-				r: {
-					sort_index: 0,
-					id: 0,
-					param_code: "",
-					name: "",
-					unit: "",
-					ref_value: "",
-					show_ref_value: "",
-					remark: ""
-				},
+				r: {...init_r},
 		        tableData: [],
 		        dialogVisible: false,
 		        fullscreenLoading: false,  // 是否显示整屏加载
@@ -110,10 +101,8 @@
 	    },
 	    methods: {
 	    	create() {
-	    		this.dialogVisible = true
-	    		this.r = {
-	    			...this.init_r
-	    		}
+	    		this.dialogVisible = true;
+	    		this.r = {...this.init_r};
 	    		this.type = 0;
 	    	},
 	    	// 获取数据
@@ -217,7 +206,7 @@
 		    	if(data.data.code == 200) {
 		    		let message = type == 0 ? "添加成功" : "修改成功";
           			this.$refs[formName].resetFields();
-      				this.dialogVisible = false
+      				this.dialogVisible = false;
       				this.$message({
 		              type: 'success',
 		              message
@@ -312,7 +301,7 @@
 			          		}
 			          	}).then(data => {
 			          		if(data.data.code == 200) {
-			          			resolve()
+			          			resolve();
 			          		}
 			          	})
 					}).then(()=> {
@@ -365,7 +354,7 @@
 							}
 						}
 			        }).catch(()=> {
-			        	e.target.value="";
+			        	e.target.value = "";
 			        })
 				});
 			},

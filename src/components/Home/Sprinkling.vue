@@ -7,7 +7,10 @@
             <el-col :span="12">
                 <!-- 左喷灌泵 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">左喷灌泵<el-switch v-model="runInfo.dig.SIP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardtitle flex-between">
+                        <span>左喷灌泵</span>
+                        <el-switch v-model="runInfo.dig.SIP1 == 1" disabled></el-switch>
+                    </div>
                     <div class="home-cardinner">
                         <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
                         <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
@@ -18,7 +21,10 @@
             <el-col :span="12">
                 <!-- 右喷灌泵 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">右喷灌泵<el-switch v-model="runInfo.dig.SIP2 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardtitle flex-between">
+                        <span>右喷灌泵</span>
+                        <el-switch v-model="runInfo.dig.SIP2 == 1" disabled></el-switch>
+                     </div>
                     <div class="home-cardinner">
                         <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
                         <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
@@ -27,19 +33,18 @@
                 <!-- 右喷灌泵 end -->
             </el-col>
         </el-row>
-      
         <el-row :gutter="10">
             <el-col :span="12">
                 <!-- 回水泵 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardtitle flex-between">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled></el-switch></div>
                 </div>
                 <!-- 回水泵 end -->
             </el-col>
             <el-col :span="12">
                  <!-- 补水阀 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled style="margin-left: 8px;float: right;"></el-switch></div>
+                    <div class="home-cardtitle flex-between">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled></el-switch></div>
                 </div>
                 <!-- 补水阀 end -->
             </el-col>
@@ -52,34 +57,27 @@
                         <div class="home-cardtitle">左侧水阀</div>
                         <table class="normal-table">
                             <tr>
-                                <td><span>4层</span> 
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                <td class="flex-between">
+                                    <span>4层</span> 
+                                    <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>3层</span>
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>2层</span> 
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>1层</span>
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                         </table>
@@ -87,39 +85,30 @@
                 </el-col>
                 <el-col :span="12">
                     <div class="home-cardbox">
-                         <div class="home-cardtitle">右侧水阀</div>
+                        <div class="home-cardtitle">右侧水阀</div>
                         <table class="normal-table">
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>4层</span> 
-                                    <span style="float:right">
-                                     <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch></span>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch></span>
                                 </td>
-
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>3层</span> 
-                                     <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
-                                     </span>
+                                    <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>2层</span> 
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="flex-between">
                                     <span>1层</span> 
-                                    <span style="float:right">
-                                        <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
-                                    </span>
+                                    <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
                                 </td>
                             </tr>
                         </table>
@@ -163,23 +152,14 @@
     </div>
 </template>
 <style scoped>
-   .space-btm1 {margin-bottom: 20px;}
   .form-text-inner {display: flex;justify-content: space-between;width: 85%;}
   .card {margin-bottom: 10px;}
-  .normal-table {border-collapse: collapse; border:  1px solid #f1f1f1; width: 100%; font-size: 12px; color: #606266; }
-  .normal-table td { border:  1px solid #f1f1f1;padding: 8px;}
   .space-left1 {margin-left: 1px;}
-
   .home-cardbox {background: #FFF;padding: 0px 0 4px;margin-bottom: 10px;font-size: 12px;border-radius: 2px;color: #808695}
-  .home-cardtitle {border-bottom: 1px solid #F7F7F7;padding: 8px 8px;font-size: 14px;}
+  .home-cardtitle {border-bottom: 1px solid #e8e8e8;padding: 8px 8px;font-size: 14px;}
   .home-cardtitle:only-child {padding-bottom: 3px;border-bottom: 0;}
   .home-cardinner {padding: 0 8px;line-height: 30px;}
-  .more-col {display: flex;justify-content: space-between;}
-  .more-col > * {width: 49%;}
-  @media screen and (max-width: 768px) {
-   .space-left1 {margin-left: 2px;}
-   .space-btm1_special {margin-bottom: 10px;}
-}
+  .flex-between {display: flex;justify-content: space-between;align-items: center;}
 </style>
 <script>
     import {minuteToTime} from "../../assets/tools/tool"
