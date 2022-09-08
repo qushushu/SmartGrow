@@ -1,51 +1,51 @@
 <!-- 
-  组件说明： 本组件为设备参数组件。
+  组件说明：本组件为设备参数组件。
   进入方式：导航->设备参数
-  用户权限： 操作员可以使用。未登录用户或其他用户自动跳转至首页。
+  用户权限：操作员可以使用。未登录用户或其他用户自动跳转至首页。
 -->
 <template>
 	<div class="ym-main">
 		<a-card>
 			<!-- 标题 start -->
-			<PageHeader title="设备参数" goBack=false></PageHeader>
+			<PageHeader :title="$t('message.设备参数')" goBack=false></PageHeader>
 			<!-- 标题 end -->
 			<!-- 搜索栏、新增 start -->
 			<a-form-model layout="inline" class="space-btm1"> 
 				<a-form-model-item>
-					<a-input-search placeholder="请输入设备型号" enter-button v-model="search_model_code" @search="onSearch" />
+					<a-input-search :placeholder="$t('message.请输入设备型号')" enter-button v-model="search_model_code" @search="getDevParamList" />
 				</a-form-model-item>
-				<a-form-model-item><a-button type="solid" block @click="handleEdit">新增</a-button></a-form-model-item>
+				<a-form-model-item><a-button type="solid" block @click="handleEdit">{{$t('message.新增')}}</a-button></a-form-model-item>
 			</a-form-model>
 			<!-- 搜索栏、新增 end -->
 			<!-- 表格 start -->
 			<el-table ref="multipleTable" :data="tableData" border stripe size="small" tooltip-effect="dark">
-			    <el-table-column prop="instance_number" label="设备编号"></el-table-column>
-			    <el-table-column prop="model" label="设备型号"></el-table-column>
-			    <el-table-column prop="description" label="描述"></el-table-column>
-			    <el-table-column prop="create_time" label="创建时间"></el-table-column>
-			    <el-table-column prop="btns" label="操作" width="220">
+			    <el-table-column prop="instance_number" :label="$t('message.设备编号')"></el-table-column>
+			    <el-table-column prop="model" :label="$t('message.设备型号')"></el-table-column>
+			    <el-table-column prop="description" :label="$t('message.描述')"></el-table-column>
+			    <el-table-column prop="create_time" :label="$t('message.创建时间')"></el-table-column>
+			    <el-table-column prop="btns" :label="$t('message.操作')" width="220">
 			      	<template slot-scope="scope">
-				        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-				        <el-button size="mini" @click="handleToParameterAdjustment(scope.$index, scope.row)">参数</el-button>
-			            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+				        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">{{$t('message.编辑')}}</el-button>
+				        <el-button size="mini" @click="handleToParameterAdjustment(scope.$index, scope.row)">{{$t('message.参数')}}</el-button>
+			            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">{{$t('message.删除')}}</el-button>
 				    </template>
 			    </el-table-column>
 			</el-table>
 			<!-- 表格 end -->
 			<!-- 弹窗 start -->
-			<el-dialog title="数据详情" :visible.sync="dialogVisible" width="400px">
+			<el-dialog :title="$t('message.数据详情')" :visible.sync="dialogVisible" width="400px">
 				<el-form ref="r" :model="r" label-width="80px" size="mini" modal="true" :rules="rules">
-					<el-form-item label="模板" prop="model_code">
-					    <el-select v-model="t" placeholder="模板">   
+					<el-form-item :label="$t('message.模板')" prop="model_code">
+					    <el-select v-model="t" :placeholder="$t('message.模板')">   
 					    	<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option> 
 					    </el-select>
 					</el-form-item>
-					<el-form-item label="设备编号" prop="instance_number"><el-input v-model="r.instance_number"></el-input></el-form-item>
-					<el-form-item label="描述" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
-					<el-form-item label="设备地址" prop="dev_inst_id"><el-input v-model="r.dev_inst_id"></el-input></el-form-item>
+					<el-form-item :label="$t('message.设备编号')" prop="instance_number"><el-input v-model="r.instance_number"></el-input></el-form-item>
+					<el-form-item :label="$t('message.描述')" prop="description"><el-input v-model="r.description"></el-input></el-form-item>
+					<el-form-item :label="$t('message.设备地址')" prop="dev_inst_id"><el-input v-model="r.dev_inst_id"></el-input></el-form-item>
 					<el-form-item> 
-						<el-button @click="resetForm('r')">取 消</el-button>
-			    		<el-button type="primary" @click="submitForm('r')">确 定</el-button>
+						<el-button @click="resetForm('r')">{{$t('message.取消')}}</el-button>
+			    		<el-button type="primary" @click="submitForm('r')">{{$t('message.确定')}}</el-button>
 						</el-form-item>
 				</el-form>
 			</el-dialog>
@@ -67,16 +67,16 @@
 					dev_model_id: 0,   // 模板id(数字的)
 					model: "",    // 模板设备型号(字符串的)
 					model_code: "",    // 模板设备编号(字符串的)
-					description: "",
-					dev_inst_id: ""
+					description: "",   // 设备描述
+					dev_inst_id: ""  // 设备地址
 				},
-		        tableData: [],
-		        t: "",
-		        dialogVisible: false,
+		        tableData: [],   // 数据列表
+		        t: "",   // select选择模板选项
+		        dialogVisible: false,   // 是否显示弹窗
 		        options: [{
 		        	value: '',
 		        	label: ''
-		        }],
+		        }],   // 模板
 		        modelList: [],
 		        rules: {
 		        	t: [{ required: true, message: '请选择模板', trigger: 'blur' }],
@@ -116,18 +116,17 @@
 	    			}
 	    		})
 	    	},
-	    	// 点击搜索按钮
-			onSearch() {
-				this.getDevParamList();
-			},
 	    	// 展示新建/编辑层
 	    	async handleEdit(index,row) {
+	    		// 获取模板列表
 	    		await this.getDevModelList();
+	    		// 显示弹窗
 	    		this.dialogVisible = true;
 	    		if(row) {
-	    			this.t = row.dev_model_id
+	    			// 编辑
+	    			this.t = row.dev_model_id;
 		    		this.r.id = row.id;
-	    			this.r.instance_number =  row.instance_number; 
+	    			this.r.instance_number = row.instance_number; 
 		    		this.r.dev_model_id = row.dev_model_id;
 		    		this.r.model = row.model;
 		    		this.r.model_code = row.model_code;
@@ -135,6 +134,7 @@
 		    		this.r.create_time = row.create_time;
 		    		this.r.dev_inst_id = row.dev_inst_id;
 	    		} else {
+	    			// 新增
 	    			this.r = {
 						id: 0,   // 设备id(数字的)
 						instance_number: "",  // 设备名称(字符串的)
@@ -186,16 +186,18 @@
 		        this.$refs[formName].validate(valid => {
 		          	if (valid) {
 		          		let {id,model,model_code,dev_inst_id} = this.getModelInfo(this.t)[0];
+		          		// 接口url判断
 		          		let url = (this.r.id == 0) ? `${this.apiurl}/la/device/param/add_dev` : `${this.apiurl}/la/device/param/modify_dev`;
 		          		let submitData = {
 				            id: "",
 		          			instance_number: this.r.instance_number,
 		          			description: this.r.description,
 				            dev_model_id: id,
-				            model: model,
-				            model_code: model_code,
+				            model,
+				            model_code,
 				            dev_inst_id: this.r.dev_inst_id
 		          		};
+		          		// 修改时重置id
 		          		(this.r.id !== 0) && (submitData.id = this.r.id);
 		          		axios({
 		          			method: "post",
@@ -216,10 +218,10 @@
 		    },
 	    	// 点击删除按钮
 	    	handleDelete(index,row) {
-	    		this.$confirm('确认删除该设备参数？', '确认信息', {
+	    		this.$confirm(this.$t("message.确认删除该设备参数？"), this.$t("message.确认信息"), {
 		          distinguishCancelAndClose: true,
-		          confirmButtonText: '确认',
-		          cancelButtonText: '取消'
+		          confirmButtonText: this.$t("message.确认"),
+		          cancelButtonText: this.$t("message.取消")
 		        }).then(() => {
 		          	axios({
 		          		url: `${this.apiurl}/la/device/param/del_dev`,
@@ -233,7 +235,7 @@
 		          		if(data.data && data.data.code == 200) {
 		          			this.$message({
 				              type: 'success',
-				              message: '删除成功'
+				              message: this.$t("message.删除成功")
 				            });
 		          			this.getDevParamList();
 		          		}
@@ -249,7 +251,7 @@
 	    		} else {
 	    			this.$message({
 		            	type: 'error',
-		            	message: '数据错误，请联系管理员'
+		            	message: this.$t("message.数据错误，请联系管理员")
 		            });
 	    		}
 	    	},
@@ -257,25 +259,6 @@
 		mounted() {
 			this.getDevParamList();
 			autoJump(1);
-			axios({
-    			url: `${this.apiurl}/la/sensor/set`,
-    			method: "post",
-    			data: {
-    				data: {
-			           "operateNo": "dgrrrrrr",
-				        "op_id": "1",
-					    "op_type": "OP_SENSOR_W_SET",
-					    "dev_id": 1,
-					    "data_id": 1,
-					    "data_code": "W_SCALE",
-					    "value": 1
-
-			        }
-    			}
-    		}).then(data => {
-    			console.log(data);
-
-    		});
 		}
 	}
 </script>

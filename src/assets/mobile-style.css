@@ -1,10 +1,7 @@
 
-@media screen and (max-width: 500px) {
-    /* 移动端显示隐藏模块 start  */
+/*@media screen and (max-width: 500px) {
         .mobile-show {display: block !important;}
         .mobile-hide {display: none !important;}
-    /* 移动端显示隐藏模块 end  */
-    
     .container-fluid {padding: 0 !important;}
     #group-header {background: #edf3ff;padding: 18px 16px;}
     .anticon {color: #10131a !important;}
@@ -38,4 +35,38 @@
     .yys-list > li {margin-bottom: 26px;}
     .yys-zl_b {font-weight: bold;color: #000;margin-bottom: 4px;}
     .yys-zl_t {color: #999;}
+}*/
+
+@media screen and (max-width: 769px) {
+    #mainBox {width: 100%;}
+    #app h1 {font-size: 14px;white-space: nowrap;}
+    #app .head-box {padding: 4px;}
+    #app .menu-icon,#app .user-icon  {font-size: 18px;}
+    #app .el-menu-item {padding: 0 6px !important;font-size: 12px;height: 38px;line-height: 38px;color: #808695}
+     .home-flex-row {flex-wrap: wrap;}
+    .home-flex-row .el-col {width: 33.33%;flex: none;float: none;border: 1px solid #f1f1f1;}
+    .el-col .text-dt {font-size: 12px;margin-bottom: 0.5rem;}
+    .el-col .text-dd {font-size: 12px;margin-bottom: 1rem;}
+    .ant-card-small > .ant-card-body {padding: 6px;font-size: 12px;}
+    .dw {font-size: 12px;}
+    .space-btm {margin-bottom: 4px;}
+    #app .home-cardtitle {font-size: 12px;}
+    .el-dropdown-menu__item {font-size: 12px;}
+    .el-dialog {max-width: 80% !important;}
+    .el-dialog--center .el-dialog__body {padding: 10px 12px;}
+    .el-form-item__label,.el-input--small {font-size: 12px;}
+    .el-col-12 {width: 100%;}
+    #timeBox {display: none;}
+    .head-box .el-col-24 {width: auto;}
+    #mobile-control-more {display: inline-block !important;vertical-align: middle;padding-top: 5px;}
+    .el-menu {display: none;}
+    .el-menu.mobile-show {display: block !important;}
+    #app .mycard-body {display: block;}
+    .card-imgbox {display: none;}
+    #app .normal-list {width: 100%;padding-left: 0;}
+    h5 {font-size: 12px !important;}
+    #app .mode {padding: 18px 8px 6px;}
+    .ant-statistic-content {font-size: 12px;}
+    #app .title {font-size: 14px;font-weight: normal;}
+    #app p {font-size: 12px;}
 }

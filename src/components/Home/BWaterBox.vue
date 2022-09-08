@@ -3,7 +3,7 @@
 -->
 <template>
     <div class="shuixiang">
-        <div id="hskedu">
+        <div id="hskedu" v-if="this.maxNum && this.minNum">
             <div class="kd" 
                 v-for="(item,key) in (maxNum - minNum + 1)" 
                 :class="{
@@ -105,6 +105,7 @@
                 this.curNum = parseInt(this.liqLv);
                 let allge = this.maxNum - this.minNum;
                 this.oneSpace = parseInt(136 / allge);
+                console.log(this.maxNum - this.minNum + 1);
             }
         },
         mounted() {

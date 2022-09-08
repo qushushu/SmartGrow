@@ -6,12 +6,12 @@
         <!-- first -->
         <li
         :class="['paging-item', 'paging-item--first', {'paging-item--disabled' : index === 1}]"
-        @click="first">首页</li>
+        @click="first">{{$t('message.首页')}}</li>
 
         <!-- prev -->
         <li
         :class="['paging-item', 'paging-item--prev', {'paging-item--disabled' : index === 1}]"
-        @click="prev">上一页</li>
+        @click="prev">{{$t('message.上一页')}}</li>
         
         <li
         :class="['paging-item', 'paging-item--more']"
@@ -29,16 +29,16 @@
         <!-- next -->
         <li
         :class="['paging-item', 'paging-item--next', {'paging-item--disabled' : index === pages}]"
-        @click="next">下一页</li>
+        @click="next">{{$t('message.下一页')}}</li>
 
          <!-- last -->
         <li
         :class="['paging-item', 'paging-item--last', {'paging-item--disabled' : index === pages}]"
-        @click="last">末页</li>
+        @click="last">{{$t('message.末页')}}</li>
     </ul>
 </template>
 <style scoped>
-     .mo-paging {
+.mo-paging {
     display: inline-block;
     padding: 0;
     margin: 1rem 0;

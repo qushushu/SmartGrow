@@ -36,7 +36,7 @@ export default function download(json,fileName){
     saveAs(tmpDown,fileName);
 }
  
-function saveAs(obj, fileName){//导出功能实现
+function saveAs(obj, fileName){ //导出功能实现
     var tmpa = document.createElement("a");
     tmpa.download = fileName || "下载";
     tmpa.href = URL.createObjectURL(obj); //绑定a标签

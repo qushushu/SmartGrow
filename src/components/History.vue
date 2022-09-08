@@ -8,24 +8,24 @@
 	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
-			<PageHeader title="历史记录" goBack=false></PageHeader>
+			<PageHeader :title="$t('message.历史记录')" goBack=false></PageHeader>
 			<!-- 头部标题 end -->
 			<a-row type="flex" justify="start">
 				<!-- 下拉选项 start -->
 				<a-col>
 					<a-select :default-value="current" style="width: 120px" @change="handleChange">
-				      <a-select-option value="ana"> 模拟量历史 </a-select-option>
-				      <a-select-option value="dig"> 开关量历史 </a-select-option>
-				      <a-select-option value="alarm"> 告警历史 </a-select-option>
-				      <a-select-option value="light"> 植物灯历史 </a-select-option>
-				      <a-select-option value="comm"> 通信历史 </a-select-option>
-				      <a-select-option value="param"> 参数历史 </a-select-option>
+				      <a-select-option value="ana"> {{$t('message.模拟量历史')}} </a-select-option>
+				      <a-select-option value="dig"> {{$t('message.开关量历史')}} </a-select-option>
+				      <a-select-option value="alarm"> {{$t('message.告警历史')}} </a-select-option>
+				      <a-select-option value="light"> {{$t('message.植物灯历史')}} </a-select-option>
+				      <a-select-option value="comm"> {{$t('message.通信历史')}} </a-select-option>
+				      <a-select-option value="param"> {{$t('message.参数历史')}} </a-select-option>
 				    </a-select>
 				</a-col>
 				<!-- 下拉选项 end -->
  				<!-- 日期选择 start -->
 				<a-col style="margin-left: 8px;">
-					<a-range-picker @change="onChange" :placeholder="['开始日期', '结束日期']" />
+					<a-range-picker @change="onChange" :placeholder="[$t('message.开始日期'), $t('message.结束日期')]" />
 				</a-col>
  				<!-- 日期选择 end -->
 			</a-row>
@@ -92,8 +92,16 @@
 		      this.start_time = dateString[0];
 		      this.end_time = dateString[1];
 		    },
+		    getCurrentTime() {
+		    	return {
+		    		start_time : new Date((new Date() - 24 * 60 * 60 * 1000)).toISOString(),
+		    		end_time: new Date().toISOString()
+		    	}
+		    }
 		},
 		mounted() {
+			this.start_time = this.getCurrentTime().start_time;
+			this.end_time = this.getCurrentTime().end_time;
 			autoJump(1);
 		}
 	}

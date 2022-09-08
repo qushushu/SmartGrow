@@ -3,17 +3,17 @@
 -->
 <template>
     <div>
-        <el-row :gutter="10">
+        <el-row :gutter="10" v-if="!isPlant">
             <el-col :span="12">
                 <!-- 左喷灌泵 start -->
                 <div class="home-cardbox">
                     <div class="home-cardtitle flex-between">
-                        <span>左喷灌泵</span>
+                        <span>{{$t("message.左喷灌泵")}}</span>
                         <el-switch v-model="runInfo.dig.SIP1 == 1" disabled></el-switch>
                     </div>
                     <div class="home-cardinner">
-                        <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP1T || "--"}}</div>
-                        <div>下次喷灌时间：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
+                        <div>{{$t("message.本次喷灌持续时长")}}（s）：{{runInfo.ana.SIP1T || "--"}}</div>
+                        <div>{{$t("message.下次喷灌时间")}}：{{runInfo.ana.SIP1NT ? minuteToTime(runInfo.ana.SIP1NT)  : "--"}}</div>
                     </div>
                 </div>
                 <!-- 左喷灌泵 end -->
@@ -22,105 +22,117 @@
                 <!-- 右喷灌泵 start -->
                 <div class="home-cardbox">
                     <div class="home-cardtitle flex-between">
-                        <span>右喷灌泵</span>
+                        <span>{{$t("message.右喷灌泵")}}</span>
                         <el-switch v-model="runInfo.dig.SIP2 == 1" disabled></el-switch>
                      </div>
                     <div class="home-cardinner">
-                        <div>本次喷灌持续时长（s）：{{runInfo.ana.SIP2T || "--"}}</div>
-                        <div>下次喷灌时间：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
+                        <div>{{$t("message.本次喷灌持续时长")}}（s）：{{runInfo.ana.SIP2T || "--"}}</div>
+                        <div>{{$t("message.下次喷灌时间")}}：{{runInfo.ana.SIP2NT ? minuteToTime(runInfo.ana.SIP2NT)  : "--"}}</div>
                     </div>
                 </div>
                 <!-- 右喷灌泵 end -->
             </el-col>
         </el-row>
+        <el-row :gutter="10" v-if="isPlant">
+            <el-col :span="12">
+                <div class="home-cardbox">
+                    <div class="home-cardtitle flex-between">{{$t("message.喷灌泵")}}<span style="font-size: 12px;"><span>{{$t("message.本次喷灌持续时长")}}（s）：</span> -- <span>{{$t("message.下次喷灌时间")}}：</span> --</span></div>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="home-cardbox">
+                    <div class="home-cardtitle flex-between">{{$t("message.水阀")}}<el-switch  disabled></el-switch></div>
+                </div>
+            </el-col>
+        </el-row>
+        
         <el-row :gutter="10">
             <el-col :span="12">
                 <!-- 回水泵 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle flex-between">回水泵<el-switch v-model="runInfo.dig.BWP1 == 1" disabled></el-switch></div>
+                    <div class="home-cardtitle flex-between">{{$t("message.回水泵")}}<el-switch v-model="runInfo.dig.BWP1 == 1" disabled></el-switch></div>
                 </div>
                 <!-- 回水泵 end -->
             </el-col>
             <el-col :span="12">
                  <!-- 补水阀 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle flex-between">补水阀<el-switch v-model="runInfo.dig.WSV == 1" disabled></el-switch></div>
+                    <div class="home-cardtitle flex-between">{{$t("message.补水阀")}}<el-switch v-model="runInfo.dig.WSV == 1" disabled></el-switch></div>
                 </div>
                 <!-- 补水阀 end -->
             </el-col>
         </el-row>
         <!-- 水阀 start -->
-           
-            <el-row :gutter="10">
-                <el-col :span="12">
-                    <div class="home-cardbox">
-                        <div class="home-cardtitle">左侧水阀</div>
-                        <table class="normal-table">
-                            <tr>
-                                <td class="flex-between">
-                                    <span>4层</span> 
-                                    <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>3层</span>
-                                    <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>2层</span> 
-                                    <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>1层</span>
-                                    <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </el-col>
-                <el-col :span="12">
-                    <div class="home-cardbox">
-                        <div class="home-cardtitle">右侧水阀</div>
-                        <table class="normal-table">
-                            <tr>
-                                <td class="flex-between">
-                                    <span>4层</span> 
-                                    <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>3层</span> 
-                                    <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>2层</span> 
-                                    <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="flex-between">
-                                    <span>1层</span> 
-                                    <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </el-col>
-            </el-row>
+        <el-row :gutter="10" v-if="!isPlant">
+            <el-col :span="12">
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">{{$t("message.左侧水阀")}}</div>
+                    <table class="normal-table">
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.4层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VL4 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.3层")}}</span>
+                                <el-switch v-model="runInfo.dig.VL3 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.2层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VL2 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.1层")}}</span>
+                                <el-switch v-model="runInfo.dig.VL1 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="home-cardbox">
+                    <div class="home-cardtitle">{{$t("message.右侧水阀")}}</div>
+                    <table class="normal-table">
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.4层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VR4 == '1'" disabled class="space-left1"></el-switch></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.3层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VR3 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.2层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VR2 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="flex-between">
+                                <span>{{$t("message.1层")}}</span> 
+                                <el-switch v-model="runInfo.dig.VR1 == '1'" disabled class="space-left1"></el-switch>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </el-col>
+        </el-row>
         <!-- 水阀 end -->
         <el-row :gutter="10">
             <el-col :span="12">
                 <!-- 液位 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">液位</div>
+                    <div class="home-cardtitle">{{$t("message.液位")}}</div>
                     <div class="home-cardinner">
                          <WaterBox 
                             :liqLv="liqLv"
@@ -136,7 +148,7 @@
             <el-col :span="12">
                 <!-- 回水液位 start -->
                 <div class="home-cardbox">
-                    <div class="home-cardtitle">回水液位</div>
+                    <div class="home-cardtitle">{{$t("message.回水液位")}}</div>
                     <div class="home-cardinner">
                          <BWaterBox 
                              :liqLv="liqLv1"
@@ -186,24 +198,11 @@
             }
         },
         computed: {
+            isPlant() {
+                return this.$store.state.isPlant;
+            },
             runInfo() {
                 return this.$store.state.runInfo;
-            },
-            curDevInfo() {
-                return this.$store.state.curDevInfo;
-            },
-            level_tv() {
-                if(this.curDevInfo.param_item) {
-                  let s = this.curDevInfo.param_item;
-                  let m = s.filter(item => item.param_code === "LEVEL_TV");
-                  if(m && m[0]) {
-                    return m[0].value;
-                  } else {
-                      return 0;
-                  }
-                } else {
-                  return 0;
-                }
             },
             liqLv() {
                 return this.runInfo.ana.LIQ_LV ? (this.runInfo.ana.LIQ_LV.toFixed(1) + 'cm') : '未知'
@@ -234,10 +233,6 @@
             },
             lvAdj1() {
                 return this.runInfo.param.LV_BW_ADJ ? (this.runInfo.param.LV_BW_ADJ + 'cm') : '未知'
-            },
-            // 是否为移动端
-            isMobile() {
-                return this.$store.state.isMobile;
             },
         },
         components: {

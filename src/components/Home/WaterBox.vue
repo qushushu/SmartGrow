@@ -3,7 +3,7 @@
 -->
 <template>
     <div class="shuixiang">
-        <div id="kedu">
+        <div id="kedu" v-if="this.maxNum && this.minNum">
             <div class="kd" 
                 v-for="(item,key) in (maxNum - minNum + 1)" 
                 :class="{

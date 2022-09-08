@@ -8,7 +8,7 @@ import "./assets/mobile-style.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
-  Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { locale })
 import store from "./store"
 import axios from 'axios'
 import VueI18n from "vue-i18n"
@@ -18,6 +18,7 @@ const i18n = new VueI18n({
   messages: {
     "zh": require("./i18n/langs/zh"),    // 引入语言包
     "en": require("./i18n/langs/en"),
+    "fr": require("./i18n/langs/fr"),
   }
 })
 // 设置axios请求的token

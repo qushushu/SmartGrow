@@ -4,136 +4,136 @@
 <template>
     <div>
         <div class="btn-mode-toggle">
-            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">表格</el-button>
-            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">图表</el-button>
+            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">{{$t('message.表格')}}</el-button>
+            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">{{$t('message.图表')}}</el-button>
         </div>
         <div v-show="mode=='table'">
-            <el-table ref="multipleTable" :data="alarmTable" border stripe size="small" tooltip-effect="dark" style="margin-top: 20px;" empty-text="暂无数据">
-                <el-table-column prop="time" label="时间" width="143"> </el-table-column>
-                <el-table-column prop="A_BW_LV_LO" label="回水液位越下限"> 
+            <el-table ref="multipleTable" :data="alarmTable" border stripe size="small" tooltip-effect="dark" style="margin-top: 20px;" :empty-text="$t('message.暂无数据')">
+                <el-table-column prop="time" :label="$t('message.时间')" width="143"> </el-table-column>
+                <el-table-column prop="A_BW_LV_LO" :label="$t('message.回水液位越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_BW_LV_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_BW_LV_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_BW_LV_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_BW_LV_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_BW_LV_UP" label="回水液位越上限">
+                <el-table-column prop="A_BW_LV_UP" :label="$t('message.回水液位越上限')">
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_BW_LV_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_BW_LV_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_BW_LV_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_BW_LV_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_CO2_LO" label="二氧化碳越下限"> 
+                <el-table-column prop="A_CO2_LO" :label="$t('message.二氧化碳越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_CO2_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_CO2_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_CO2_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_CO2_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_CO2_UP" label="二氧化碳越上限"> 
+                <el-table-column prop="A_CO2_UP" :label="$t('message.二氧化碳越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_CO2_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_CO2_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_CO2_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_CO2_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_EC_LO" label="EC越下限"> 
+                <el-table-column prop="A_EC_LO" :label="$t('message.EC越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_EC_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_EC_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_EC_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_EC_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_EC_UP" label="EC越上限"> 
+                <el-table-column prop="A_EC_UP" :label="$t('message.EC越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_EC_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_EC_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_EC_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_EC_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_HUM_OL" label="湿度越限"> 
+                <el-table-column prop="A_HUM_OL" :label="$t('message.湿度越限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_HUM_OL =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_HUM_OL == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_HUM_OL =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_HUM_OL == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_LIQ_T_LO" label="液温越下限"> 
+                <el-table-column prop="A_LIQ_T_LO" :label="$t('message.液温越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_LIQ_T_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_LIQ_T_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_LIQ_T_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_LIQ_T_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_LIQ_T_UP" label="液温越上限"> 
+                <el-table-column prop="A_LIQ_T_UP" :label="$t('message.液温越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_LIQ_T_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_LIQ_T_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_LIQ_T_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_LIQ_T_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_LV_LO" label="液位越下限"> 
+                <el-table-column prop="A_LV_LO" :label="$t('message.液位越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_LV_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_LV_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_LV_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_LV_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_LV_UP" label="液位越上限"> 
+                <el-table-column prop="A_LV_UP" :label="$t('message.液位越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_LV_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_LV_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_LV_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_LV_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_PH_LO" label="PH越下限"> 
+                <el-table-column prop="A_PH_LO" :label="$t('message.PH越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_PH_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_PH_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_PH_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_PH_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_PH_UP" label="PH越上限"> 
+                <el-table-column prop="A_PH_UP" :label="$t('message.PH越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_PH_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_PH_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_PH_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_PH_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_QY1" label="营养液A缺液"> 
+                <el-table-column prop="A_QY1" :label="$t('message.营养液A缺液')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_QY1 =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_QY1 == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_QY1 =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_QY1 == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_QY2" label="营养液B缺液"> 
+                <el-table-column prop="A_QY2" :label="$t('message.营养液B缺液')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_QY2 =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_QY2 == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_QY2 =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_QY2 == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_QY3" label="营养液C缺液"> 
+                <el-table-column prop="A_QY3" :label="$t('message.营养液C缺液')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_QY3 =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_QY3 == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_QY3 =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_QY3 == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_QY4" label="酸缺液"> 
+                <el-table-column prop="A_QY4" :label="$t('message.酸缺液')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_QY4 =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_QY4 == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_QY4 =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_QY4 == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_QY5" label="碱缺液"> 
+                <el-table-column prop="A_QY5" :label="$t('message.碱缺液')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_QY5 =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_QY5 == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_QY5 =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_QY5 == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_TEMP_OL" label="温度越限"> 
+                <el-table-column prop="A_TEMP_OL" :label="$t('message.温度越限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_TEMP_OL =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_TEMP_OL == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_TEMP_OL =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_TEMP_OL == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_WP_LO" label="出水管压力越下限"> 
+                <el-table-column prop="A_WP_LO" :label="$t('message.出水管压力越下限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_WP_LO =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_WP_LO == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_WP_LO =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_WP_LO == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="A_WP_UP" label="出水管压力越上限"> 
+                <el-table-column prop="A_WP_UP" :label="$t('message.出水管压力越上限')"> 
                     <template slot-scope="scope">
-                        <div v-if="scope.row.A_WP_UP =='1'" class="text-fail"> 异常 </div>
-                        <div v-if="scope.row.A_WP_UP == '0'" class="text-success"> 正常 </div>
+                        <div v-if="scope.row.A_WP_UP =='1'" class="text-fail"> {{$t('message.异常')}} </div>
+                        <div v-if="scope.row.A_WP_UP == '0'" class="text-success"> {{$t('message.正常')}} </div>
                     </template>
                 </el-table-column>
             </el-table>
@@ -141,11 +141,11 @@
         </div>
         <div v-show="mode=='chart'" style="padding-top: 30px;">
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                 <el-tab-pane label="回水液位" name="A_BW-chart">
+                 <el-tab-pane :label="$t('message.回水液位')" name="A_BW-chart">
                       <div id="A_BW-chart1" class="line-chart"></div>
                       <div id="A_BW-chart2" class="line-chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="二氧化碳" name="A_CO2-chart">
+                 <el-tab-pane label="CO2" name="A_CO2-chart">
                       <div id="A_CO2-chart1" class="line-chart"></div>
                       <div id="A_CO2-chart2" class="line-chart"></div>
                  </el-tab-pane>
@@ -153,17 +153,17 @@
                       <div id="A_EC-chart1" class="line-chart"></div>
                       <div id="A_EC-chart2" class="line-chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="湿度" name="A_HUM-chart">
+                 <el-tab-pane :label="$t('message.湿度')" name="A_HUM-chart">
                       <div id="A_HUM-chart" class="normal-line_chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="温度" name="A_TEMP-chart">
+                 <el-tab-pane :label="$t('message.温度')" name="A_TEMP-chart">
                       <div id="A_TEMP-chart" class="normal-line_chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="液温" name="A_LIQ_T-chart">
+                 <el-tab-pane :label="$t('message.液温')" name="A_LIQ_T-chart">
                       <div id="A_LIQ_T-chart1" class="line-chart"></div>
                       <div id="A_LIQ_T-chart2" class="line-chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="液位" name="A_LV-chart">
+                 <el-tab-pane :label="$t('message.液位')" name="A_LV-chart">
                       <div id="A_LV-chart1" class="line-chart"></div>
                       <div id="A_LV-chart2" class="line-chart"></div>
                  </el-tab-pane>
@@ -171,14 +171,14 @@
                       <div id="A_PH-chart1" class="line-chart"></div>
                       <div id="A_PH-chart2" class="line-chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="缺液" name="A_QY-chart">
+                 <el-tab-pane :label="$t('message.缺液')" name="A_QY-chart">
                       <div id="A_QY-chart1" class="line-chart"></div>
                       <div id="A_QY-chart2" class="line-chart"></div>
                       <div id="A_QY-chart3" class="line-chart"></div>
                       <div id="A_QY-chart4" class="line-chart"></div>
                       <div id="A_QY-chart5" class="line-chart"></div>
                  </el-tab-pane>
-                 <el-tab-pane label="出水管压力" name="A_WP-chart">
+                 <el-tab-pane :label="$t('message.出水管压力')" name="A_WP-chart">
                       <div id="A_WP-chart1" class="line-chart"></div>
                       <div id="A_WP-chart2" class="line-chart"></div>
                  </el-tab-pane>
@@ -219,67 +219,67 @@
                 total_alarm : 0,
                 arrParamData: [{
                     param: "A_BW_LV_LO",
-                    name: "回水液位越下限"
+                    name: this.$t('message.回水液位越下限')
                 },{
                     param: "A_BW_LV_UP",
-                    name: "回水液位越上限"
+                    name: this.$t('message.回水液位越上限')
                 },{
                     param: "A_CO2_LO",
-                    name: "二氧化碳越下限"
+                    name: this.$t('message.二氧化碳越下限')
                 },{
                     param: "A_CO2_UP",
-                    name: "二氧化碳越上限"
+                    name: this.$t('message.二氧化碳越上限')
                 },{
                     param: "A_EC_LO",
-                    name: "EC越下限"
+                    name: this.$t('message.EC越下限')
                 },{
                     param: "A_EC_UP",
-                    name: "EC越上限"
+                    name: this.$t('message.EC越上限')
                 },{
                     param: "A_HUM_OL",
-                    name: "湿度越限"
+                    name: this.$t('message.湿度越限')
                 },{
                     param: "A_LIQ_T_LO",
-                    name: "液温越下限"
+                    name: this.$t('message.液温越下限')
                 },{
                     param: "A_LIQ_T_UP",
-                    name: "液温越上限"
+                    name: this.$t('message.液温越上限')
                 },{
                     param: "A_LV_LO",
-                    name: "液位越下限"
+                    name: this.$t('message.液位越下限')
                 },{
                     param: "A_LV_UP",
-                    name: "液位越上限"
+                    name: this.$t('message.液位越上限')
                 },{
                     param: "A_PH_LO",
-                    name: "PH越下限"
+                    name: this.$t('message.PH越下限')
                 },{
                     param: "A_PH_UP",
-                    name: "PH越上限"
+                    name: this.$t('message.PH越上限')
                 },{
                     param: "A_QY1",
-                    name: "营养液A缺液"
+                    name: this.$t('message.营养液A缺液')
                 },{
                     param: "A_QY2",
-                    name: "营养液B缺液"
+                    name: this.$t('message.营养液B缺液')
                 },{
                     param: "A_QY3",
-                    name: "营养液C缺液"
+                    name: this.$t('message.营养液C缺液')
                 },{
                     param: "A_QY4",
-                    name: "酸缺液"
+                    name: this.$t('message.酸缺液')
                 },{
                     param: "A_QY5",
-                    name: "碱缺液"
+                    name: this.$t('message.碱缺液')
                 },{
                     param: "A_TEMP_OL",
-                    name: "温度越限"
+                    name: this.$t('message.温度越限')
                 },{
                     param: "A_WP_LO",
-                    name: "出水管压力越下限"
+                    name: this.$t('message.出水管压力越下限')
                 },{
                     param: "A_WP_UP",
-                    name: "出水管压力越上限"
+                    name: this.$t('message.出水管压力越上限')
                 }]
             }
         },
@@ -339,7 +339,6 @@
                         }
                     }
                 }).then(data => {
-                    
                     if(data.data.code == 200) {
                         let tb = [];
                         data.data.data.forEach(item => {

@@ -7,17 +7,19 @@
 	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
-			<PageHeader title="查看阶段" goBack=true></PageHeader>
+			<PageHeader :title="$t('message.查看阶段')" goBack=true></PageHeader>
 			<!-- 头部标题 end -->
 			<!-- 导出excel start -->
-			<el-button type="primary" size="small" @click="downloadExl" :disabled="!!!tableData1.length">导出excel</el-button>
+			<el-button type="primary" size="small" @click="downloadExl" :disabled="!!!tableData.length" class="space-btm1">{{$t('message.导出excel')}}</el-button>
 			<!-- 导出excel end -->
-			<el-table ref="multipleTable" :data="tableData1" height="300" border stripe size="small" empty-text tooltip-effect="dark" style="margin-top: 20px;">
+			<!-- 数据表格 start -->
+			<el-table ref="multipleTable" :data="tableData" height="300" border stripe size="small" empty-text tooltip-effect="dark" class="space-btm">
 				<el-table-column size="small" v-for="item,key in colList" :key="key" :prop="item.prop" :label="item.label"></el-table-column>
 			</el-table>
-			<div style="margin-top: 10px;">
-				<el-button type="primary" size="small" @click="handleEdit">编辑</el-button>
-			</div>
+			<!-- 数据表格 end -->
+			<!-- 编辑按钮 start -->
+			<el-button type="primary" size="small" @click="handleEdit">{{$t('message.编辑')}}</el-button>
+			<!-- 编辑按钮 end -->
 		</a-card>
 	</div>
 </template>
@@ -31,57 +33,7 @@
 			return {
 				id: 0,
 				scheme_name: "",
-		        tableData: [{
-		        	ename: "stage_name",
-		        	cs: '阶段名称',
-		        	csz: '',
-		        },{
-	        		ename: "DAY_OFFSET",
-		        	cs: '天数',
-		        	csz: '',
-		        },{
-	        		ename: "EC_TV",
-		          	cs: 'EC',
-		          	csz: '',
-		        },{
-		        	ename: "PH_TV",
-		          	cs: 'PH',
-		          	csz: '',
-		        },{
-		        	ename: "SUNRIZE",
-		          	cs: '日出时间',
-		          	csz: '',
-		        },{
-		        	ename: "SUNSET",
-		          	cs: '日落时间',
-		          	csz: '',
-		        },{
-		        	ename: "TEMP_DAY",
-			        cs: '日间温度',
-			        csz: '',
-		        },{
-		        	ename: "TEMP_NIGHT",
-		          	cs: '夜间温度',
-		          	csz: '',
-		        },{
-		        	ename: "HUM_DAY",
-		          	cs: '日间湿度',
-		          	csz: '',
-		        },{
-		        	ename: "HUM_NIGHT",
-		          	cs: '夜间湿度',
-		          	csz: '',
-		        },{
-		        	ename: "CO2",
-		          	cs: 'CO2浓度',
-		          	csz: '',
-		        },{
-		        	ename: "LIQ_TEMP",
-		          	cs: '营养液温度',
-		          	csz: '',
-		        }],
-		        tableData1: [],
-		        curStageId: 0
+		        tableData: [],
 	      	}
 		},
 		components: {
@@ -92,12 +44,43 @@
                 return this.$store.state.apiurl;
             },
             colList() {
-				return this.tableData.map(item => {
-					return {
-						prop: item.ename,
-						label: item.cs
-					}
-				})
+            	return [{
+		        	prop: "stage_name",
+		        	label: '阶段名称',
+		        },{
+	        		prop: "DAY_OFFSET",
+		        	label: '天数',
+		        },{
+	        		prop: "EC_TV",
+		          	label: 'EC',
+		        },{
+		        	prop: "PH_TV",
+		          	label: 'PH',
+		        },{
+		        	prop: "SUNRIZE",
+		          	label: '日出时间',
+		        },{
+		        	prop: "SUNSET",
+		          	label: '日落时间',
+		        },{
+		        	prop: "TEMP_DAY",
+			        label: '日间温度',
+		        },{
+		        	prop: "TEMP_NIGHT",
+		          	label: '夜间温度',
+		        },{
+		        	prop: "HUM_DAY",
+		          	label: '日间湿度',
+		        },{
+		        	prop: "HUM_NIGHT",
+		          	label: '夜间湿度',
+		        },{
+		        	prop: "CO2",
+		          	label: 'CO2浓度',
+		        },{
+		        	prop: "LIQ_TEMP",
+		          	label: '营养液温度',
+		        }];
 			}
 	    },
 	    methods: {
@@ -114,12 +97,10 @@
 	    		}).then(data => {
 	    			if(data.data.code == 200) {
 	    				data.data.data.stage_item.forEach(item => {
-		    				const itm = {
-		    					...item.stage_content[0]
-		    				}
+		    				const itm = {...item.stage_content[0]};
 		    				itm.SUNRIZE = minuteToTime(itm.SUNRIZE);
 		    				itm.SUNSET = minuteToTime(itm.SUNSET);
-		    				this.tableData1.push(itm);
+		    				this.tableData.push(itm);
 	    				});
 	    			}
 	    		})
@@ -144,24 +125,26 @@
                     'CO2浓度' : "CO2",
                     '营养液温度' : "LIQ_TEMP"
                 };
-			    let result = this.tableData1.map(item => {
+			    let result = this.tableData.map(item => {
+			    	const nodataText="--";
+			    	let {stage_name,DAY_OFFSET,EC_TV,PH_TV,SUNRIZE,SUNSET,TEMP_DAY,TEMP_NIGHT,HUM_DAY,HUM_NIGHT,CO2,LIQ_TEMP} = item;
 			    	return {
-			    		"阶段名称" : item.stage_name || "-",
-			    		"天数" : item.DAY_OFFSET || "--",
-			    		"EC" : item.EC_TV || "--",
-			    		"PH" : item.PH_TV || "--",
-			    		"日出时间" : item.SUNRIZE || "--",
-			    		"日落时间" : item.SUNSET || "--",
-			    		'日间温度' : item.TEMP_DAY || "--",
-			    		'夜间温度' : item.TEMP_NIGHT || "--",
-			    		'日间湿度' : item.HUM_DAY || "--",
-			    		'夜间湿度' : item.HUM_NIGHT || "--",
-			    		'CO2浓度' : item.CO2 || "--",
-			    		'营养液温度' : item.LIQ_TEMP || "--"
+			    		"阶段名称" : stage_name || nodataText,
+			    		"天数" : DAY_OFFSET || nodataText,
+			    		"EC" : EC_TV || nodataText,
+			    		"PH" : PH_TV || nodataText,
+			    		"日出时间" : SUNRIZE || nodataText,
+			    		"日落时间" : SUNSET || nodataText,
+			    		'日间温度' : TEMP_DAY || nodataText,
+			    		'夜间温度' : TEMP_NIGHT || nodataText,
+			    		'日间湿度' : HUM_DAY || nodataText,
+			    		'夜间湿度' : HUM_NIGHT || nodataText,
+			    		'CO2浓度' : CO2 || nodataText,
+			    		'营养液温度' : LIQ_TEMP || nodataText
 			    	}
 			    });
                 result.unshift(baseJson);
-			    download(result, this.scheme_name +'方案阶段列表.xlsx')//导出的文件名
+			    download(result, this.scheme_name +'方案阶段列表.xlsx');
 	    	},
 		},
 		mounted() {

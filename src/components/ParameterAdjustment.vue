@@ -7,27 +7,27 @@
 	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
-			<PageHeader title="设置参数值" goBack=true></PageHeader>
+			<PageHeader :title="$t('message.设置参数值')" goBack=true></PageHeader>
 			<!-- 头部标题 end -->
 			<!-- 表格 start -->
 			<el-table ref="multipleTable" :data="tableData" border stripe size="small" height="300px" tooltip-effect="dark" style="margin-top: 20px;">
-			    <el-table-column prop="sort_index" label="序号" width="50"></el-table-column>
-			    <el-table-column prop="param_code" label="代码" width="100"></el-table-column>
-			    <el-table-column prop="name" label="参数项" width="200"></el-table-column>
-			    <el-table-column prop="unit" label="单位" width="100"></el-table-column>
-			    <el-table-column prop="remark" label="备注" width="200"></el-table-column>
-			    <el-table-column prop="ref_value" label="参数值">
+			    <el-table-column prop="sort_index" :label="$t('message.序号')" width="50"></el-table-column>
+			    <el-table-column prop="param_code" :label="$t('message.代码')" width="100"></el-table-column>
+			    <el-table-column prop="name" :label="$t('message.参数项')" width="200"></el-table-column>
+			    <el-table-column prop="unit" :label="$t('message.单位')" width="100"></el-table-column>
+			    <el-table-column prop="remark" :label="$t('message.备注')" width="200"></el-table-column>
+			    <el-table-column prop="ref_value" :label="$t('message.参数值')">
 		    		<template slot-scope="scope">
-		    			<el-input placeholder="请输入内容" size="small" v-model="scope.row.ref_value"></el-input>
+		    			<el-input :placeholder="$t('message.请输入内容')" size="small" v-model="scope.row.ref_value"></el-input>
 					</template>
 			    </el-table-column>
 			</el-table>
 			<!-- 表格 end -->
 			<!-- 功能按钮 start -->
 			<div style="padding-top: 10px;">
-				<el-button type="primary" size="small" @click="save">保存</el-button>
-				<el-button type="default" size="small" @click="write" v-loading.fullscreen.lock="fullscreenLoading">写设备参数</el-button>
-				<el-button type="warning" size="small" @click="read">读设备参数</el-button>
+				<el-button type="primary" size="small" @click="save">{{$t('message.保存')}}</el-button>
+				<el-button type="default" size="small" @click="write" v-loading.fullscreen.lock="fullscreenLoading">{{$t('message.写设备参数')}}</el-button>
+				<el-button type="warning" size="small" @click="read">{{$t('message.读设备参数')}}</el-button>
 			</div>
 			<!-- 功能按钮 end -->
 		</a-card>
@@ -43,10 +43,23 @@
 			return {
 				fullscreenLoading: false,
 				param_item: {},
-		        tableData: [],
-		        originArr: []
+		        tableData: []  // 表格数据
 	      	}
 		},
+		computed: {
+	    	apiurl() {
+                return this.$store.state.apiurl;
+            },
+            operateNo() {
+            	return this.$store.state.user.operateNo;
+            },
+            op_id() {
+            	return this.$store.state.user.userId;
+            },
+            isPlant() {
+            	return this.$store.state.isPlant;
+            }
+	    },
 		components: {
 	    	PageHeader
 	    },
@@ -63,21 +76,7 @@
 	    			}
 	    		}).then(data => {
 	    			if(data.data.code == 200) {
-	    				let tmpArr = [];
-	    				tmpArr = data.data.data.param_item.map(item => {
-	    					return {
-	    						id: item.id,
-	    						dev_model_id: item.dev_model_id,
-		    					name: item.name,
-		    					sort_index: item.sort_index,
-		          				ref_value:  item.ref_value,
-		          				unit: item.unit,
-		          				remark: item.remark,
-		          				param_code: item.param_code
-	    					}
-	    				})
-	    				this.tableData = tmpArr;
-	    				this.originArr =  data.data.data.param_item;
+	    				this.tableData = data.data.data.param_item;
 	    				this.get_dev();
 	    			}
 	    		})
@@ -132,7 +131,6 @@
 		    		}).then(data => {
 		    			if(data.data.code == 200) {
 		    				resolve();
-		    				
 		    			}
 		    		})
 	    		})
@@ -143,7 +141,7 @@
 	    		res.then(_=> {
 	    			this.$message({
 		              type: 'success',
-		              message: '保存成功'
+		              message: this.$t('message.保存成功')
 		            });
     				this.getList();
 	    		})
@@ -155,9 +153,9 @@
 	    			method: "post",
 	    			data: {
 	    				data: {
-	    					"operateNo": "test123",
-					        "op_id": "1",
-					        "op_type": "OP_SEEDLING_CALL_SET",     
+	    					"operateNo": this.operateNo,
+					        "op_id": this.op_id,
+					        "op_type": this.isPlant ? "OP_PLANT_CALL_SET" : "OP_SEEDLING_CALL_SET",     
 					        "dev_id": parseInt(this.$route.query.dev_inst_id)
 				        }
 	    			}
@@ -186,23 +184,22 @@
 			        	this.tableData = result;
 			        	this.$message({
 			              type: 'success',
-			              message: '读取成功'
+			              message: this.$t('message.读取成功')
 			            });
 	    			}
 	    		})
 	    	},
 	    	// 写设备参数
 	    	write() {
-	    		this.$confirm('确认写入设备参数？', '确认信息', {
+	    		this.$confirm(this.$t('message.确认写入设备参数？'), this.$t('message.确认信息'), {
                     distinguishCancelAndClose: true,
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消'
+                    confirmButtonText: this.$t('message.确认'),
+                    cancelButtonText: this.$t('message.取消')
                 }).then(()=> {
                 	let res = this.baseSave();
                 	res.then(_ => {
 	                	let param_item = [];
 			    		this.tableData.forEach(item => {
-			    			// item = switchTimeToSubmit(item);
 			    			param_item.push({
 			    				param_id: item.sort_index,
 			    				param_code: item["param_code"],
@@ -212,12 +209,12 @@
 			    		this.fullscreenLoading = true;
 			    		let data = {
 			    			data: {
-								"operateNo": "111",
-						        "op_id": "1",
-						        "op_type": "OP_SEEDLING_SET_SET",
-						        "dev_id": 1,
-						        "instance_number": this.$route.query.instance_number,     
-						        "item_num": param_item.length,
+			    				operateNo: this.operateNo,
+					        	op_id: this.op_id,
+						        op_type: this.isPlant ? "OP_PLANT_SET_SET" : "OP_SEEDLING_SET_SET",
+						        dev_id: 1,
+						        instance_number: this.$route.query.instance_number,     
+						        item_num: param_item.length,
 					            dev_inst_id: parseInt(this.$route.query.dev_inst_id),
 		    					dev_model_id: parseInt(this.$route.query.dev_model_id),
 		    					item: param_item
@@ -232,7 +229,7 @@
 			    			if(data.data.code == 200) {
 			    				this.$message({
 					              type: 'success',
-					              message: '操作成功'
+					              message: this.$t('message.操作成功')
 					            });
 					            this.getList();
 			    			}
@@ -240,11 +237,6 @@
                 	})
                 })
 	    	},
-	    },
-	    computed: {
-	    	apiurl() {
-                return this.$store.state.apiurl;
-            }
 	    },
 	    mounted() {
 	    	this.getList();

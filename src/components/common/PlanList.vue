@@ -56,12 +56,6 @@
             apiurl() {
                 return this.$store.state.apiurl;
             },
-            localMode() {
-                return this.$store.state.localMode;
-            },
-            noWebTest() {
-                return this.$store.state.noWebTest;
-            }
         },
         props: ["showLayer"],
         methods: {
@@ -70,63 +64,55 @@
             },
             // 获取所有培植方案
             getList() {
-                if(this.localMode && this.noWebTest) {
-                    this.plantList = [{
-                        id: 1,
-                        plant_image: ""
-                    }];
-                    this.$store.commit("changePlanListLayerState",true);
-                } else {
-                    axios({
-                        method: "post",
-                        url: `${this.apiurl}/la/plant/head/get_list`,
+                axios({
+                    method: "post",
+                    url: `${this.apiurl}/la/plant/head/get_list`,
+                    data: {
                         data: {
-                            data: {
-                                formData: {
-                                    plant: "",
-                                    scheme_name: "",
-                                    start_time: "",
-                                    end_time: ""
-                                }
+                            formData: {
+                                plant: "",
+                                scheme_name: "",
+                                start_time: "",
+                                end_time: ""
                             }
                         }
-                    }).then(data => {
-                        if(data.data.code == 200) {
-                            this.plantList = data.data.data;
-                            this.$store.commit("changePlanListLayerState",true);
-                        }
-                    });
-                }
+                    }
+                }).then(data => {
+                    if(data.data.code == 200) {
+                        this.plantList = data.data.data;
+                        this.$store.commit("changePlanListLayerState",true);
+                    }
+                });
             },
             // 切换培植方案
             readyChangePlan(plant_id) {
-                this.$confirm('是否切换该种植方案?', '提示', {
+                this.$confirm(this.$t("message.是否切换该种植方案?"), this.$t("message.提示"), {
                     distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                    confirmButtonText: this.$t("message.确定"),
+                    cancelButtonText: this.$t("message.取消"),
                 }).then(() => {
-                    this.$prompt('请填写切换原因', '切换方案', {
-                      confirmButtonText: '确定',
-                      cancelButtonText: '取消',
+                    this.$prompt(this.$t("message.请填写切换原因"), this.$t("message.切换方案"), {
+                      confirmButtonText: this.$t("message.确定"),
+                      cancelButtonText: this.$t("message.取消"),
                       inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,
-                      inputErrorMessage: '切换原因不能为空'
+                      inputErrorMessage: this.$t("message.切换原因不能为空")
                     }).then(({ value }) => {
                         this.start(plant_id);
                         this.$message({
                             type: 'success',
-                            message: '切换成功!'
+                            message: this.$t("message.切换成功")
                         });
                         this.$store.commit("changePlanListLayerState",false);
                     }).catch(() => {
                         this.$message({
                             type: 'info',
-                            message: '取消切换'
+                            message: this.$t("message.取消切换")
                         });       
                     });
                 }).catch(() => {
                     this.$message({
                         type: 'info',
-                        message: '切换失败'
+                        message: this.$t("message.切换失败")
                     });
                     this.$store.commit("changePlanListLayerState",false);
                 });
@@ -148,7 +134,7 @@
                     if(data.data.code == 200) {
                         this.$message({
                             type: 'success',
-                            message: '方案开启成功'
+                            message: this.$t("message.方案开启成功")
                         });
                         this.$emit("changeState",false);
                     }

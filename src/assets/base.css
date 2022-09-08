@@ -38,7 +38,8 @@
 .space-btm {margin-bottom: 10px;}
 .space-btm1 {margin-bottom: 20px;}
 .text-center {text-align: center;}
-.normal-table,.normal-table td {}
+.text-right {text-align: right;}
+.com-hide {display: none;}
 .normal-table {border-collapse: collapse; width: 100%; table-layout: fixed; }
 .normal-table td { padding: 8px;color: #172b4d;border:  1px solid #f1f1f1;font-size: 12px;}
 .text-dt {font-size: 14px;color:#808695;line-height: 22px;}

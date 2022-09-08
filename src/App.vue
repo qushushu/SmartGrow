@@ -9,7 +9,7 @@
       <Nav></Nav>
       <!-- 导航 end -->
       <!-- 内容 start -->
-      <router-view />
+      <router-view style="flex: 1" />
       <!-- 内容 end -->
     </div>
   </div>

@@ -14,6 +14,7 @@ import PlanStage from '@/components/PlanStage'
 import PlanStageShow from '@/components/PlanStageShow'
 import User from '@/components/User'
 import CreateLanguage from '@/components/CreateLanguage'
+import Sensor from '@/components/Sensor'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import ElementUI from 'element-ui';
@@ -32,6 +33,11 @@ export default new Router({
       path: '/User',
       name: 'User',
       component: User
+    },
+    {
+      path: '/Sensor',
+      name: 'Sensor',
+      component: Sensor
     },
     {
       path: '/CreateLanguage',

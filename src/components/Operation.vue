@@ -6,21 +6,18 @@
 -->
 <template>
 	<div class="ym-main">
-		<div class="mobile-home-tab mobile-bg-cd">
-			<a-card>
-				<el-tabs tab-position="top">
-				    <el-tab-pane label="喷灌"><Operation_1></Operation_1></el-tab-pane>
-				    <el-tab-pane label="配液"><Operation_2></Operation_2></el-tab-pane>
-				    <el-tab-pane label="环境"><Operation_3 ></Operation_3></el-tab-pane>
-				</el-tabs>
-			</a-card>
-		</div>
+		<div class="mode">{{runInfo.dig.AUTO ? $t("message.当前模式为自动模式，如需开关，请调节至手动模式！") : $t("message.当前模式为手动模式，你可以手动打开或关闭各个开关！")}}</div>
+		<a-card>
+			<el-tabs tab-position="top">
+			    <el-tab-pane :label="$t('message.喷灌')"><Operation_1></Operation_1></el-tab-pane>
+			    <el-tab-pane :label="$t('message.配液')"><Operation_2></Operation_2></el-tab-pane>
+			    <el-tab-pane :label="$t('message.环境')"><Operation_3></Operation_3></el-tab-pane>
+			</el-tabs>
+		</a-card>
 	</div>
 </template>
 <style scoped>
-	@media screen and (max-width: 500px) {
-	    .ant-card-body {padding: 0;}
-	}
+	.mode {text-align: center;margin-top: -10px;margin-bottom: 10px;background: rgb(148,221,230,.5);padding: 8px 16px;color: #7a7a7a;font-size: 12px;font-weight: bold;}
 </style>
 <script>
 	import Operation_1 from "./Operation/Operation_1"
@@ -33,6 +30,11 @@
 	    	Operation_2,
 	    	Operation_3
 	    },
+	    computed: {
+            runInfo() {
+                return this.$store.state.runInfo;
+            }
+        },
 	    mounted() {
 	    	autoJump(1);
 	    }

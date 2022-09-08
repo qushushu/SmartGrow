@@ -4,12 +4,12 @@
 <template>
     <div>
         <div class="btn-mode-toggle">
-            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">表格</el-button>
-            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">图表</el-button>
+            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">{{$t('message.表格')}}</el-button>
+            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">{{$t('message.图表')}}</el-button>
         </div>
         <div v-show="mode=='table'">
-            <el-table ref="multipleTable" :data="anaTable" border stripe size="small" tooltip-effect="dark" empty-text="暂无数据">
-                <el-table-column prop="time" label="时间" width="143"> </el-table-column>
+            <el-table ref="multipleTable" :data="anaTable" border stripe size="small" tooltip-effect="dark" :empty-text="$t('message.暂无数据')">
+                <el-table-column prop="time" :label="$t('message.时间')" width="143"> </el-table-column>
                 <el-table-column :prop="item.param" :label="item.name" v-for="(item,key) in arrParamData" :key="key"> </el-table-column>
             </el-table>
             <Pagination v-if="total_ana > 0" :page-index="page_ana" :total="total_ana" :page-size="rows" @change="pageChange_ana"> </Pagination>
@@ -23,34 +23,34 @@
                 <el-tab-pane label="PH" name="PH-chart">
                     <div id="PH-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="液位" name="LIQ_LV-chart">
+                <el-tab-pane :label="$t('message.液位')" name="LIQ_LV-chart">
                     <div id="LIQ_LV-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="液温" name="LIQ_TEMP-chart">
+                <el-tab-pane :label="$t('message.液温')" name="LIQ_TEMP-chart">
                     <div id="LIQ_TEMP-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="质量" name="W-chart">
+                <el-tab-pane :label="$t('message.质量')" name="W-chart">
                     <div id="W-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="转速" name="ZS-chart">
+                <el-tab-pane :label="$t('message.转速')" name="ZS-chart">
                     <div id="ZS-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="出水管压力" name="OUT_PRESS-chart">
+                <el-tab-pane :label="$t('message.出水管压力')" name="OUT_PRESS-chart">
                      <div id="OUT_PRESS-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="二氧化碳浓度" name="CO2-chart">
+                <el-tab-pane :label="$t('message.二氧化碳浓度')" name="CO2-chart">
                     <div id="CO2-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="环境温度" name="TEMP-chart">
+                <el-tab-pane :label="$t('message.环境温度')" name="TEMP-chart">
                     <div id="TEMP-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="湿度" name="HUM-chart">
+                <el-tab-pane :label="$t('message.湿度')" name="HUM-chart">
                     <div id="HUM-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="喷灌持续时间" name="SIPT-chart">
+                <el-tab-pane :label="$t('message.喷灌持续时间')" name="SIPT-chart">
                     <div id="SIPT-chart"  class="normal-chart"></div>
                 </el-tab-pane>
-                <el-tab-pane label="下次喷灌时间" name="SIPNT-chart">
+                <el-tab-pane :label="$t('message.下次喷灌时间')" name="SIPNT-chart">
                     <div id="SIPNT-chart"  class="normal-chart"></div>
                 </el-tab-pane>
             </el-tabs>
@@ -96,82 +96,82 @@
                     name: "PH"
                 },{
                     param: "LIQ_LV",
-                    name: "液位(cm)"
+                    name: this.$t('message.液位') + '(cm)'
                 },{
                     param: "LIQ_B_LV",
-                    name: "回水液位(cm)"
+                    name: this.$t('message.回水液位') + '(cm)'
                 },{
                     param: "LIQ_TEMP",
-                    name: "液温(℃)"
+                    name: this.$t('message.液温') + '(℃)'
                 },{
                     param: "W1",
-                    name: "营养液A质量(kg)"
+                    name: this.$t('message.营养液A质量') + '(kg)'
                 },{
                     param: "W2",
-                    name: "营养液B质量(kg)"
+                    name: this.$t('message.营养液B质量') + '(kg)'
                 },{
                     param: "W3",
-                    name: "营养液C质量(kg)"
+                    name: this.$t('message.营养液C质量') + '(kg)'
                 },{
                     param: "W4",
-                    name: "酸质量(kg)"
+                    name: this.$t('message.酸质量') + '(kg)'
                 },{
                     param: "W5",
-                    name: "碱质量(kg)"
+                    name: this.$t('message.碱质量') + '(kg)'
                 },{
                     param: "WS1",
-                    name: "营养液A起始质量(kg)"
+                    name: this.$t('message.营养液A起始质量') + '(kg)'
                 },{
                     param: "WS2",
-                    name: "营养液B起始质量(kg)"
+                    name: this.$t('message.营养液B起始质量') + '(kg)'
                 },{
                     param: "WS3",
-                    name: "营养液C起始质量(kg)"
+                    name: this.$t('message.营养液C起始质量') + '(kg)'
                 },{
                     param: "WS4",
-                    name: "酸起始质量(kg)"
+                    name: this.$t('message.酸起始质量') + '(kg)'
                 },{
                     param: "WS5",
-                    name: "碱起始质量(kg)"
+                    name: this.$t('message.碱起始质量') + '(kg)'
                 },{
                     param: "ZS1",
-                    name: "营养液A蠕动泵转速(分钟)"
+                    name: this.$t('message.营养液A蠕动泵转速') + "(m)"
                 },{
                     param: "ZS2",
-                    name: "营养液B蠕动泵转速(分钟)"
+                    name: this.$t('message.营养液B蠕动泵转速') + "(m)"
                 },{
                     param: "ZS3",
-                    name: "营养液C蠕动泵转速(分钟)"
+                    name: this.$t('message.营养液C蠕动泵转速') + "(m)"
                 },{
                     param: "ZS4",
-                    name: "酸液蠕动泵转速(分钟)"
+                    name: this.$t('message.酸液蠕动泵转速') + "(m)"
                 },{
                     param: "ZS5",
-                    name: "碱液蠕动泵转速(分钟)"
+                    name: this.$t('message.碱液蠕动泵转速') + "(m)"
                 },{
                     param: "OUT_PRESS",
-                    name: "出水管压力"
+                    name: this.$t('message.出水管压力')
                 },{
                     param: "CO2",
-                    name: "二氧化碳浓度"
+                    name: this.$t('message.二氧化碳浓度')
                 },{
                     param: "TEMP",
-                    name: "环境温度(℃)"
+                    name: this.$t('message.环境温度') + '(℃)'
                 },{
                     param: "HUM",
-                    name: "湿度(％)"
+                    name: this.$t('message.湿度') + '(％)'
                 },{
                     param: "SIP1T",
-                    name: "泵1喷灌持续时间(秒)"
+                    name: this.$t('message.泵1喷灌持续时间') + "(s)"
                 },{
                     param: "SIP1NT",
-                    name: "泵1下次喷灌时间(分)"
+                    name: this.$t('message.泵1下次喷灌时间') + "(m)"
                 },{
                     param: "SIP2T",
-                    name: "泵2喷灌持续时间(秒)"
+                    name: this.$t('message.泵2喷灌持续时间') + "(s)"
                 },{
                     param: "SIP2NT",
-                    name: "泵2下次喷灌时间(分)"
+                    name: this.$t('message.泵2下次喷灌时间') + "(m)"
                 }]
             }
         },

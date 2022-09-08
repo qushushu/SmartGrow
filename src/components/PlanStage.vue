@@ -7,62 +7,75 @@
 	<div class="ym-main">
 		<a-card>
 			<!-- 头部标题 start -->
-			<PageHeader title="设置阶段" goBack=true></PageHeader>
+			<PageHeader :title="$t('message.设置阶段')" goBack=true></PageHeader>
 			<!-- 头部标题 end -->
-			<el-row :gutter="4" v-if="stageList.length">
+			<el-row :gutter="4" v-if="stageList.length" class="space-btm">
+				<!-- 左侧阶段设置 start -->
 				<el-col :lg="10" :md="10" :sm="10">
 					<div style="padding-right: 8px;">
-						<el-table :data="stageList" border  size="small" tooltip-effect="dark" id="planListTable" :row-class-name="tableRowClassName" :highlight-current-row="true">
-					      <el-table-column prop="stage_content[0].stage_name" label="阶段名称">
-					      	<template slot-scope="scope">
-					    		<el-input type="text" @focus="changeCurrentSort(scope)" placeholder="请输入内容" v-model="scope.row.stage_content[0].stage_name" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
-					    	</template>
-					      </el-table-column>
-					      <el-table-column prop="remark" label="阶段备注">
-					      	<template slot-scope="scope">
-					      		<el-input type="text" placeholder="请输入内容" @focus="changeCurrentSort(scope)" v-model="scope.row.remark" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
-					      	</template>
-					      </el-table-column>
-					      <el-table-column prop="edit" label="操作" width="80">
-					      	<template slot-scope="scope">
-					      		<el-button size="small" @click="handleDelete(scope)">删除</el-button>
-					      	</template>
-					      </el-table-column>
+						<el-table :data="stageList" border size="small" id="planListTable" :row-class-name="tableRowClassName" :highlight-current-row="true">
+							<!-- 阶段名称 start -->
+					      	<el-table-column prop="stage_content[0].stage_name" :label="$t('message.阶段名称')">
+						      	<template slot-scope="scope">
+						    		<el-input type="text" @focus="changeCurrentSort(scope)" :placeholder="$t('message.请输入内容')" v-model="scope.row.stage_content[0].stage_name" maxlength="10" show-word-limit style="width: 99%" size="small" /> 
+						    	</template>
+					      	</el-table-column>
+					      	<!-- 阶段名称 end -->
+					      	<!-- 阶段备注 start -->
+					      	<el-table-column prop="remark" :label="$t('message.阶段备注')">
+						      	<template slot-scope="scope">
+						      		<el-input type="text" :placeholder="$t('message.请输入内容')" @focus="changeCurrentSort(scope)" v-model="scope.row.remark" maxlength="10" show-word-limit style="width: 99%" size="small"> </el-input>
+						      	</template>
+					      	</el-table-column>
+					      	<!-- 阶段备注 end -->
+					      	<!-- 操作 start -->
+					      	<el-table-column prop="edit" :label="$t('message.操作')" width="80">
+						      	<template slot-scope="scope">
+						      		<el-button size="small" @click="handleDelete(scope)">{{$t('message.删除')}}</el-button>
+						      	</template>
+					      	</el-table-column>
+					      	<!-- 操作 end -->
 					    </el-table>
 					</div>
 				</el-col>
+				<!-- 左侧阶段设置 end -->
+				<!-- 右侧参数设置 start -->
 				<el-col :lg="14" :md="14" :sm="14">
 					<div style="padding-left: 8px;">
 						<el-table ref="multipleTable" :data="tableData" height="300" border stripe size="small" tooltip-effect="dark">
-						    <el-table-column prop="cs" label="参数" size="small"></el-table-column>
-						    <el-table-column prop="csz" label="参数值" size="small">
+						    <el-table-column prop="cs" :label="$t('message.参数')" size="small"></el-table-column>
+						    <el-table-column prop="csz" :label="$t('message.参数值')" size="small">
 						    	<template slot-scope="scope">
-						    		<el-input placeholder="请输入内容" size="small" v-model="scope.row.csz" @input="handleInputText(scope.row.csz,scope.row)"></el-input>
+						    		<el-input :placeholder="$t('message.请输入内容')" size="small" v-model="scope.row.csz" @input="handleInputText(scope.row.csz,scope.row)"></el-input>
 							    </template>
 						    </el-table-column>
 						</el-table>
 					</div>
 				</el-col>
+				<!-- 右侧参数设置 end -->
 			</el-row>
-			<a-empty v-if="!stageList.length" description="暂无数据" />
+			<!-- 空数据 start -->
+			<a-empty v-if="!stageList.length" :description="$t('message.暂无数据')" class="space-btm" />
+			<!-- 空数据 end -->
 			<!-- 功能按钮 start -->
-			<div style="padding-top: 8px;">
-				<el-button type="primary" size="small" @click="handleCreate">新增</el-button>
+			<div>
+				<!-- 新增 start -->
+				<el-button type="primary" size="small" @click="handleCreate">{{$t('message.新增')}}</el-button>
+				<!-- 新增 end -->
 				<!-- 导入按钮 start -->
-				<label>
-					<span class="nmbtn">导入excel</span>
-					<input type="file" @change="importExcel" style="display: none;" >
-				</label>
+				<label><span class="nmbtn">{{$t('message.导入excel')}}</span><input type="file" @change="importExcel" style="display: none;"></label>
 				<!-- 导入按钮 end -->
-				<el-button type="default" size="small" @click="save" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+				<!-- 保存 start -->
+				<el-button type="default" size="small" @click="save" v-loading.fullscreen.lock="fullscreenLoading">{{$t('message.保存')}}</el-button>
+				<!-- 保存 end -->
 			</div>
 			<!-- 功能按钮 end -->
 		</a-card>
 	</div>
 </template>
 <style scoped>
-	.nmbtn {padding: 9px 15px; font-size: 12px; border-radius: 3px;display: inline-block; line-height: 1; white-space: nowrap; cursor: pointer; background: #e6a23c; border: 1px solid #e6a23c; color: #FFF; -webkit-appearance: none; text-align: center; box-sizing: border-box; outline: none; margin: 0; transition: .1s; font-weight: 500; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; border-radius: 4px;}
-    .nmbtn:hover {color: #fff; border-color: #ebb563; background-color: #ebb563; }
+	.nmbtn {padding: 9px 15px; font-size: 12px; display: inline-block; line-height: 1;  cursor: pointer; background: #e6a23c; border: 1px solid #e6a23c; color: #FFF;  transition: .1s; user-select: none; border-radius: 4px;}
+    .nmbtn:hover { border-color: #ebb563; background-color: #ebb563; }
 </style>
 <script>
 	import PageHeader from "./common/PageHeader"
@@ -72,13 +85,13 @@
 	export default {
 		data() {
 			return {
-				fullscreenLoading: false,
+				fullscreenLoading: false,   // loading
 				id: 0,
-				stageList: [],
-		        tableData: [
+				stageList: [],  // 左侧阶段列表详情
+		        tableData: [   // 右侧参数详情
 		        {
 	        		ename: "DAY_OFFSET",
-		        	cs: '天数',
+		        	cs: this.$t('message.天数'),
 		        	csz: '',
 		        },{
 	        		ename: "EC_TV",
@@ -90,40 +103,39 @@
 		          	csz: '',
 		        },{
 		        	ename: "SUNRIZE",
-		          	cs: '日出时间',
+		          	cs: this.$t('message.日出时间'),
 		          	csz: '',
 		        },{
 		        	ename: "SUNSET",
-		          	cs: '日落时间',
+		          	cs: this.$t('message.日落时间'),
 		          	csz: '',
 		        },{
 		        	ename: "TEMP_DAY",
-			        cs: '日间温度',
+			        cs: this.$t('message.日间温度'),
 			        csz: '',
 		        },{
 		        	ename: "TEMP_NIGHT",
-		          	cs: '夜间温度',
+		          	cs: this.$t('message.夜间温度'),
 		          	csz: '',
 		        },{
 		        	ename: "HUM_DAY",
-		          	cs: '日间湿度',
+		          	cs: this.$t('message.日间湿度'),
 		          	csz: '',
 		        },{
 		        	ename: "HUM_NIGHT",
-		          	cs: '夜间湿度',
+		          	cs: this.$t('message.夜间湿度'),
 		          	csz: '',
 		        },{
 		        	ename: "CO2",
-		          	cs: 'CO2浓度',
+		          	cs: this.$t('message.CO2浓度'),
 		          	csz: '',
 		        },{
 		        	ename: "LIQ_TEMP",
-		          	cs: '营养液温度',
+		          	cs: this.$t('message.营养液温度'),
 		          	csz: '',
 		        }],
 		        curStageSort: 0,
-		        currentIndex: 0,
-		        selectData: []
+		        currentIndex: 0,   // 用于标记高亮行
 	      	}
 		},
 		components: {
@@ -137,10 +149,7 @@
 	    methods: {
 	    	// 设置高亮行
 	    	tableRowClassName({row, rowIndex}) {
-		        if (rowIndex === this.currentIndex) {
-		          return 'warning-row';
-		        }
-		        return '';
+	    		return (rowIndex === this.currentIndex) ? "warning-row" : "";
 		    },
 	    	// 获取数据
 	    	getList() {
@@ -155,13 +164,11 @@
 	    		}).then(data => {
 	    			if(data.data.code == 200) {
 	    				this.stageList = data.data.data.stage_item;
-	    				if(this.stageList.length) {
-	    					this.viewDetail(this.stageList[this.currentIndex]);
-	    				}
+	    				this.stageList.length && this.viewDetail(this.stageList[this.currentIndex]);
 	    			}
 	    		})
 	    	},
-	    	// 修改查看阶段
+	    	// 鼠标定位左侧输入框时查看右侧阶段参数
 	    	changeCurrentSort(scope) {
 	    		this.currentIndex = scope.$index;
 	    		this.curStageSort = scope.row.sort_index;
@@ -180,10 +187,7 @@
 	    	// 新增阶段
 	    	handleCreate() {
 	    		// 获取最大的id
-	    		let sort_max = 0;
-	    		if(this.stageList.length) {
-	    			sort_max = Math.max(...this.stageList.map(item => item.sort_index));
-	    		}
+	    		let sort_max = this.stageList.length ? Math.max(...this.stageList.map(item => item.sort_index)): 0;
 	    		this.stageList.push({
 	    			id: "",
 	    			plant_id: this.id,
@@ -215,14 +219,14 @@
 	    		let stage_item = this.stageList;
 	    		let stageNameList = stage_item.map(item=> item.stage_content[0].stage_name);
 	    		if(stageNameList.includes("")) {
-	    			this.$message.error('保存失败，阶段名称不能为空值！');
+	    			this.$message.error(this.$t('message.保存失败，阶段名称不能为空值！'));
 	    			return;
 	    		}
 	    		let tmpSet = new Set([...stageNameList])
 	    		let len1 = stageNameList.length;
 	    		let len2 = tmpSet.size;
 	    		if(len1 !== len2) {
-	    			this.$message.error('保存失败，有重复阶段名称！');
+	    			this.$message.error(this.$t('message.保存失败，有重复阶段名称！'));
 	    			return;
 	    		}
 	    		this.fullscreenLoading = true;
@@ -239,7 +243,7 @@
 	    			if(data.data.code == 200) {
 	    				this.$message({
 			              type: 'success',
-			              message: '修改成功'
+			              message: this.$t('message.修改成功')
 			            });
 			            this.getList();
 			            this.fullscreenLoading = false;
@@ -273,14 +277,14 @@
 				if(!/sheet/.test(file.type)) {
 					this.$message({
 		              type: 'error',
-		              message: '文件类型不正确'
+		              message: this.$t('message.文件类型不正确')
 		            });
 		            return;
 				}
-				this.$confirm('确认导入该文件（导入文件后原有的阶段都会被清空）？', '确认信息', {
+				this.$confirm(this.$t('message.确认导入该文件（导入文件后原有的阶段都会被清空）？'), this.$t('message.确认信息'), {
 		          distinguishCancelAndClose: true,
-		          confirmButtonText: '确认',
-		          cancelButtonText: '取消'
+		          confirmButtonText: this.$t('message.确认'),
+		          cancelButtonText: this.$t('message.取消')
 		        }).then(()=> {
 		        	const fileReader = new FileReader();
 					fileReader.readAsBinaryString(file);
@@ -335,7 +339,7 @@
 				          	}).then(data => {
 				          		_this.$message({
 					              type: 'success',
-					              message: '导入成功'
+					              message: this.$t('message.导入成功')
 					            });
 					            _this.getList();
 					            e.target.value="";
@@ -343,7 +347,7 @@
 						} catch(e) {
 							_this.$message({
 				              type: 'error',
-				              message: '文件类型不正确'
+				              message: this.$t('message.导入失败')
 				            });
 						}
 					}

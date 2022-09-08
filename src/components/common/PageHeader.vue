@@ -3,12 +3,18 @@
 -->
 <template>
 	<div>
+		<!-- 返回按钮 start -->
 		<span v-if="showBack" @click="toBack">
-			<el-link :underline="false"> <i class="el-icon-back"></i> 返回</el-link>
+			<el-link :underline="false"> <i class="el-icon-back"></i> {{$t("message.返回")}}</el-link>
 			<a-divider type="vertical" />
 		</span> 
-		<span class="title"> {{title}} </span> 
+		<!-- 返回按钮 end -->
+		<!-- 标题 start -->
+		<span class="title">{{title}}</span> 
+		<!-- 标题 end -->
+		<!-- 分割线 start -->
 		<a-divider />
+		<!-- 分割线 end -->
 	</div>
 </template>
 <style scoped>

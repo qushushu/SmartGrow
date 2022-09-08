@@ -47,12 +47,6 @@
       Clock,
       Mode
     },
-    data() {
-      return {
-        activeName: 'first',
-        showCard: 0
-      }
-    },
     computed: {
       userPower() {
         return this.$store.state.userPower;
@@ -68,7 +62,6 @@
       info() {
         this.$store.dispatch("updateRunInfo");
       },
-      handleClick(tab, event) {},
     },
     mounted() {
       this.info();

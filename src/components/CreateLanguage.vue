@@ -74,6 +74,7 @@
                         resultJson += "}"
                         let resultJs = `let languageList = ${resultJson}`;
                         _this.download("language.txt",resultJs);
+                        e.target.value = "";
                     } catch(e) {
                         _this.$message({
                           type: 'error',

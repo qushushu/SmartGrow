@@ -4,159 +4,159 @@
 <template>
     <div>
         <div class="btn-mode-toggle">
-            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">表格</el-button>
-            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">图表</el-button>
+            <el-button :type="mode == 'table' ? 'primary' : 'default'" size="small" @click="mode='table'">{{$t('message.表格')}}</el-button>
+            <el-button :type="mode == 'chart' ? 'primary' : 'default'" size="small" @click="mode='chart'">{{$t('message.图表')}}</el-button>
         </div>
         <div v-show="mode=='table'">
-            <el-table ref="multipleTable" :data="lightTable" border stripe size="small"tooltip-effect="dark" style="margin-top: 20px;" empty-text="暂无数据"> 
-                <el-table-column prop="time" label="时间" width="143" align="center"> </el-table-column>
-                <el-table-column label="第一组植物灯" align="center"> 
-                    <el-table-column label="一层左侧" prop="LT1_L1">
+            <el-table ref="multipleTable" :data="lightTable" border stripe size="small"tooltip-effect="dark" style="margin-top: 20px;" :empty-text="$t('message.暂无数据')"> 
+                <el-table-column prop="time" :label="$t('message.时间')" width="143" align="center"> </el-table-column>
+                <el-table-column :label="$t('message.第一组植物灯')" align="center"> 
+                    <el-table-column :label="$t('message.一层左侧')" prop="LT1_L1">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_L1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_L1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_L1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_L1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="一层右侧" prop="LT1_R1">
+                    <el-table-column :label="$t('message.一层右侧')" prop="LT1_R1">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_R1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_R1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_R1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_R1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层左侧" prop="LT1_L2">
+                    <el-table-column :label="$t('message.二层左侧')" prop="LT1_L2">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_L2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_L2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_L2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_L2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层右侧" prop="LT1_R2">
+                    <el-table-column :label="$t('message.二层右侧')" prop="LT1_R2">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_R2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_R2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_R2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_R2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层左侧" prop="LT1_L3">
+                    <el-table-column :label="$t('message.三层左侧')" prop="LT1_L3">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_L3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_L3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_L3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_L3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层右侧" prop="LT1_R3">
+                    <el-table-column :label="$t('message.三层右侧')" prop="LT1_R3">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_R3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_R3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_R3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_R3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层左侧" prop="LT1_L4">
+                    <el-table-column :label="$t('message.四层左侧')" prop="LT1_L4">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_L4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_L4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_L4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_L4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层右侧" prop="LT1_R4">
+                    <el-table-column :label="$t('message.四层右侧')" prop="LT1_R4">
                          <template slot-scope="scope">
-                            <div v-if="scope.row.LT1_R4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT1_R4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT1_R4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT1_R4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column label="第二组植物灯" align="center"> 
-                    <el-table-column label="一层左侧" prop="LT2_L1">
+                <el-table-column :label="$t('message.第二组植物灯')" align="center"> 
+                    <el-table-column :label="$t('message.一层左侧')" prop="LT2_L1">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_L1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_L1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_L1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_L1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="一层右侧" prop="LT2_R1">
+                    <el-table-column :label="$t('message.一层右侧')" prop="LT2_R1">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_R1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_R1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_R1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_R1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层左侧" prop="LT2_L2">
+                    <el-table-column :label="$t('message.二层左侧')" prop="LT2_L2">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_L2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_L2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_L2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_L2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层右侧" prop="LT2_R2">
+                    <el-table-column :label="$t('message.二层右侧')" prop="LT2_R2">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_R2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_R2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_R2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_R2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层左侧" prop="LT2_L3">
+                    <el-table-column :label="$t('message.三层左侧')" prop="LT2_L3">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_L3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_L3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_L3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_L3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层右侧" prop="LT2_R3">
+                    <el-table-column :label="$t('message.三层右侧')" prop="LT2_R3">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_R3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_R3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_R3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_R3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层左侧" prop="LT2_L4">
+                    <el-table-column :label="$t('message.四层左侧')" prop="LT2_L4">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_L4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_L4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_L4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_L4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层右侧" prop="LT2_R4">
+                    <el-table-column :label="$t('message.四层右侧')" prop="LT2_R4">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT2_R4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT2_R4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT2_R4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT2_R4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column label="第三组植物灯" align="center"> 
-                    <el-table-column label="一层左侧" prop="LT3_L1">
+                <el-table-column :label="$t('message.第三组植物灯')" align="center"> 
+                    <el-table-column :label="$t('message.一层左侧')" prop="LT3_L1">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_L1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_L1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_L1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_L1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="一层右侧" prop="LT3_R1">
+                    <el-table-column :label="$t('message.一层右侧')" prop="LT3_R1">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_R1 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_R1 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_R1 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_R1 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层左侧" prop="LT3_L2">
+                    <el-table-column :label="$t('message.二层左侧')" prop="LT3_L2">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_L2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_L2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_L2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_L2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="二层右侧" prop="LT3_R2">
+                    <el-table-column :label="$t('message.二层右侧')" prop="LT3_R2">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_R2 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_R2 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_R2 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_R2 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层左侧" prop="LT3_L3">
+                    <el-table-column :label="$t('message.三层左侧')" prop="LT3_L3">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_L3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_L3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_L3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_L3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="三层右侧" prop="LT3_R3">
+                    <el-table-column :label="$t('message.三层右侧')" prop="LT3_R3">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_R3 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_R3 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_R3 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_R3 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层左侧" prop="LT3_L4">
+                    <el-table-column :label="$t('message.四层左侧')" prop="LT3_L4">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_L4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_L4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_L4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_L4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="四层右侧" prop="LT3_R4">
+                    <el-table-column :label="$t('message.四层右侧')" prop="LT3_R4">
                         <template slot-scope="scope">
-                            <div v-if="scope.row.LT3_R4 =='1'" class="text-success"> 开 </div>
-                            <div v-if="scope.row.LT3_R4 == '0'" class="text-fail"> 关 </div>
+                            <div v-if="scope.row.LT3_R4 =='1'" class="text-success"> {{$t('message.开')}} </div>
+                            <div v-if="scope.row.LT3_R4 == '0'" class="text-fail"> {{$t('message.关')}} </div>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -165,7 +165,7 @@
         </div>
         <div v-show="mode=='chart'" style="padding-top: 30px;">
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="第一组植物灯" name="light1">
+                <el-tab-pane :label="$t('message.第一组植物灯')" name="light1">
                     <a-row type="flex">
                          <a-col justify="space-between" :span="12"><div id="L1G1L" class="line-chart" style="width: 100%;"></div></a-col>
                          <a-col justify="space-between" :span="12"><div id="L1G1R" class="line-chart" style="width: 100%;"></div></a-col>
@@ -183,7 +183,7 @@
                          <a-col justify="space-between" :span="12"><div id="L1G4R" class="line-chart" style="width: 100%;"></div></a-col>
                     </a-row>
                 </el-tab-pane>
-                <el-tab-pane label="第二组植物灯" name="light2">
+                <el-tab-pane :label="$t('message.第二组植物灯')" name="light2">
                     <a-row type="flex">
                          <a-col justify="space-between" :span="12"><div id="L2G1L" class="line-chart" style="width: 100%;"></div></a-col>
                          <a-col justify="space-between" :span="12"><div id="L2G1R" class="line-chart" style="width: 100%;"></div></a-col>
@@ -201,7 +201,7 @@
                          <a-col justify="space-between" :span="12"><div id="L2G4R" class="line-chart" style="width: 100%;"></div></a-col>
                     </a-row>
                 </el-tab-pane>
-                <el-tab-pane label="第三组植物灯" name="light3">
+                <el-tab-pane :label="$t('message.第三组植物灯')" name="light3">
                     <a-row type="flex">
                          <a-col justify="space-between" :span="12"><div id="L3G1L" class="line-chart" style="width: 100%;"></div></a-col>
                          <a-col justify="space-between" :span="12"><div id="L3G1R" class="line-chart" style="width: 100%;"></div></a-col>
@@ -256,81 +256,81 @@
                 fullData: [],
                 arrParamData: [{
                     param: "LT1_L1",
-                    name: "一层左侧开关"
+                    name:  this.$t('message.一层左侧开关')
                 },{
                     param: "LT1_R1",
-                    name: "一层右侧开关"
+                    name:  this.$t('message.一层右侧开关')
                 },{
                     param: "LT1_L2",
-                    name: "二层左侧开关"
+                    name:  this.$t('message.二层左侧开关')
                 },{
                     param: "LT1_R2",
-                    name: "二层右侧开关"
+                    name:  this.$t('message.二层右侧开关')
                 },{
                     param: "LT1_L3",
-                    name: "三层左侧开关"
+                    name:  this.$t('message.三层左侧开关')
                 },{
                     param: "LT1_R3",
-                    name: "三层右侧开关"
+                    name:  this.$t('message.三层右侧开关')
                 },{
                     param: "LT1_L4",
-                    name: "四层左侧开关"
+                    name:  this.$t('message.四层左侧开关')
                 },{
                     param: "LT1_R4",
-                    name: "四层右侧开关"
+                    name:  this.$t('message.四层右侧开关')
                 },
 
                 {
                     param: "LT2_L1",
-                    name: "一层左侧开关"
+                    name:  this.$t('message.一层左侧开关')
                 },{
                     param: "LT2_R1",
-                    name: "一层右侧开关"
+                    name:  this.$t('message.一层右侧开关')
                 },{
                     param: "LT2_L2",
-                    name: "二层左侧开关"
+                    name:  this.$t('message.二层左侧开关')
                 },{
                     param: "LT2_R2",
-                    name: "二层右侧开关"
+                    name:  this.$t('message.二层右侧开关')
                 },{
                     param: "LT2_L3",
-                    name: "三层左侧开关"
+                    name:  this.$t('message.三层左侧开关')
                 },{
                     param: "LT2_R3",
-                    name: "三层右侧开关"
+                    name:  this.$t('message.三层右侧开关')
                 },{
                     param: "LT2_L4",
-                    name: "四层左侧开关"
+                    name:  this.$t('message.四层左侧开关')
                 },{
                     param: "LT2_R4",
-                    name: "四层右侧开关"
+                    name:  this.$t('message.四层右侧开关')
                 },
 
                 {
                     param: "LT3_L1",
-                    name: "一层左侧开关"
+                    name:  this.$t('message.一层左侧开关')
                 },{
                     param: "LT3_R1",
-                    name: "一层右侧开关"
+                    name:  this.$t('message.一层右侧开关')
                 },{
                     param: "LT3_L2",
-                    name: "二层左侧开关"
+                    name:  this.$t('message.二层左侧开关')
                 },{
                     param: "LT3_R2",
-                    name: "二层右侧开关"
+                    name:  this.$t('message.二层右侧开关')
                 },{
                     param: "LT3_L3",
-                    name: "三层左侧开关"
+                    name:  this.$t('message.三层左侧开关')
                 },{
                     param: "LT3_R3",
-                    name: "三层右侧开关"
+                    name:  this.$t('message.三层右侧开关')
                 },{
                     param: "LT3_L4",
-                    name: "四层左侧开关"
+                    name:  this.$t('message.四层左侧开关')
                 },{
                     param: "LT3_R4",
-                    name: "四层右侧开关"
-                },]
+                    name:  this.$t('message.四层右侧开关')
+                }]
             }
         },
         computed: {
