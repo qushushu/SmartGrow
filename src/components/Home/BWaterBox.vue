@@ -105,7 +105,6 @@
                 this.curNum = parseInt(this.liqLv);
                 let allge = this.maxNum - this.minNum;
                 this.oneSpace = parseInt(136 / allge);
-                console.log(this.maxNum - this.minNum + 1);
             }
         },
         mounted() {

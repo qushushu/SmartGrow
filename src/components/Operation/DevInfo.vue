@@ -8,13 +8,13 @@
             <a-col :span="6"><h5 class="ant-statistic-title" style="padding-top: 2px;"> {{$t("message.二氧化碳电磁阀")}}</h5><div><a-switch v-model="runInfo.dig.CO2V == 1" style="margin-top: 12px;" @change="onChangeCO2V" :disabled="runInfo.dig.AUTO === 1" /></div></a-col>
         </a-row>
         <!-- 当前环境信息展示 end -->  
-        <a-row type="flex" align="top" class="space-btm" v-if="planInfo.curStage.stage_content.length">
+        <a-row type="flex" align="top" class="space-btm" v-if="planInfo.curStage && planInfo.curStage.stage_content && planInfo.curStage.stage_content.length">
             <a-col :span="6"><a-statistic :title="$t('message.日目标温度') + '(℃)'" :value="temp_day" /></a-col>
             <a-col :span="6"><a-statistic :title="$t('message.夜目标温度') + '(℃)'" :value="temp_night" /></a-col>
             <a-col :span="6"><a-statistic :title="$t('message.日目标湿度') + '(%)'" :value="humidity_day" /></a-col>
             <a-col :span="6"><a-statistic :title="$t('message.夜目标湿度') + '(%)'" :value="humidity_night" /></a-col>
         </a-row>
-        <a-row type="flex" align="top" class="space-btm" v-if="planInfo.curStage.stage_content.length">
+        <a-row type="flex" align="top" class="space-btm" v-if="planInfo.curStage && planInfo.curStage.stage_content && planInfo.curStage.stage_content.length">
             <a-col :span="6"><a-statistic :title="$t('message.日出时间') " :value="SUNRIZE" /></a-col>
             <a-col :span="6"><a-statistic :title="$t('message.日落时间') " :value="SUNSET" /></a-col>
         </a-row>

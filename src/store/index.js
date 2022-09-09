@@ -2,8 +2,8 @@ import Vue from "vue"
 import Vuex from "vuex"
 import {ajax,formatTime,opinion} from "../assets/tools/tool"
 Vue.use(Vuex);
-let localMode = true;
-// let localMode = false;
+// let localMode = true;
+let localMode = false;
 let localBaseUrl = "/apis";
 let realBaseUrl = window.ip.apiURL;
 let isMobile = opinion() == "mobile";
@@ -67,27 +67,37 @@ let store = new Vuex.Store({
 		// 更新运行状态信息
 		updateRunInfo(state,runInfo) {
 			let {alarm,ana,comm,dig,param,version} = runInfo;
-			let seedling_light = state.isPlant ? runInfo.plant_light : runInfo.seedling_light
+			let seedling_light = state.isPlant ? runInfo.plant_light : runInfo.seedling_light;
 			let jsonAna = {};
 			let jsonAlarm = {};
 			let jsonComm = {};
 			let jsonDig = {};
 			let jsonParam = {};
-			alarm.item.map(item => {
-				jsonAlarm[item["param_code"]] = item.value;
-			});
-			ana.item.map(item => {
-				jsonAna[item["param_code"]] = item.value;
-			});
-			comm.item.map(item => {
-				jsonComm[item["param_code"]] = item.value;
-			});
-			dig.item.map(item => {
-				jsonDig[item["param_code"]] = item.value;
-			});
-			param.item.map(item => {
-				jsonParam[item["param_code"]] = item.value;
-			});
+			if(alarm) {
+				alarm.item.map(item => {
+					jsonAlarm[item["param_code"]] = item.value;
+				});
+			}
+			if(ana) {
+				ana.item.map(item => {
+					jsonAna[item["param_code"]] = item.value;
+				});
+			}
+			if(comm) {
+				comm.item.map(item => {
+					jsonComm[item["param_code"]] = item.value;
+				});
+			}
+			if(dig) {
+				dig.item.map(item => {
+					jsonDig[item["param_code"]] = item.value;
+				});
+			}
+			if(param) {
+				param.item.map(item => {
+					jsonParam[item["param_code"]] = item.value;
+				});
+			}
 			state.runInfo.alarm = jsonAlarm;
 			state.runInfo.ana = jsonAna;
 			state.runInfo.comm = jsonComm;
