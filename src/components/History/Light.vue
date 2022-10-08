@@ -230,6 +230,7 @@
 <script>
     import axios from 'axios'
     import {formatTime} from "../../assets/tools/tool"
+    import {switchTimeToShow,switchTimeToSubmit,minuteToTime} from "../../assets/tools/tool.js"
     import Pagination from "../common/Pagination"
     import * as echarts from 'echarts';
     export default {

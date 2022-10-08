@@ -38,7 +38,7 @@
                     <!-- 质量 start -->
                     <td>{{runInfo.ana["W" + num]}}</td>
                     <td>{{runInfo.ana["WS" + num] || "--"}}</td>
-                    <td>{{(runInfo.ana["W" + num] - runInfo.ana["WS" + num]) || "--"}}</td>
+                    <td>{{(runInfo.ana["WS" + num] - runInfo.ana["W" + num]).toFixed(1) || "--"}}</td>
                     <td>
                         <el-button type="primary" size="small" @click="loadBdLayer(num)">{{$t("message.标定")}}</el-button>
                         <el-button type="default" size="small" @click="resetZero(num)">{{$t("message.清零")}}</el-button>

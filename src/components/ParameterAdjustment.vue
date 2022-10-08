@@ -10,7 +10,7 @@
 			<PageHeader :title="$t('message.设置参数值')" goBack=true></PageHeader>
 			<!-- 头部标题 end -->
 			<!-- 表格 start -->
-			<el-table ref="multipleTable" :data="tableData" border stripe size="small" height="300px" tooltip-effect="dark" style="margin-top: 20px;">
+			<el-table ref="multipleTable" :data="tableData" border stripe size="small" height="647px" tooltip-effect="dark" style="margin-top: 20px;">
 			    <el-table-column prop="sort_index" :label="$t('message.序号')" width="50"></el-table-column>
 			    <el-table-column prop="param_code" :label="$t('message.代码')" width="100"></el-table-column>
 			    <el-table-column prop="name" :label="$t('message.参数项')" width="200"></el-table-column>

@@ -11,6 +11,7 @@
         <!-- <el-carousel-item> -->
           <div>
             <div class="inner">
+                <CurrentIp></CurrentIp>
                 <Nutrient></Nutrient>
                 <CurrentPlan></CurrentPlan>
                 <Mode></Mode>
@@ -37,6 +38,7 @@
   import Sprinkling from "./Home/Sprinkling"
   import Clock from "./Home/Clock"
   import Mode from "./Home/Mode"
+  import CurrentIp from "./Home/CurrentIp"
   import {autoJump} from "../assets/tools/tool"
   export default {
     name: 'Home',
@@ -45,7 +47,8 @@
       CurrentPlan,
       Sprinkling,
       Clock,
-      Mode
+      Mode,
+      CurrentIp
     },
     computed: {
       userPower() {

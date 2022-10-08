@@ -17,10 +17,12 @@ if(/plant/.test((new URL(location.href))["searchParams"].get("m"))) {
 	realBaseUrl += "/seedling";
 	document.title = "植物工厂智能育苗系统";
 }
+
 import axios from 'axios'
 let store = new Vuex.Store({
 	state: {
 		isPlant: /plant/.test((new URL(location.href))["searchParams"].get("m")),
+		currentUrl: location.href,
 		localMode,
 		runInfo: {
 	        ana: {},
@@ -31,6 +33,7 @@ let store = new Vuex.Store({
 	        seedling_light_dig: {},
 	        plant_light_ana:[]
 	    },
+	    arrNumberList: [12,13,14,15],
 	    plant_dig: [],
 	    curDevInfo: {},
 	    currentPlanInfo: {},   // 当前种植方案信息 
@@ -136,6 +139,10 @@ let store = new Vuex.Store({
 		// 更新当前种植方案信息
 		updateCurrentPlanInfo(state,s) {
 			state.currentPlanInfo = s;
+		},
+		// 更新当前url
+		updatecurrentUrl(state,s) {
+			state.currentUrl = s;
 		}
 	},
 	actions: {

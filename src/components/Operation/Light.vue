@@ -140,7 +140,7 @@
 </style>
 <script>
     import axios from 'axios';
-    import {switchTimeToShow,switchTimeToSubmit} from "../../assets/tools/tool.js"
+    import {switchTimeToShow,switchTimeToSubmit,minuteToTime,timeToMinute} from "../../assets/tools/tool.js"
     export default {
         data() {
             return {
@@ -214,7 +214,16 @@
                     }
                 }
                 return result;
-            }
+            },
+            planInfo() {
+                return this.$store.state.currentPlanInfo;
+            },
+            SUNRIZE() {
+                return  this.planInfo.curStage.stage_content.length ? (this.minuteToTime(this.planInfo.curStage.stage_content[0].SUNRIZE) || null) : null;
+            },
+            SUNSET() {
+                return this.planInfo.curStage.stage_content.length ? (this.minuteToTime(this.planInfo.curStage.stage_content[0].SUNSET) || null) : null;
+            },
         },
         methods: {
             // 获取育苗所有指示灯状态
@@ -226,6 +235,35 @@
                 seedling_light_dig.push(await this.getLight(3));
                 this.seedling_light_dig = seedling_light_dig;
                 this.fullscreenLoading = false;
+            },
+            minuteToTime,
+            // 
+            beforeWrite(n) {
+                let _this = this;
+                return new Promise(resolve => {
+                    axios({
+                        method: 'post',
+                        url: `${this.apiurl}/la/device/param/read`,
+                        data: {
+                            data: { 
+                                operateNo: this.operateNo,
+                                op_id: this.op_id,
+                                op_type: "OP_LT_SDL_CALL_SET",     
+                                dev_id: n
+                          }
+                        }
+                    }).then(data=> {
+                        if(data.data.code == 200) {
+                            if(data.data.data) {
+                                resolve(data.data.data);
+                            } else {
+                                resolve(undefined)
+                            }
+                        } else {
+                            resolve(undefined)
+                        }
+                    });
+                });
             },
             // 育苗获取第num组指示灯状态
             getLight(n) {
@@ -251,8 +289,8 @@
                                 let base = arr.splice(0,3);
                                 let rc = base[1];
                                 let rl = base[2];
-                                // _this.valueRc = this.minuteToTime(rc);
-                                // _this.valueRl = this.minuteToTime(rl);
+                                _this.valueRc = this.minuteToTime(rc);
+                                _this.valueRl = this.minuteToTime(rl);
                                 arr = arr.map(item => item == 1);
                                 resolve(arr);
                             } else {
@@ -266,119 +304,69 @@
             },
             // 修改育苗第num组指示灯状态
             changeLight(num) {
-                this.$confirm(this.$t('message.是否修改照明灯开关？'), $t('message.提示'), {
+                this.$confirm(this.$t('message.是否修改照明灯开关？'), this.$t('message.提示'), {
                     distinguishCancelAndClose: true,
-                    confirmButtonText: $t('message.确定'),
-                    cancelButtonText: $t('message.取消'),
-                }).then(()=> {
+                    confirmButtonText: this.$t('message.确定'),
+                    cancelButtonText: this.$t('message.取消'),
+                }).then(async ()=> {
                     // 获取dev_id
                     let dev_id = num + 1;
                     // 获取DAY_OFFSET
                     let DAY_OFFSET = 1;
-                    // 获取SUNRIZE（日出时间）
-                    let [m,n] = this.valueRc.split(":");
-                    m = Number(m)
-                    n = Number(n)
-                    let SUNRIZE = 60 * m + n;
-                    // 获取SUNSET（日落时间）
-                    let [m1,n1] = this.valueRl.split(":");
-                    m1 = Number(m1)
-                    n1 = Number(n1)
-                    let SUNSET = 60 * m1 + n1;
-                    // 获取4组植物灯状态
-                    let LT_L1 = this.show_seedling_light_dig[num][0] ? 1 : 0;
-                    let LT_L2 = this.show_seedling_light_dig[num][1] ? 1 : 0;
-                    let LT_L3 = this.show_seedling_light_dig[num][2] ? 1 : 0;
-                    let LT_L4 = this.show_seedling_light_dig[num][3] ? 1 : 0;
-                    let LT_R1 = this.show_seedling_light_dig[num][4] ? 1 : 0;
-                    let LT_R2 = this.show_seedling_light_dig[num][5] ? 1 : 0;
-                    let LT_R3 = this.show_seedling_light_dig[num][6] ? 1 : 0;
-                    let LT_R4 = this.show_seedling_light_dig[num][7] ? 1 : 0;
-                    // 构建基础数据
-                    let baseJson = {
-                        operateNo: this.operateNo,
-                        op_id: this.op_id,
-                        op_type: this.isPlant ? "OP_LT_P_SET_SET" : "OP_LT_SDL_SET_SET",
-                        dev_id,
-                        item_num: 11
-                    }
-                    // 构建灯数据
-                    let lightJson = {
-                        item: [
-                            {
-                                param_id: 1,
-                                param_code: "DAY_OFFSET",
-                                value: DAY_OFFSET
-                            },
-                            {
-                                param_id: 2,
-                                param_code: "SUNRIZE",
-                                value: SUNRIZE
-                            },
-                            {
-                                param_id: 3,
-                                param_code: "SUNSET",
-                                value: SUNSET
-                            },
-                            {
-                                "param_id": 4,
-                                "param_code": "LT_L1",
-                                "value": LT_L1
-                            },
-                            {
-                                "param_id": 5,
-                                "param_code": "LT_L2",
-                                "value": LT_L2
-                            },
-                            {
-                                "param_id": 6,
-                                "param_code": "LT_L3",
-                                "value": LT_L3
-                            },
-                            {
-                                "param_id": 7,
-                                "param_code": "LT_L4",
-                                "value": LT_L4
-                            },
-                            {
-                                "param_id": 8,
-                                "param_code": "LT_R1",
-                                "value": LT_R1
-                            },
-                            {
-                                "param_id": 9,
-                                "param_code": "LT_R2",
-                                "value": LT_R2
-                            },
-                            {
-                                "param_id": 10,
-                                "param_code": "LT_R3",
-                                "value": LT_R3
-                            },
-                            {
-                                "param_id": 11,
-                                "param_code": "LT_R4",
-                                "value": LT_R4
+                    let or = await this.beforeWrite(num + 1);
+                    if(or) {
+                        let {item,item_num,dev_id} = or;
+                        // 获取4组植物灯状态
+                        let LT_L1 = this.show_seedling_light_dig[num][0] ? 1 : 0;
+                        let LT_L2 = this.show_seedling_light_dig[num][1] ? 1 : 0;
+                        let LT_L3 = this.show_seedling_light_dig[num][2] ? 1 : 0;
+                        let LT_L4 = this.show_seedling_light_dig[num][3] ? 1 : 0;
+                        let LT_R1 = this.show_seedling_light_dig[num][4] ? 1 : 0;
+                        let LT_R2 = this.show_seedling_light_dig[num][5] ? 1 : 0;
+                        let LT_R3 = this.show_seedling_light_dig[num][6] ? 1 : 0;
+                        let LT_R4 = this.show_seedling_light_dig[num][7] ? 1 : 0;
+                        // 构建基础数据
+                        this.setValueFromParam(item,"LT_L1",LT_L1);
+                        this.setValueFromParam(item,"LT_L2",LT_L2);
+                        this.setValueFromParam(item,"LT_L3",LT_L3);
+                        this.setValueFromParam(item,"LT_L4",LT_L4);
+                        this.setValueFromParam(item,"LT_R1",LT_R1);
+                        this.setValueFromParam(item,"LT_R2",LT_R2);
+                        this.setValueFromParam(item,"LT_R3",LT_R3);
+                        this.setValueFromParam(item,"LT_R4",LT_R4);
+                        if(this.SUNSET) {
+                            this.setValueFromParam(item,"SUNSET",timeToMinute(this.SUNSET));
+                        }
+                        if(this.SUNRIZE) {
+                            this.setValueFromParam(item,"SUNRIZE",timeToMinute(this.SUNRIZE));
+                        }
+                        
+                        let data = {
+                            operateNo: this.operateNo,
+                            op_id: this.op_id,
+                            op_type: "OP_LT_SDL_SET_SET",
+                            dev_id: Number(dev_id),
+                            item_num,
+                            item
+                        }
+                        // 调用接口
+                        axios({
+                            method: 'post',
+                            url: `${this.apiurl}/la/device/param/write`,
+                            data: {
+                                data 
                             }
-                        ]
+                        }).then(data=> {
+                            if(data.data.code == 200) {
+                                this.$store.commit("changeOpOnoff",true);
+                            }
+                        });
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: "数据读取异常！"
+                        });
                     }
-
-                    let data = { 
-                        ...baseJson,
-                        ...lightJson
-                    };
-                    // 调用接口
-                    axios({
-                        method: 'post',
-                        url: `${this.apiurl}/la/device/param/write`,
-                        data: {
-                            data 
-                        }
-                    }).then(data=> {
-                        if(data.data.code == 200) {
-                            this.$store.commit("changeOpOnoff",true);
-                        }
-                    });
                 })
             },
             // 工具函数

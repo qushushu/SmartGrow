@@ -18,69 +18,6 @@
             <a-col :span="6"><a-statistic :title="$t('message.日出时间') " :value="SUNRIZE" /></a-col>
             <a-col :span="6"><a-statistic :title="$t('message.日落时间') " :value="SUNSET" /></a-col>
         </a-row>
-        <!-- 设备信息 start -->
-        <a-row type="flex" align="top" class="space-btm" v-if="false">
-            <a-col :span="6">
-                <div class="ant-statistic">
-                    <div class="ant-statistic-title">{{$t('message.目标温度')}}(℃)</div>
-                    <div class="ant-statistic-content">
-                        <div class="ant-statistic-content-value">
-                            <div class="ant-statistic-content-value-int"><span v-show="!showIptWd">{{TEMP_TV}}</span> <a-input-number v-show="showIptWd" v-model="show_temp_tv" :min="1" :max="100" class
-                            ="space-right" /><a href="javascript:;" class="f-n"><i class="el-icon-edit" @click="toggleShowIptWd(show_temp_tv)"></i></a></div>
-                        </div>
-                    </div>
-                </div>
-            </a-col>
-            <a-col :span="6">
-                <div class="ant-statistic">
-                    <div class="ant-statistic-title">{{$t('message.目标湿度')}}(%)</div>
-                    <div class="ant-statistic-content">
-                        <div class="ant-statistic-content-value">
-                            <div class="ant-statistic-content-value-int"><span v-show="!showIptSd">{{HUM_TV}}</span> <a-input-number v-show="showIptSd" v-model="show_hum_tv" :min="1" :max="100" class
-                            ="space-right"  /><a href="javascript:;" class="f-n"><i class="el-icon-edit" @click="toggleShowIptSd(show_hum_tv)"></i></a></div>
-                        </div>
-                    </div>
-                </div>
-            </a-col>
-            <a-col :span="6">
-                <div class="ant-statistic">
-                    <div class="ant-statistic-title">{{$t('message.日出时间')}}：</div>
-                    <div class="ant-statistic-content">
-                        <el-time-select
-                          v-model="SUNRIZE"
-                          :picker-options="{
-                            start: '05:00',
-                            step: '00:15',
-                            end: '10:00'
-                          }"
-                          placeholder="选择时间"
-                          @change="changeRc"
-                          >
-                        </el-time-select>
-                    </div>
-                </div>
-            </a-col>
-            <a-col :span="6">
-                <div class="ant-statistic">
-                    <div class="ant-statistic-title">{{$t('message.日落时间')}}：</div>
-                    <div class="ant-statistic-content">
-                        <div class="ant-statistic-content">
-                            <el-time-select
-                              v-model="SUNSET"
-                              :picker-options="{
-                                start: '15:00',
-                                step: '00:15',
-                                end: '19:30'
-                              }"
-                              @change="changeRl"
-                              placeholder="选择时间">
-                            </el-time-select>
-                        </div>
-                    </div>
-                </div>
-            </a-col>
-        </a-row>
-        <!-- 设备信息 end -->
     </a-card>
 
 </template>
@@ -194,8 +131,8 @@
                         this.itemList = itemList;
                         this.TEMP_TV = this.getValueFromParam("TEMP_TV")
                         this.HUM_TV = this.getValueFromParam("HUM_TV")
-                        this.SUNRIZE = this.getValueFromParam("SUNRIZE")
-                        this.SUNSET = this.getValueFromParam("SUNSET")
+                        // this.show_SUNRIZE = this.getValueFromParam("SUNRIZE")
+                        // this.show_SUNSET = this.getValueFromParam("SUNSET")
                     }
                 })
             },
@@ -207,82 +144,6 @@
             setValueFromParam(param_code,newData) {
                 let arr = this.itemList.filter(item => item["param_code"] == param_code);
                 arr[0].value = newData;
-            },
-            // 修改目标温度
-            toggleShowIptWd(target) {
-                this.showIptWd = !this.showIptWd;
-                this.show_temp_tv = this.TEMP_TV;
-                if(!this.showIptWd) {
-                    this.setValueFromParam("TEMP_TV",target);
-                    this.save();
-                }
-            },
-            // 修改目标湿度
-            toggleShowIptSd(target) {
-                this.showIptSd = !this.showIptSd;
-                this.show_hum_tv = this.HUM_TV;
-                if(!this.showIptSd) {
-                    this.setValueFromParam("HUM_TV",target);
-                    this.save();
-                }
-            },
-            // 修改日出时刻
-            changeRc(target) {
-                this.setValueFromParam("SUNRIZE",target);
-                this.save();
-            },
-            // 修改日落时刻
-            changeRl(target) {
-                this.setValueFromParam("SUNSET",target);
-                this.save();
-            },
-            // 保存
-            save() {
-                return new Promise(resolve => {
-                    this.itemList.forEach(item => {
-                        switchTimeToSubmit(item,"param_code","value");
-                    });
-                    axios({
-                        url: `${this.apiurl}/la/device/param/write`,
-                        method: "post",
-                        data: {
-                            data: {
-                                operateNo: this.operateNo,
-                                op_id: this.op_id,
-                                op_type: this.isPlant ? "OP_PLANT_SET_SET" : "OP_SEEDLING_SET_SET",
-                                dev_id: 1,
-                                item_num:46,
-                                item: this.itemList
-                            }
-                        }
-                    }).then(data => {
-                        if(data.data.code == 200) {
-                            this.$message({
-                                type: 'success',
-                                message: $t('message.修改成功')
-                            });
-                            this.read();
-                        }
-                    });
-                });
-            },
-            // 修改设备状态
-            onChange(checked) {
-                axios({
-                    method: 'post',
-                    url: `${this.apiurl}/la/control`,
-                    data: {
-                        data: {
-                            dig: {
-                                CO2_valve: checked ? 1 : 0
-                            }
-                        }
-                    }
-                }).then(data=> {
-                    if(data.data.code == 200) {
-                        this.$store.dispatch("updateRunInfo");
-                    }
-                })
             },
             onChangeCO2V(checked) {
                 this.$confirm('确认修改二氧化碳电磁阀状态?', '提示', {
